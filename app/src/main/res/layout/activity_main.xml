@@ -10,8 +10,9 @@
         android:layout_height="wrap_content"
         android:text="Connect"
         android:id="@+id/btnConnect"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/textPort"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -21,9 +22,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="43dp"
-        android:layout_alignRight="@+id/btnConnect"
-        android:layout_alignEnd="@+id/btnConnect"
-        android:hint="IP address"/>
+        android:hint="IP address"
+        android:layout_toLeftOf="@+id/btnSend"
+        android:layout_toStartOf="@+id/btnSend"
+        android:text="192.168.1.2" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -36,6 +38,29 @@
         android:layout_alignParentStart="true"
         android:hint="Port"
         android:text="4444" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="87dp"
+        android:layout_alignRight="@+id/textPort"
+        android:layout_alignEnd="@+id/textPort"
+        android:text="Skriv" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send"
+        android:id="@+id/btnSend"
+        android:layout_alignBottom="@+id/editText"
+        android:layout_toRightOf="@+id/editText"
+        android:layout_toEndOf="@+id/editText" />
 
 
 </RelativeLayout>
