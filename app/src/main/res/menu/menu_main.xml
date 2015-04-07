@@ -1,6 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <item android:id="@+id/connect_now"
+        android:title="@string/connect_now"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/edit_ip_and_port"
+        android:title="@string/edit_ip_and_port"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/update_now"
+        android:title="@string/update_now"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 </menu>

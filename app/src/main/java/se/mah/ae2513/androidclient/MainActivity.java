@@ -1,8 +1,11 @@
 package se.mah.ae2513.androidclient;
 
-import android.os.AsyncTask;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,10 +41,10 @@ public class MainActivity extends ActionBarActivity {
      * Setting up buttons and editTexts
      */
     private void setComponents() {
-        etIP = (EditText) findViewById(R.id.textIP);
-        etPort = (EditText) findViewById(R.id.textPort);
+        etIP = (EditText) findViewById(R.id.etIP);
+        etPort = (EditText) findViewById(R.id.etPort);
         send = (Button) findViewById(R.id.btnSend);
-        stringText = (EditText) findViewById(R.id.editText);
+        stringText = (EditText) findViewById(R.id.etwrite);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +64,7 @@ public class MainActivity extends ActionBarActivity {
         connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            connectClicked();
                  mTcpClient = new TCPClient(etIP.getText().toString(),
                         Integer.parseInt(etPort.getText().toString()), new TCPClient.OnMessageReceived() {
                     @Override
@@ -72,63 +76,30 @@ public class MainActivity extends ActionBarActivity {
                 mTcpClient.start();
 
             }
-
         });
     }
 
-    private void setupConnectButton() {
-        Button connectButton = (Button) findViewById(R.id.btnConnect);
-        connectButton.setOnClickListener(new View.OnClickListener() {
-
+    private void connectToServer() {
+        mTcpClient = new TCPClient(etIP.getText().toString(),
+                Integer.parseInt(etPort.getText().toString()), new TCPClient.OnMessageReceived() {
             @Override
-            public void onClick(View v) {
-                new connectTask().execute("");
-                //String ipNbr = etIP.getText().toString();
-                //int port = Integer.parseInt(etPort.getText().toString());
-                //Thread thread = new Thread(new TCPClient(ipNbr, port));
-                //thread.start();
-                //Log.i("Testing", "Det funkar kanske");
+            public void messageReceived(String message) {
 
             }
+
         });
+        mTcpClient.start();
     }
-
-
-
-    /**
-     * aSyncTask to be used to perform actions in background while letting
-     * the main activity run on foreground. In this example, the background
-     * activity is the connection to the server.
-     *
-     * Three generics in interface AsyncTask
-     * 1. Type of references passed to doInBackGround
-     * 2. Type of reference passed to onProgressUpdate
-     * 3. Type of reference returned by doInBackground
-     */
-    public class connectTask extends AsyncTask<String,String,TCPClient> {
-
-        @Override
-        protected TCPClient doInBackground(String... params) {
-            mTcpClient = new TCPClient(etIP.getText().toString(),
-                    Integer.parseInt(etPort.getText().toString()), new TCPClient.OnMessageReceived() {
-                @Override
-                //here the messageReceived method is implemented
-                public void messageReceived(String message) {
-                    //this method calls the onProgressUpdate
-                    publishProgress(message);
-                }
-            });
-            mTcpClient.run();
-
-            return null;
-        }
+    public void connectClicked(){
+        Intent getConnectLayout = new Intent(this, ThreadActivity.class);
+        startActivity(getConnectLayout);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+       // getMenuInflater().inflate(R.layout.connect_layout, menu);
         return true;
     }
 
@@ -140,11 +111,23 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.connect_now) {
+           connectToServer();
+            Log.i("Message:", "Clicked");
             return true;
+        }else if (id == R.id.edit_ip_and_port ){
+            fragmentIP();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void fragmentIP() {
+        FragmentManager FM = getFragmentManager();
+        FragmentTransaction FT = FM.beginTransaction();
+        ConnectFragment CF = new ConnectFragment();
+        FT.add(R.id.home_screen,CF);
+        FT.commit();
     }
 
 }
