@@ -80,6 +80,7 @@ public class TCPClient extends Thread {
                     serverMessage = null;
 
                 }
+                socket.close();
             } catch (Exception e) {
                 Log.e("TCP", "S: Error", e);
             }
@@ -91,5 +92,9 @@ public class TCPClient extends Thread {
 
     public interface OnMessageReceived {
         public void messageReceived(String message);
+    }
+
+    public void setmRun (boolean bool){
+        mRun = bool;
     }
 }

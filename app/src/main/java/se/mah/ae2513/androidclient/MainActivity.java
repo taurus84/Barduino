@@ -5,7 +5,6 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,18 +20,18 @@ import android.widget.EditText;
  */
 public class MainActivity extends ActionBarActivity {
 
-    private Button connectButton, send;
+    private Button connectButton, send, disCon;
     private EditText etIP, etPort, stringText;
     private TCPClient mTcpClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.layout_test);
 
-        setComponents();
+        //setComponents();
       //  setupConnectButton();
-        connectWithThread();
+        //connectWithThread();
 
 
     }
@@ -44,6 +43,7 @@ public class MainActivity extends ActionBarActivity {
         etIP = (EditText) findViewById(R.id.etIP);
         etPort = (EditText) findViewById(R.id.etPort);
         send = (Button) findViewById(R.id.btnSend);
+        disCon = (Button) findViewById(R.id.btnDiscon);
         stringText = (EditText) findViewById(R.id.etwrite);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +56,14 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
+        disCon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTcpClient.setmRun(false);
+            }
+        });
+
+
 
 
     }
@@ -64,7 +72,7 @@ public class MainActivity extends ActionBarActivity {
         connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            connectClicked();
+            //connectClicked();
                  mTcpClient = new TCPClient(etIP.getText().toString(),
                         Integer.parseInt(etPort.getText().toString()), new TCPClient.OnMessageReceived() {
                     @Override
@@ -113,20 +121,29 @@ public class MainActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.connect_now) {
            connectToServer();
-            Log.i("Message:", "Clicked");
-            return true;
+           return true;
         }else if (id == R.id.edit_ip_and_port ){
             fragmentIP();
+        } else if (id == R.id.update_now) {
+            update();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void update() {
+        FragmentManager FM = getFragmentManager();
+        FragmentTransaction FT = FM.beginTransaction();
+        UpdateFragment UF = new UpdateFragment();
+        FT.replace(R.id.fr_id, UF);
+        FT.commit();
     }
 
     private void fragmentIP() {
         FragmentManager FM = getFragmentManager();
         FragmentTransaction FT = FM.beginTransaction();
         ConnectFragment CF = new ConnectFragment();
-        FT.add(R.id.home_screen,CF);
+        FT.replace(R.id.fr_id, CF);
         FT.commit();
     }
 
