@@ -1,20 +1,13 @@
 package se.mah.ae2513.androidclient;
 
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import java.io.*;
-import java.net.InetAddress;
-import java.net.Socket;
 
 
 
@@ -35,21 +28,10 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         setComponents();
-      //  connectToServer();
-        setupConnectButton();
+      //  setupConnectButton();
+        connectWithThread();
 
 
-    }
-
-    /**
-     * *** Not used ***
-     */
-    private void connectToServer() {
-        try {
-            Socket socket = new Socket("192.168.1.2", 4444);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -73,6 +55,25 @@ public class MainActivity extends ActionBarActivity {
         });
 
 
+    }
+    private void connectWithThread(){
+        Button connectButton = (Button) findViewById(R.id.btnConnect);
+        connectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 mTcpClient = new TCPClient(etIP.getText().toString(),
+                        Integer.parseInt(etPort.getText().toString()), new TCPClient.OnMessageReceived() {
+                    @Override
+                    public void messageReceived(String message) {
+
+                    }
+
+                });
+                mTcpClient.start();
+
+            }
+
+        });
     }
 
     private void setupConnectButton() {
@@ -108,7 +109,8 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         protected TCPClient doInBackground(String... params) {
-            mTcpClient = new TCPClient(etIP.getText().toString(), Integer.parseInt(etPort.getText().toString()), new TCPClient.OnMessageReceived() {
+            mTcpClient = new TCPClient(etIP.getText().toString(),
+                    Integer.parseInt(etPort.getText().toString()), new TCPClient.OnMessageReceived() {
                 @Override
                 //here the messageReceived method is implemented
                 public void messageReceived(String message) {

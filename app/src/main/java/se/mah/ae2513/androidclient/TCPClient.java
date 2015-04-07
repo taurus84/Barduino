@@ -1,16 +1,20 @@
 package se.mah.ae2513.androidclient;
 
 import android.util.Log;
-import android.widget.Toast;
 
-import java.io.*;
-import java.net.InetAddress;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
  * Created by David on 2015-04-02.
  */
-public class TCPClient implements Runnable {
+public class TCPClient extends Thread {
 
     private String ipNumber;
     private int port;
@@ -49,6 +53,8 @@ public class TCPClient implements Runnable {
             //create a socket to make the connection with the server
             Socket socket = new Socket(ipNumber, port);
             /*PrintStream ps = new PrintStream(socket.getOutputStream());
+            Socket socket = new Socket("192.168.1.100", 4444);
+            PrintStream ps = new PrintStream(socket.getOutputStream());
             ps.println("Hello server!");
             InputStreamReader ir = new InputStreamReader(socket.getInputStream());
             in = new BufferedReader(ir);
