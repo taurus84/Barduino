@@ -13,7 +13,7 @@ public class ThreadActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.connect_layout);
+        setContentView(R.layout.edit_layout);
         setComponents();
 
     }

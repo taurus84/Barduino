@@ -107,7 +107,7 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-       // getMenuInflater().inflate(R.layout.connect_layout, menu);
+       // getMenuInflater().inflate(R.layout.edit_layout, menu);
         return true;
     }
 
@@ -120,8 +120,9 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.connect_now) {
-           connectToServer();
-           return true;
+            connect();
+            //connectToServer();
+            //return true;
         }else if (id == R.id.edit_ip_and_port ){
             fragmentIP();
         } else if (id == R.id.update_now) {
@@ -129,6 +130,14 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void connect() {
+        FragmentManager FM = getFragmentManager();
+        FragmentTransaction FT = FM.beginTransaction();
+        ConnectFragment CF = new ConnectFragment();
+        FT.replace(R.id.fr_id, CF);
+        FT.commit();
     }
 
     private void update() {
@@ -142,8 +151,8 @@ public class MainActivity extends ActionBarActivity {
     private void fragmentIP() {
         FragmentManager FM = getFragmentManager();
         FragmentTransaction FT = FM.beginTransaction();
-        ConnectFragment CF = new ConnectFragment();
-        FT.replace(R.id.fr_id, CF);
+        EditFragment EF = new EditFragment();
+        FT.replace(R.id.fr_id, EF);
         FT.commit();
     }
 
