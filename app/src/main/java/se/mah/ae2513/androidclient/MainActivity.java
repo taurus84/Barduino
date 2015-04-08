@@ -70,7 +70,7 @@ public class MainActivity extends ActionBarActivity {
                 mTcpClient.setmRun(false);
             }
         });
-*/
+
         btnCon = (Button) findViewById(R.id.buttonConnect);
         btnCon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,10 +79,10 @@ public class MainActivity extends ActionBarActivity {
                 connectToServer();
             }
         });
-
+*/
     }
     private void connectWithThread(){
-        Button connectButton = (Button) findViewById(R.id.buttonConnect);
+   //     Button connectButton = (Button) findViewById(R.id.buttonConnect);
         connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

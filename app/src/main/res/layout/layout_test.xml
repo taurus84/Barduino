@@ -16,8 +16,8 @@
         android:layout_weight="5"
         android:background="#F7D288">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:src="@drawable/barduino"/>
         </LinearLayout>
 
@@ -29,19 +29,7 @@
         android:orientation="horizontal">
 
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Send Message"
-            android:id="@+id/buttonSend"
-            android:layout_gravity="bottom" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Connect"
-            android:id="@+id/buttonConnect"
-            android:layout_gravity="center_vertical" />
 
     </LinearLayout>
 
