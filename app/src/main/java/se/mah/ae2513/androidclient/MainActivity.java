@@ -2,7 +2,6 @@ package se.mah.ae2513.androidclient;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -11,28 +10,37 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-
-
-
 /**
  * The class creates a connection to a server where user chooses
  * ip-address and port number of the server.
  */
 public class MainActivity extends ActionBarActivity {
 
-    private Button connectButton, send, disCon;
+    private Button connectButton, send, disCon, btnCon;
     private EditText etIP, etPort, stringText;
     private TCPClient mTcpClient;
+    private FragmentManager fm;
+    private FragmentTransaction transaction;
+    private Fragment_Connect fragCon;
+    private Fragment_Update fragUp;
+    private Fragment_Edit fragEdit;
+    private Fragment_Start fragStart;
+    private Controller controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_test);
-
-        //setComponents();
+        createFragments();
+        initialize();
+        setComponents();
       //  setupConnectButton();
         //connectWithThread();
+    }
 
+    private void initialize() {
+
+        controller = new Controller(this);
 
     }
 
@@ -40,7 +48,7 @@ public class MainActivity extends ActionBarActivity {
      * Setting up buttons and editTexts
      */
     private void setComponents() {
-        etIP = (EditText) findViewById(R.id.etIP);
+  /*      etIP = (EditText) findViewById(R.id.etIP);
         etPort = (EditText) findViewById(R.id.etPort);
         send = (Button) findViewById(R.id.btnSend);
         disCon = (Button) findViewById(R.id.btnDiscon);
@@ -62,45 +70,42 @@ public class MainActivity extends ActionBarActivity {
                 mTcpClient.setmRun(false);
             }
         });
-
-
-
+*/
+        btnCon = (Button) findViewById(R.id.buttonConnect);
+        btnCon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //controller.connectToServer();
+                connectToServer();
+            }
+        });
 
     }
     private void connectWithThread(){
-        Button connectButton = (Button) findViewById(R.id.btnConnect);
+        Button connectButton = (Button) findViewById(R.id.buttonConnect);
         connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             //connectClicked();
-                 mTcpClient = new TCPClient(etIP.getText().toString(),
-                        Integer.parseInt(etPort.getText().toString()), new TCPClient.OnMessageReceived() {
+                 mTcpClient = new TCPClient("192.168.1.53",4444, new TCPClient.OnMessageReceived() {
                     @Override
                     public void messageReceived(String message) {
 
                     }
-
                 });
                 mTcpClient.start();
-
             }
         });
     }
 
     private void connectToServer() {
-        mTcpClient = new TCPClient(etIP.getText().toString(),
-                Integer.parseInt(etPort.getText().toString()), new TCPClient.OnMessageReceived() {
+        mTcpClient = new TCPClient("192.168.1.53", 4444, new TCPClient.OnMessageReceived() {
             @Override
             public void messageReceived(String message) {
 
             }
-
         });
         mTcpClient.start();
-    }
-    public void connectClicked(){
-        Intent getConnectLayout = new Intent(this, ThreadActivity.class);
-        startActivity(getConnectLayout);
     }
 
     @Override
@@ -120,9 +125,9 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.connect_now) {
-            connect();
+            controller.connectToServer();
             //connectToServer();
-            //return true;
+            return true;
         }else if (id == R.id.edit_ip_and_port ){
             fragmentIP();
         } else if (id == R.id.update_now) {
@@ -132,28 +137,47 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void createFragments() {
+
+        fragCon = new Fragment_Connect();
+        fragUp = new Fragment_Update();
+        fragEdit = new Fragment_Edit();
+        fragStart = new Fragment_Start();
+        fm = getFragmentManager();
+        transaction = fm.beginTransaction();
+        transaction.add(R.id.fr_id,fragStart);
+        transaction.commit();
+        //transaction.add(R.id.fr_id,fragUp);
+        //transaction.add(R.id.fr_id,fragEdit);
+    }
+
     private void connect() {
-        FragmentManager FM = getFragmentManager();
-        FragmentTransaction FT = FM.beginTransaction();
-        ConnectFragment CF = new ConnectFragment();
-        FT.replace(R.id.fr_id, CF);
-        FT.commit();
+        fm = getFragmentManager();
+        transaction = fm.beginTransaction();
+        transaction.replace(R.id.fr_id, fragCon);
+        transaction.addToBackStack(null);
+        transaction.commit();
+//        transaction.commitAllowingStateLoss();
     }
 
     private void update() {
-        FragmentManager FM = getFragmentManager();
-        FragmentTransaction FT = FM.beginTransaction();
-        UpdateFragment UF = new UpdateFragment();
-        FT.replace(R.id.fr_id, UF);
-        FT.commit();
+        fm = getFragmentManager();
+        transaction = fm.beginTransaction();
+  //      fragUp = new Fragment_Update();
+        transaction.replace(R.id.fr_id, fragUp);
+        transaction.addToBackStack(null);
+        transaction.commit();
+//        transaction.commitAllowingStateLoss();
     }
 
     private void fragmentIP() {
-        FragmentManager FM = getFragmentManager();
-        FragmentTransaction FT = FM.beginTransaction();
-        EditFragment EF = new EditFragment();
-        FT.replace(R.id.fr_id, EF);
-        FT.commit();
+        fm = getFragmentManager();
+        transaction = fm.beginTransaction();
+  //      fragEdit = new Fragment_Edit();
+        transaction.replace(R.id.fr_id, fragEdit);
+        transaction.addToBackStack(null);
+       transaction.commit();
+//        transaction.commitAllowingStateLoss();
     }
 
 }

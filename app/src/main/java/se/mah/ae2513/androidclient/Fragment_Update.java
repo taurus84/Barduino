@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 /**
  * Created by John on 15-04-07.
  */
-public class UpdateFragment extends Fragment {
+public class Fragment_Update extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

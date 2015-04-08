@@ -2,22 +2,19 @@ package se.mah.ae2513.androidclient;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by John on 15-04-07.
+ * Created by John on 15-04-08.
  */
-public class EditFragment extends Fragment{
+public class Fragment_Start extends Fragment {
 
-    @Nullable
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.edit_layout, container, false);
+        View v = inflater.inflate(R.layout.start_layout, container, false);
         return v;
     }
 }

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 /**
  * Created by John on 15-04-07.
  */
-public class ConnectFragment extends Fragment {
+public class Fragment_Connect extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
