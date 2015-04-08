@@ -16,5 +16,6 @@ public class Fragment_Update extends Fragment {
 
         View v = inflater.inflate(R.layout.update_layout, container, false);
         return v;
+
     }
 }
