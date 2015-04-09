@@ -32,13 +32,13 @@ public class MainActivity extends ActionBarActivity implements Communicator{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_test);
         createFragments();
-        initialize();
+        initializeController();
         setComponents();
       //  setupConnectButton();
         //connectWithThread();
     }
 
-    private void initialize() {
+    private void initializeController() {
 
         controller = new Controller(this);
 
@@ -86,7 +86,6 @@ public class MainActivity extends ActionBarActivity implements Communicator{
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-       // getMenuInflater().inflate(R.layout.edit_layout, menu);
         return true;
     }
 
@@ -127,19 +126,9 @@ public class MainActivity extends ActionBarActivity implements Communicator{
         //transaction.add(R.id.fr_id,fragEdit);
     }
 
-    private void connect() {
-        fm = getFragmentManager();
-        transaction = fm.beginTransaction();
-        transaction.replace(R.id.fr_id, fragCon);
-        transaction.addToBackStack(null);
-        transaction.commit();
-//        transaction.commitAllowingStateLoss();
-    }
-
     private void update() {
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
-  //      fragUp = new Fragment_Update();
         transaction.replace(R.id.fr_id, fragUp);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -149,7 +138,6 @@ public class MainActivity extends ActionBarActivity implements Communicator{
     private void fragmentIP() {
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
-  //      fragEdit = new Fragment_Edit();
         transaction.replace(R.id.fr_id, fragEdit);
         transaction.addToBackStack(null);
        transaction.commit();
@@ -164,22 +152,20 @@ public class MainActivity extends ActionBarActivity implements Communicator{
         transaction.commit();
     }
 
-    public void connect(View view) {
-
-    }
-
+    //implemented method for interface Communication
     @Override
     public void doSomething() {
 
-
-        controller.sendMessageToServer("AVAREQ");
+        //controller.sendMessageToServer("AVAREQ");
     }
 
+    //implemented method for interface Communication
     @Override
     public void connectNow() {
         controller.connectToServer();
     }
 
+    //implemented method for interface Communication
     @Override
     public void sendMessage(String string) {
         controller.sendMessageToServer(string);

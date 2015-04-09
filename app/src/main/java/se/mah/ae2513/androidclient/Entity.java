@@ -2,6 +2,8 @@ package se.mah.ae2513.androidclient;
 
 import android.view.View;
 
+import java.util.ArrayList;
+
 /**
  * Created by John on 15-04-08.
  */
@@ -10,6 +12,8 @@ public class Entity {
     private int portNbr;
     private String ipNbr;
     private static Entity entity = new Entity();
+    private ArrayList<String> fluidsList;
+    private int nbrOfFluids;
 
     private Entity() {
         portNbr = 4444;
