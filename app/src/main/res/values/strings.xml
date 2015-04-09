@@ -5,5 +5,8 @@
     <string name="action_settings">Settings!</string>
     <string name="connect_now">Connect</string>
     <string name="edit_ip_and_port">Edit IP and port</string>
-    <string name="update_now">Update</string>
+    <string name="update_now">Write to server</string>
+    <string name="messageToServer">AVAREQ</string>
+    <string name="mixer">Mix Drinks</string>
+    <color name="appBg">#F7D288</color>
 </resources>

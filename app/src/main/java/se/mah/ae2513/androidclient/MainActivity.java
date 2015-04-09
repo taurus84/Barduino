@@ -106,6 +106,8 @@ public class MainActivity extends ActionBarActivity implements Communicator{
             fragmentIP();
         } else if (id == R.id.update_now) {
             update();
+        } else if (id == R.id.mixer) {
+            fragmentMixer();
         }
 
         return super.onOptionsItemSelected(item);
@@ -154,12 +156,32 @@ public class MainActivity extends ActionBarActivity implements Communicator{
 //        transaction.commitAllowingStateLoss();
     }
 
+    private void fragmentMixer() {
+        fm = getFragmentManager();
+        transaction = fm.beginTransaction();
+        transaction.replace(R.id.fr_id, fragStart);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
     public void connect(View view) {
 
     }
 
     @Override
     public void doSomething() {
-        update();
+
+
+        controller.sendMessageToServer("AVAREQ");
     }
+
+    public void sendGrog() {
+        controller.sendMessageToServer("GROG 99");
+    }
+
+    @Override
+    public void connectNow() {
+        controller.connectToServer();
+    }
+
 }

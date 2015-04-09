@@ -9,30 +9,34 @@ public class Entity {
 
     private int portNbr;
     private String ipNbr;
+    private static Entity entity = new Entity();
 
-    public Entity() {
+    private Entity() {
         portNbr = 4444;
         ipNbr = "192.168.1.53";
     }
 
-    public int getPortNbr() {
+    public static Entity getInstance() {
+        return entity;
+    }
+
+
+
+    public synchronized int getPortNbr() {
         return portNbr;
     }
 
-    public void setPortNbr(int portNbr) {
+    public synchronized void setPortNbr(int portNbr) {
         this.portNbr = portNbr;
     }
 
-    public String getIpNbr() {
+    public synchronized String getIpNbr() {
         return ipNbr;
     }
 
-    public void setIpNbr(String ipNbr) {
+    public synchronized void setIpNbr(String ipNbr) {
         this.ipNbr = ipNbr;
     }
 
 
-    public void setIpAndPort(View view) {
-
-    }
 }

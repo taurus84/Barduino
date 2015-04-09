@@ -23,6 +23,21 @@
             android:id="@+id/seekBar"
             android:layout_below="@+id/seekBar2"
            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send Avareq to Server"
+            android:id="@+id/avareqToServer"
+            android:layout_below="@+id/seekBar"
+            android:layout_centerHorizontal="true" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send Grog to Server"
+            android:id="@+id/grogToServer"
+            android:layout_below="@+id/avareqToServer"
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
 </LinearLayout>
