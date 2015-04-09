@@ -176,13 +176,14 @@ public class MainActivity extends ActionBarActivity implements Communicator{
         controller.sendMessageToServer("AVAREQ");
     }
 
-    public void sendGrog() {
-        controller.sendMessageToServer("GROG 99");
-    }
-
     @Override
     public void connectNow() {
         controller.connectToServer();
+    }
+
+    @Override
+    public void sendMessage(String string) {
+        controller.sendMessageToServer(string);
     }
 
 }

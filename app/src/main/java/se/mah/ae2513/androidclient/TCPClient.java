@@ -18,10 +18,8 @@ public class TCPClient extends Thread {
 
     private String ipNumber;
     private int port;
-    PrintWriter out;
-    BufferedReader in;
-    PrintStream ps;
-    InputStreamReader ir;
+    private PrintWriter out;
+    private BufferedReader in;
     private String serverMessage;
     private OnMessageReceived mMessageListener = null;
     private boolean mRun = false;
@@ -31,7 +29,6 @@ public class TCPClient extends Thread {
         this.ipNumber = ipNumber;
         this.port = port;
         mMessageListener = listener;
-
     }
 
     /**
@@ -53,14 +50,6 @@ public class TCPClient extends Thread {
             //create a socket to make the connection with the server
             Socket socket = new Socket(ipNumber, port);
             Log.i("Connected to ip: ", ipNumber);
-            /*PrintStream ps = new PrintStream(socket.getOutputStream());
-            Socket socket = new Socket("192.168.1.100", 4444);
-            PrintStream ps = new PrintStream(socket.getOutputStream());
-            ps.println("Hello server!");
-            InputStreamReader ir = new InputStreamReader(socket.getInputStream());
-            in = new BufferedReader(ir);
-            String message = in.readLine();
-            */
 
             try {
                 //send the message to the server
@@ -100,5 +89,4 @@ public class TCPClient extends Thread {
     public interface OnMessageReceived {
         public void messageReceived(String message);
     }
-
 }
