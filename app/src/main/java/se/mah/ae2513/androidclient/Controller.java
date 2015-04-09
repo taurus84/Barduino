@@ -14,6 +14,7 @@ public class Controller {
     }
 
     public void connectToServer() {
+        //message STOP returned from server if socket closes
         if(mTcpClient != null) {
             mTcpClient.sendMessage("STOP");
         }
@@ -28,6 +29,10 @@ public class Controller {
     public void sendMessageToServer(String message) {
 
         mTcpClient.sendMessage(message);
+    }
+
+    public void closeConnection(){
+        sendMessageToServer("STOP");
     }
 
 }
