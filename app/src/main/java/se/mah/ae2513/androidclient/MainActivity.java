@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -27,6 +26,7 @@ public class MainActivity extends ActionBarActivity implements Communicator{
     private Fragment_Start fragStart;
     private Controller controller;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +34,7 @@ public class MainActivity extends ActionBarActivity implements Communicator{
         createFragments();
         initializeController();
         setComponents();
+
       //  setupConnectButton();
         //connectWithThread();
     }
