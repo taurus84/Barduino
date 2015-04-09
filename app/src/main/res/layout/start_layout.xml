@@ -14,6 +14,14 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Välj dina drinkar"
+            android:textColor="#21C400"
+            android:textSize="50dp"/>
             </RelativeLayout>
     </LinearLayout>
 
@@ -38,7 +46,18 @@
             <SeekBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp" />
+                android:layout_marginTop="30dp"
+                android:id="@+id/seekBar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CL"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="20dp"
+                android:layout_below="@+id/seekBar" />
+
         </RelativeLayout>
     </LinearLayout>
 
@@ -63,6 +82,15 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/seekBar2"
                 android:layout_marginTop="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CL"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/seekBar2"
+                android:layout_marginRight="20dp" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -88,6 +116,15 @@
                 android:id="@+id/seekBar3"
                 android:layout_marginTop="30dp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CL"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/seekBar3"
+                android:layout_marginRight="20dp" />
+
         </RelativeLayout>
     </LinearLayout>
 
@@ -112,6 +149,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:id="@+id/seekbar4"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CL"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="20dp"
+                android:layout_below="@+id/seekbar4" />
+
         </RelativeLayout>
     </LinearLayout>
 
