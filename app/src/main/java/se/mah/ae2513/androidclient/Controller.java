@@ -5,16 +5,18 @@ package se.mah.ae2513.androidclient;
  */
 public class Controller {
 
-    private Entity entity;
+    private Entity entity = Entity.getInstance();
     private TCPClient mTcpClient;
     private MainActivity main;
 
     public Controller(MainActivity mainActivity) {
         main = mainActivity;
-        entity = new Entity();
     }
 
     public void connectToServer() {
+        if(mTcpClient != null) {
+            mTcpClient.sendMessage("STOP");
+        }
         mTcpClient = new TCPClient(entity.getIpNbr(),entity.getPortNbr(), new TCPClient.OnMessageReceived() {
             @Override
             public void messageReceived(String message) {

@@ -6,4 +6,8 @@ package se.mah.ae2513.androidclient;
 public interface Communicator {
 
     public void doSomething();
+
+    public void sendGrog();
+
+    public void connectNow();
 }

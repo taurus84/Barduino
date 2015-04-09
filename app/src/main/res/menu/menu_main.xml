@@ -14,4 +14,8 @@
         android:title="@string/update_now"
         android:orderInCategory="100"
         app:showAsAction="never" />
+    <item android:id="@+id/mixer"
+        android:title="@string/mixer"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 </menu>

@@ -71,6 +71,9 @@ public class TCPClient extends Thread {
                 while (mRun) {
                     serverMessage = in.readLine();
 
+                    if(serverMessage.equals("STOP")) {
+                        break;
+                    }
                     if (serverMessage != null && mMessageListener != null) {
                         //call the method messageReceived from MyActivity class
                         mMessageListener.messageReceived(serverMessage);
@@ -80,7 +83,10 @@ public class TCPClient extends Thread {
                     serverMessage = null;
 
                 }
+                in.close();
+                out.close();
                 socket.close();
+                Log.i("Meddelande: ", "Socket closed");
             } catch (Exception e) {
                 Log.e("TCP", "S: Error", e);
             }
@@ -94,7 +100,4 @@ public class TCPClient extends Thread {
         public void messageReceived(String message);
     }
 
-    public void setmRun (boolean bool){
-        mRun = bool;
-    }
 }
