@@ -1,5 +1,7 @@
 package se.mah.ae2513.androidclient;
 
+import android.view.View;
+
 /**
  * Created by John on 15-04-08.
  */
@@ -30,6 +32,7 @@ public class Entity {
     }
 
 
+    public void setIpAndPort(View view) {
 
-
+    }
 }

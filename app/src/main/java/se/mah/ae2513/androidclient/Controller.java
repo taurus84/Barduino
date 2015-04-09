@@ -24,6 +24,7 @@ public class Controller {
     }
 
     public void sendMessageToServer(String message) {
+
         mTcpClient.sendMessage(message);
     }
 
