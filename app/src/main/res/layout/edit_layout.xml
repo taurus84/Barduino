@@ -3,7 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:id="@+id/edit_layout_background">
+    android:id="@+id/edit_layout_background"
+    android:layout_margin="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +16,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:layout_marginLeft="10dp"
                 android:text="IP-NUMMER"/>
              <EditText
                 android:layout_width="match_parent"
@@ -36,8 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="PORT"
-            android:layout_marginLeft="10dp"/>
+            android:text="PORT"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,5 +65,26 @@
             android:layout_gravity="center"
             android:text="CONNECT"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Message:"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:id="@+id/etMessage"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="SEND"/>
+        </LinearLayout>
 
 </LinearLayout>

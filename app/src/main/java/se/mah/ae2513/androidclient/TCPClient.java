@@ -52,6 +52,7 @@ public class TCPClient extends Thread {
         try {
             //create a socket to make the connection with the server
             Socket socket = new Socket(ipNumber, port);
+            Log.i("Connected to ip: ", ipNumber);
             /*PrintStream ps = new PrintStream(socket.getOutputStream());
             Socket socket = new Socket("192.168.1.100", 4444);
             PrintStream ps = new PrintStream(socket.getOutputStream());
