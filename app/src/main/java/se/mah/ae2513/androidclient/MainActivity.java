@@ -14,7 +14,7 @@ import android.widget.EditText;
  * The class creates a connection to a server where user chooses
  * ip-address and port number of the server.
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements Communicator{
 
     private Button connectButton, send, disCon, btnCon;
     private EditText etIP, etPort, stringText;
@@ -81,32 +81,6 @@ public class MainActivity extends ActionBarActivity {
         });
 */
     }
-    private void connectWithThread(){
-   //     Button connectButton = (Button) findViewById(R.id.buttonConnect);
-        connectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            //connectClicked();
-                 mTcpClient = new TCPClient("192.168.1.53",4444, new TCPClient.OnMessageReceived() {
-                    @Override
-                    public void messageReceived(String message) {
-
-                    }
-                });
-                mTcpClient.start();
-            }
-        });
-    }
-
-    private void connectToServer() {
-        mTcpClient = new TCPClient("192.168.1.53", 4444, new TCPClient.OnMessageReceived() {
-            @Override
-            public void messageReceived(String message) {
-
-            }
-        });
-        mTcpClient.start();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -145,7 +119,7 @@ public class MainActivity extends ActionBarActivity {
         fragStart = new Fragment_Start();
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
-        transaction.add(R.id.fr_id,fragStart);
+        transaction.add(R.id.fr_id,fragEdit);
         transaction.commit();
         //transaction.add(R.id.fr_id,fragUp);
         //transaction.add(R.id.fr_id,fragEdit);
@@ -180,4 +154,12 @@ public class MainActivity extends ActionBarActivity {
 //        transaction.commitAllowingStateLoss();
     }
 
+    public void connect(View view) {
+
+    }
+
+    @Override
+    public void doSomething() {
+        update();
+    }
 }
