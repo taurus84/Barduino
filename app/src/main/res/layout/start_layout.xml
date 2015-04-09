@@ -12,15 +12,17 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/relative1"
             android:layout_width="fill_parent"
             android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/txt1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="Välj dina drinkar"
-            android:textColor="#21C400"
+            android:textColor="#000000"
             android:textSize="50dp"/>
             </RelativeLayout>
     </LinearLayout>
@@ -33,10 +35,12 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/relative2"
             android:layout_width="fill_parent"
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/liquid1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Liquid 1"
@@ -51,6 +55,7 @@
                 android:layout_marginLeft="10dp" />
 
             <TextView
+                android:id="@+id/Cl1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CL"
@@ -70,10 +75,12 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/relative3"
             android:layout_width="fill_parent"
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/liquid2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Liquid 2"
@@ -87,6 +94,7 @@
                 android:layout_marginLeft="10dp" />
 
             <TextView
+                android:id="@+id/CL2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CL"
@@ -105,10 +113,12 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/relative4"
             android:layout_width="fill_parent"
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/liquid3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Liquid 3"
@@ -122,6 +132,7 @@
                 android:layout_marginLeft="10dp" />
 
             <TextView
+                android:id="@+id/CL3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CL"
@@ -141,10 +152,12 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/relative5"
             android:layout_width="fill_parent"
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/liquid4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Liquid 4"
@@ -158,6 +171,7 @@
                 android:layout_marginLeft="10dp" />
 
             <TextView
+                android:id="@+id/CL4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CL"
@@ -177,18 +191,20 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/relative6"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:clickable="false">
 
             <Button
+                android:id="@+id/orderButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="Order drink"
                 android:textSize="50dp"
                 android:textStyle="bold|italic"
-                android:textColor="#21C400" />
+                android:textColor="#000000" />
 
         </RelativeLayout>
     </LinearLayout>
