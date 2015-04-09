@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -25,6 +26,7 @@ public class MainActivity extends ActionBarActivity implements Communicator{
     private Fragment_Edit fragEdit;
     private Fragment_Start fragStart;
     private Controller controller;
+    private boolean bool = true;
 
 
     @Override
@@ -156,6 +158,14 @@ public class MainActivity extends ActionBarActivity implements Communicator{
     //implemented method for interface Communication
     @Override
     public void doSomething() {
+
+        if(bool)
+            findViewById(R.id.btnSave).setVisibility(View.INVISIBLE);
+        else
+            findViewById(R.id.btnSave).setVisibility(View.VISIBLE);
+        bool = !bool;
+
+
 
         //controller.sendMessageToServer("AVAREQ");
     }
