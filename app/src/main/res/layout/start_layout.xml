@@ -52,10 +52,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:id="@+id/seekBar"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="10dp"
+                android:max="20" />
 
             <TextView
-                android:id="@+id/Cl1"
+                android:id="@+id/cl1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CL"
@@ -91,10 +92,11 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/seekBar2"
                 android:layout_marginTop="30dp"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="10dp"
+                android:max="20" />
 
             <TextView
-                android:id="@+id/CL2"
+                android:id="@+id/cl2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CL"
@@ -129,10 +131,11 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/seekBar3"
                 android:layout_marginTop="30dp"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="10dp"
+                android:max="20" />
 
             <TextView
-                android:id="@+id/CL3"
+                android:id="@+id/cl3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CL"
@@ -168,10 +171,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:id="@+id/seekbar4"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="10dp"
+                android:max="20" />
 
             <TextView
-                android:id="@+id/CL4"
+                android:id="@+id/cl4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CL"
