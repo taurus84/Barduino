@@ -41,16 +41,16 @@ public class Fragment_Start extends Fragment implements SeekBar.OnSeekBarChangeL
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         cl1 = (TextView) getActivity().findViewById(R.id.cl1);
-        cl1.setText("CL: " + seekBar1.getProgress());
+        cl1.setText(seekBar1.getProgress() + " cl");
 
         cl2 = (TextView) getActivity().findViewById(R.id.cl2);
-        cl2.setText("CL: " + seekBar2.getProgress());
+        cl2.setText(seekBar2.getProgress() + " cl");
 
         cl3 = (TextView) getActivity().findViewById(R.id.cl3);
-        cl3.setText("CL: " + seekBar3.getProgress());
+        cl3.setText(seekBar3.getProgress() + " cl");
 
         cl4 = (TextView) getActivity().findViewById(R.id.cl4);
-        cl4.setText("CL: " + seekBar4.getProgress());
+        cl4.setText(seekBar4.getProgress() + " cl");
 
     }
 
