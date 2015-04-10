@@ -155,15 +155,20 @@ public class MainActivity extends ActionBarActivity implements Communicator{
         transaction.commit();
     }
 
+    public Controller getController() {
+        return controller;
+    }
+
     //implemented method for interface Communication
     @Override
     public void doSomething() {
 
-        if(bool)
+     /*   if(bool)
             findViewById(R.id.btnSave).setVisibility(View.INVISIBLE);
         else
             findViewById(R.id.btnSave).setVisibility(View.VISIBLE);
         bool = !bool;
+     */
 
 
 
@@ -179,6 +184,7 @@ public class MainActivity extends ActionBarActivity implements Communicator{
     //implemented method for interface Communication
     @Override
     public void sendMessage(String string) {
+
         controller.sendMessageToServer(string);
     }
 

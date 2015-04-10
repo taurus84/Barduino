@@ -30,12 +30,12 @@ public class Fragment_Start extends Fragment implements SeekBar.OnSeekBarChangeL
         seekBar1 = (SeekBar) getActivity().findViewById(R.id.seekBar);
         seekBar2 = (SeekBar) getActivity().findViewById(R.id.seekBar2);
         seekBar3 = (SeekBar) getActivity().findViewById(R.id.seekBar3);
-        seekBar4 = (SeekBar) getActivity().findViewById(R.id.seekBar4);
+        //seekBar4 = (SeekBar) getActivity().findViewById(R.id.seekBar4);
 
         seekBar1.setOnSeekBarChangeListener(this);
         seekBar2.setOnSeekBarChangeListener(this);
         seekBar3.setOnSeekBarChangeListener(this);
-        seekBar4.setOnSeekBarChangeListener(this);
+//        seekBar4.setOnSeekBarChangeListener(this);
     }
 
     @Override
@@ -49,8 +49,8 @@ public class Fragment_Start extends Fragment implements SeekBar.OnSeekBarChangeL
         cl3 = (TextView) getActivity().findViewById(R.id.cl3);
         cl3.setText(seekBar3.getProgress() + " cl");
 
-        cl4 = (TextView) getActivity().findViewById(R.id.cl4);
-        cl4.setText(seekBar4.getProgress() + " cl");
+     //   cl4 = (TextView) getActivity().findViewById(R.id.cl4);
+     //   cl4.setText(seekBar4.getProgress() + " cl");
 
     }
 

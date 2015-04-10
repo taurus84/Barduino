@@ -1,5 +1,6 @@
 package se.mah.ae2513.androidclient;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,10 @@ public class Fragment_Edit extends Fragment implements View.OnClickListener {
     Entity entity = Entity.getInstance();
     EditText etIP, etPort;
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
 
     @Nullable
     @Override
@@ -51,8 +56,8 @@ public class Fragment_Edit extends Fragment implements View.OnClickListener {
             case R.id.btnConnectNow:
                 entity.setIpNbr( etIP.getText().toString());
                 entity.setPortNbr(Integer.parseInt(etPort.getText().toString()));
-                //comm.connectNow();
-                comm.doSomething();
+                comm.connectNow();
+                //comm.doSomething();
                 break;
         }
 

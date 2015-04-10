@@ -44,7 +44,7 @@ public class Fragment_Update extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.avareqToServer:
-                comm.doSomething();
+                comm.sendMessage("AVAREQ");
                 break;
             case R.id.grogToServer:
                 comm.sendMessage("GROG 99");
