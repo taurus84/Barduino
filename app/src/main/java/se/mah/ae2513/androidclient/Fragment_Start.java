@@ -27,7 +27,7 @@ public class Fragment_Start extends Fragment implements SeekBar.OnSeekBarChangeL
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        seekBar1 = (SeekBar) getActivity().findViewById(R.id.seekBar);
+        seekBar1 = (SeekBar) getActivity().findViewById(R.id.seekBar1);
         seekBar2 = (SeekBar) getActivity().findViewById(R.id.seekBar2);
         seekBar3 = (SeekBar) getActivity().findViewById(R.id.seekBar3);
         seekBar4 = (SeekBar) getActivity().findViewById(R.id.seekBar4);
