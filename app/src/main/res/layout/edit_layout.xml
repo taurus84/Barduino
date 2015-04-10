@@ -23,7 +23,8 @@
                 android:layout_weight="1"
                 android:id="@+id/etIP"
                 android:hint="IP address"
-                android:text="83.249.53.25" />
+                android:text="83.249.53.25"
+                 android:singleLine="true"/>
      </LinearLayout>
 
     <LinearLayout
@@ -43,7 +44,8 @@
             android:layout_weight="1"
             android:id="@+id/etPort"
             android:hint="4444"
-            android:text="4444" />
+            android:text="4444"
+            android:singleLine="true"/>
     </LinearLayout>
 
     <LinearLayout
