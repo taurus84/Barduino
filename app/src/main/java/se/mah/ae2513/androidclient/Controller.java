@@ -48,6 +48,7 @@ public class Controller {
     public void closeConnection(){
 
         sendMessageToServer("STOP");
+        timer.cancel();
     }
 
     public void getStatus() {

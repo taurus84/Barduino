@@ -134,6 +134,9 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     @Override
     public void doSomething() {
 
+        setConnectedButton(bool);
+        bool = !bool;
+
      /*   if(bool)
             findViewById(R.id.btnSave).setVisibility(View.INVISIBLE);
         else
@@ -160,17 +163,14 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     }
 
     public void setConnectedButton(boolean bool) {
-      /*  if(bool) {
+        if(bool) {
             findViewById(R.id.topLeftOff).setVisibility(View.GONE);
             findViewById(R.id.topLeftOn).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.topLeftOff).setVisibility(View.VISIBLE);
             findViewById(R.id.topLeftOn).setVisibility(View.GONE);
-        } */
-        if(bool)
-            findViewById(R.id.btnSave).setVisibility(View.INVISIBLE);
-        else
-            findViewById(R.id.btnSave).setVisibility(View.VISIBLE);
+        }
+
 
     }
 }

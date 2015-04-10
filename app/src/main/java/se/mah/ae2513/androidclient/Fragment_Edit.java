@@ -52,6 +52,7 @@ public class Fragment_Edit extends Fragment implements View.OnClickListener {
             case R.id.btnSave:
                 entity.setIpNbr( etIP.getText().toString());
                 entity.setPortNbr(Integer.parseInt(etPort.getText().toString()));
+                comm.doSomething();
                 break;
             case R.id.btnConnectNow:
                 entity.setIpNbr( etIP.getText().toString());
