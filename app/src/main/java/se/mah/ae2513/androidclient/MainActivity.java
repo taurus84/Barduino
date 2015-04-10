@@ -14,7 +14,7 @@ import android.widget.EditText;
  * The class creates a connection to a server where user chooses
  * ip-address and port number of the server.
  */
-public class MainActivity extends ActionBarActivity implements Communicator{
+public class MainActivity extends ActionBarActivity implements Communicator  {
 
     private Button connectButton, send, disCon, btnCon;
     private EditText etIP, etPort, stringText;
