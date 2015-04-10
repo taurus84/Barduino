@@ -51,38 +51,7 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
      * Setting up buttons and editTexts
      */
     private void setComponents() {
-  /*      etIP = (EditText) findViewById(R.id.etIP);
-        etPort = (EditText) findViewById(R.id.etPort);
-        send = (Button) findViewById(R.id.btnSend);
-        disCon = (Button) findViewById(R.id.btnDiscon);
-        stringText = (EditText) findViewById(R.id.etwrite);
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Get text from stringText and send it to server
-                String message = stringText.getText().toString();
-                if (mTcpClient != null) {
-                    mTcpClient.sendMessage(message);
-                    stringText.setText("");
-                }
-            }
-        });
-        disCon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTcpClient.setmRun(false);
-            }
-        });
 
-        btnCon = (Button) findViewById(R.id.buttonConnect);
-        btnCon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //controller.connectToServer();
-                connectToServer();
-            }
-        });
-*/
     }
 
     @Override
@@ -110,6 +79,8 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
             update();
         } else if (id == R.id.mixer) {
             fragmentMixer();
+        } else if (id == R.id.disconnect) {
+            controller.closeConnection();
         }
 
         return super.onOptionsItemSelected(item);
@@ -188,4 +159,18 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         controller.sendMessageToServer(string);
     }
 
+    public void setConnectedButton(boolean bool) {
+      /*  if(bool) {
+            findViewById(R.id.topLeftOff).setVisibility(View.GONE);
+            findViewById(R.id.topLeftOn).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.topLeftOff).setVisibility(View.VISIBLE);
+            findViewById(R.id.topLeftOn).setVisibility(View.GONE);
+        } */
+        if(bool)
+            findViewById(R.id.btnSave).setVisibility(View.INVISIBLE);
+        else
+            findViewById(R.id.btnSave).setVisibility(View.VISIBLE);
+
+    }
 }

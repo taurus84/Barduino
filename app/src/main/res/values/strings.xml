@@ -8,5 +8,6 @@
     <string name="update_now">Write to server</string>
     <string name="messageToServer">AVAREQ</string>
     <string name="mixer">Mix Drinks</string>
+    <string name="disconnect">Disconnect</string>
     <color name="appBg">#F7D288</color>
 </resources>

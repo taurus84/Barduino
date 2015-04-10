@@ -18,4 +18,8 @@
         android:title="@string/mixer"
         android:orderInCategory="100"
         app:showAsAction="never" />
+    <item android:id="@+id/disconnect"
+        android:title="@string/disconnect"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 </menu>

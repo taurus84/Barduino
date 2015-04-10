@@ -20,10 +20,19 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:src="@drawable/barduino"
-            android:id="@+id/topLeft"
+            android:src="@drawable/stop"
+            android:id="@+id/topLeftOff"
             android:layout_alignParentLeft="true"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:visibility="visible"/>
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/con66"
+            android:id="@+id/topLeftOn"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
+            android:visibility="gone"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
