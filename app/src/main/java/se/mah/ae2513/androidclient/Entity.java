@@ -15,6 +15,14 @@ public class Entity {
     private ArrayList<String> fluidsList;
     private int nbrOfFluids;
 
+    public int getNbrOfFluids() {
+        return nbrOfFluids;
+    }
+
+    public void setNbrOfFluids(int nbrOfFluids) {
+        this.nbrOfFluids = nbrOfFluids;
+    }
+
     private Entity() {
         portNbr = 4444;
         ipNbr = "192.168.1.53";

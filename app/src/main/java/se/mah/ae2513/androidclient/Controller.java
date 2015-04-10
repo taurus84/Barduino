@@ -1,5 +1,7 @@
 package se.mah.ae2513.androidclient;
 
+import android.util.Log;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -25,19 +27,23 @@ public class Controller {
         if(mTcpClient != null) {
             mTcpClient.sendMessage("STOP");
         }
+      /*
         mTcpClient = new TCPClient(entity.getIpNbr(),entity.getPortNbr(), new TCPClient.OnMessageReceived() {
             @Override
             public void messageReceived(String message) {
-         /*       if(message.contains("ERROR")) {
+               if(message.contains("ERROR")) {
                     main.setConnectedButton(false);
                 }
-                */
+
+
 
             }
         });
+        */
+        mTcpClient = new TCPClient(entity.getIpNbr(),entity.getPortNbr(),this);
         mTcpClient.start();
         getStatus();
-      //  changeButtons();
+        changeButtons();
     }
 
     public void sendMessageToServer(String message) {
@@ -49,6 +55,14 @@ public class Controller {
 
         sendMessageToServer("STOP");
         timer.cancel();
+    }
+
+    public void messageReceived(String string) {
+
+        if(string.equals("DAVID")) {
+            main.doSomething();
+        }
+        Log.i("Controller prints: ", string);
     }
 
     public void getStatus() {
@@ -85,7 +99,4 @@ public class Controller {
             toggler = !toggler;
         }
     }
-
-
-
 }

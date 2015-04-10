@@ -23,12 +23,14 @@ public class TCPClient extends Thread {
     private String serverMessage;
     private OnMessageReceived mMessageListener = null;
     private boolean mRun = false;
+    Controller controller;
+    Entity entity = Entity.getInstance();
 
 
-    public TCPClient(String ipNumber, int port, OnMessageReceived listener ) {
+    public TCPClient(String ipNumber, int port, Controller controller) {
         this.ipNumber = ipNumber;
         this.port = port;
-        mMessageListener = listener;
+        this.controller = controller;
     }
 
     /**
@@ -64,9 +66,10 @@ public class TCPClient extends Thread {
                     if(serverMessage.equals("STOP")) {
                         break;
                     }
-                    if (serverMessage != null && mMessageListener != null) {
+                    if (serverMessage != null ) {
                         //call the method messageReceived from MyActivity class
-                        mMessageListener.messageReceived(serverMessage);
+                        //mMessageListener.messageReceived(serverMessage);
+                        controller.messageReceived(serverMessage);
                         //Prints out the message on consol in debugging perpose
                         Log.i("RESPONSE FROM SERVER", "S: Received Message: '" + serverMessage + "'");
                     }

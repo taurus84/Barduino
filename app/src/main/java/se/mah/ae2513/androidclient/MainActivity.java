@@ -10,15 +10,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * The class creates a connection to a server where user chooses
  * ip-address and port number of the server.
  */
 public class MainActivity extends ActionBarActivity implements Communicator  {
 
-    private Button connectButton, send, disCon, btnCon;
-    private EditText etIP, etPort, stringText;
-    private TCPClient mTcpClient;
     private FragmentManager fm;
     private FragmentTransaction transaction;
     private Fragment_Connect fragCon;
@@ -36,15 +36,11 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         createFragments();
         initializeController();
         setComponents();
-
-      //  setupConnectButton();
-        //connectWithThread();
     }
 
     private void initializeController() {
 
         controller = new Controller(this);
-
     }
 
     /**
@@ -144,9 +140,6 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         bool = !bool;
      */
 
-
-
-        //controller.sendMessageToServer("AVAREQ");
     }
 
     //implemented method for interface Communication
@@ -162,15 +155,26 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         controller.sendMessageToServer(string);
     }
 
-    public void setConnectedButton(boolean bool) {
-        if(bool) {
-            findViewById(R.id.topLeftOff).setVisibility(View.GONE);
-            findViewById(R.id.topLeftOn).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.topLeftOff).setVisibility(View.VISIBLE);
-            findViewById(R.id.topLeftOn).setVisibility(View.GONE);
-        }
+    public void setConnectedButton(final boolean bool) {
+        //to avoid exception android.view.ViewRoot$CalledFromWrongThreadException:
+        //Only the original thread that created a view hierarchy can touch its views.
+        //This method allows the action to be run in the UI thread.
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(bool) {
+                    findViewById(R.id.topLeftOff).setVisibility(View.GONE);
+                    findViewById(R.id.topLeftOn).setVisibility(View.VISIBLE);
+                } else {
+                    findViewById(R.id.topLeftOff).setVisibility(View.VISIBLE);
+                    findViewById(R.id.topLeftOn).setVisibility(View.GONE);
+                }
 
-
+            }
+            });
     }
+
 }
+
+
+
