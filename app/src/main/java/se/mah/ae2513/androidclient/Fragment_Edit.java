@@ -48,6 +48,7 @@ public class Fragment_Edit extends Fragment implements View.OnClickListener {
         etIP = (EditText) getActivity().findViewById(R.id.etIP);
         etPort = (EditText) getActivity().findViewById(R.id.etPort);
 
+
     }
 
     @Override

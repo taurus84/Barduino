@@ -14,6 +14,7 @@ public class Entity {
     private static Entity entity = new Entity();
     private ArrayList<String> fluidsList;
     private int nbrOfFluids;
+    private String serverMessage = "";
 
     public int getNbrOfFluids() {
         return nbrOfFluids;
@@ -26,6 +27,14 @@ public class Entity {
     private Entity() {
         portNbr = 4444;
         ipNbr = "192.168.1.53";
+    }
+
+    public synchronized String getServerMessage() {
+        return serverMessage;
+    }
+
+    public synchronized void setServerMessage(String serverMessage) {
+        this.serverMessage = serverMessage;
     }
 
     public static Entity getInstance() {

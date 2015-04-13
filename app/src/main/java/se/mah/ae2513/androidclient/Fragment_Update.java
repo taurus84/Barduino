@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * Created by John on 15-04-07.
@@ -16,6 +17,7 @@ public class Fragment_Update extends Fragment implements View.OnClickListener{
     Communicator comm;
     Button button, button2, button3;
     EditText editText;
+    TextView tvMess;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class Fragment_Update extends Fragment implements View.OnClickListener{
         button.setOnClickListener(this);
         button2.setOnClickListener(this);
         button3.setOnClickListener(this);
+        tvMess = (TextView) getActivity().findViewById(R.id.tvServerMessage);
         //type convert mainActivity to interface Communicator
         comm = (Communicator) getActivity();
     }
@@ -53,5 +56,9 @@ public class Fragment_Update extends Fragment implements View.OnClickListener{
                 comm.sendMessage(editText.getText().toString());
         }
 
+    }
+
+    public void setTextFromServer(String message) {
+        tvMess.setText(message);
     }
 }

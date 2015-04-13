@@ -100,7 +100,8 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         } else if (id == R.id.mixer) {
             fragmentMixer();
         } else if (id == R.id.disconnect) {
-
+            timer = new Timer();
+            timer.schedule(new ButtonChanger(), 1000, 5000 );
         }
 
         return super.onOptionsItemSelected(item);
@@ -191,14 +192,19 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         });
     }
 
-    public void setServerMessage(final String message) {
+    public void setServerMessage() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                tvMessage = (TextView) findViewById(R.id.tvServerMessage);
-                tvMessage.setText(message);
+                //tvMessage = (TextView) findViewById(R.id.tvServerMessage);
+                //tvMessage.setText(message);
+                fragUp.setTextFromServer(entity.getServerMessage());
             }
         });
+    }
+
+    public void updateFluids() {
+        client.sendMessage("INGREDIENTS");
     }
 
 
@@ -206,11 +212,7 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
 
         @Override
         public void run() {
-
             doSomething();
         }
     }
 }
-
-
-

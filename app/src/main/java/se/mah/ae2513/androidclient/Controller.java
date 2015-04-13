@@ -61,7 +61,7 @@ public class Controller {
             main.doSomething();
         }
 
-        main.setServerMessage(message);
+       // main.setServerMessage(message);
         Log.i("Controller prints: ", message);
     }
 

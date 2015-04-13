@@ -68,11 +68,13 @@ public class TCPClient extends Thread {
                         break;
                     }
                     if (serverMessage != null ) {
-                        //call the method messageReceived from MyActivity class
-                        //mMessageListener.messageReceived(serverMessage);
-                        //controller.messageReceived(serverMessage);
+                       if(!serverMessage.contains("ERROR")) {
+                           entity.setServerMessage(serverMessage);
+                           mainActivity.setServerMessage();
+                       }
+
                         //Prints out the message on consol in debugging perpose
-                        mainActivity.setServerMessage(serverMessage);
+                        //mainActivity.setServerMessage(serverMessage);
                         Log.i("RESPONSE FROM SERVER", "S: Received Message: '" + serverMessage + "'");
                     }
                     serverMessage = null;
