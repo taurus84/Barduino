@@ -20,7 +20,6 @@ public class Fragment_Start extends Fragment {
     private int seekbarMax = 25;
     private ArrayList <SeekBar> seekBarList = new ArrayList<SeekBar>();
     private ArrayList <TextView> textViewList = new ArrayList<TextView>();
-    private ArrayList <TextView> ratioLbls = new ArrayList<TextView>();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
