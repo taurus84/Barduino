@@ -9,5 +9,6 @@
     <string name="messageToServer">AVAREQ</string>
     <string name="mixer">Mix Drinks</string>
     <string name="disconnect">Disconnect</string>
-    <color name="appBg">#F7D288</color>
+    <string name="messageFrServer">Message \n from server</string>
+    <color name="appBg">#02644F</color>
 </resources>
