@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,6 +28,7 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     private Fragment_Start fragStart;
     private Controller controller;
     private boolean bool = true;
+    private TextView tvMessage;
 
 
     @Override
@@ -41,6 +43,7 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     private void initializeController() {
 
         controller = new Controller(this);
+        tvMessage = (TextView)findViewById(R.id.tvServerMessage);
     }
 
     /**
@@ -174,6 +177,14 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
             });
     }
 
+    public void setServerMessage(final String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tvMessage.setText(message);
+            }
+        });
+    }
 }
 
 

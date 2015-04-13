@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by John on 15-04-07.
@@ -44,6 +47,7 @@ public class Fragment_Edit extends Fragment implements View.OnClickListener {
         buttonConnectNow.setOnClickListener(this);
         etIP = (EditText) getActivity().findViewById(R.id.etIP);
         etPort = (EditText) getActivity().findViewById(R.id.etPort);
+
     }
 
     @Override
@@ -61,6 +65,5 @@ public class Fragment_Edit extends Fragment implements View.OnClickListener {
                 //comm.doSomething();
                 break;
         }
-
     }
 }

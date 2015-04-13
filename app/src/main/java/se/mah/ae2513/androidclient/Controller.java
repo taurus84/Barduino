@@ -34,9 +34,6 @@ public class Controller {
                if(message.contains("ERROR")) {
                     main.setConnectedButton(false);
                 }
-
-
-
             }
         });
         */
@@ -53,21 +50,23 @@ public class Controller {
 
     public void closeConnection(){
 
-        sendMessageToServer("STOP");
         timer.cancel();
+        sendMessageToServer("STOP");
+
     }
 
-    public void messageReceived(String string) {
+    public void messageReceived(String message) {
 
-        if(string.equals("DAVID")) {
+        if(message.equals("DAVID")) {
             main.doSomething();
         }
-        Log.i("Controller prints: ", string);
+        main.setServerMessage(message);
+        Log.i("Controller prints: ", message);
     }
 
     public void getStatus() {
         timer = new Timer();
-        timer.schedule(new CheckServer(), 3000, 4000 );
+        timer.schedule(new CheckServer(), 5000, 10000 );
     }
 
     private void changeButtons() {
