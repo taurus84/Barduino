@@ -3,9 +3,6 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:displayOptions">showHome|useLogo</item>
-        <item name="android:text">#000</item>
     </style>
 
 </resources>

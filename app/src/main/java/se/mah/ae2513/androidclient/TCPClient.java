@@ -23,14 +23,15 @@ public class TCPClient extends Thread {
     private String serverMessage;
     private OnMessageReceived mMessageListener = null;
     private boolean mRun = false;
+    private MainActivity mainActivity;
     Controller controller;
     Entity entity = Entity.getInstance();
 
 
-    public TCPClient(String ipNumber, int port, Controller controller) {
+    public TCPClient(String ipNumber, int port, MainActivity mainActivity) {
         this.ipNumber = ipNumber;
         this.port = port;
-        this.controller = controller;
+        this.mainActivity = mainActivity;
     }
 
     /**
@@ -69,8 +70,9 @@ public class TCPClient extends Thread {
                     if (serverMessage != null ) {
                         //call the method messageReceived from MyActivity class
                         //mMessageListener.messageReceived(serverMessage);
-                        controller.messageReceived(serverMessage);
+                        //controller.messageReceived(serverMessage);
                         //Prints out the message on consol in debugging perpose
+                        mainActivity.setServerMessage(serverMessage);
                         Log.i("RESPONSE FROM SERVER", "S: Received Message: '" + serverMessage + "'");
                     }
                     serverMessage = null;

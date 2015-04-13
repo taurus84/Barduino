@@ -2,6 +2,7 @@ package se.mah.ae2513.androidclient;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -11,8 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 /**
  * The class creates a connection to a server where user chooses
@@ -26,9 +31,13 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     private Fragment_Update fragUp;
     private Fragment_Edit fragEdit;
     private Fragment_Start fragStart;
-    private Controller controller;
     private boolean bool = true;
     private TextView tvMessage;
+    private Handler handler;
+    private TCPClient client;
+    private Entity entity = Entity.getInstance();
+    private boolean toggler;
+    private Timer timer;
 
 
     @Override
@@ -36,14 +45,27 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_test);
         createFragments();
-        initializeController();
         setComponents();
     }
 
-    private void initializeController() {
+    public void connectToServer() {
+        //message STOP returned from server if socket closes
+        if(client != null) {
+            client.sendMessage("STOP");
+        }
+      /*
+        mTcpClient = new TCPClient(entity.getIpNbr(),entity.getPortNbr(), new TCPClient.OnMessageReceived() {
+            @Override
+            public void messageReceived(String message) {
+               if(message.contains("ERROR")) {
+                    main.setConnectedButton(false);
+                }
+            }
+        });
+        */
+        client = new TCPClient(entity.getIpNbr(),entity.getPortNbr(), this);
+        client.start();
 
-        controller = new Controller(this);
-        tvMessage = (TextView)findViewById(R.id.tvServerMessage);
     }
 
     /**
@@ -69,8 +91,7 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.connect_now) {
-            controller.connectToServer();
-            //connectToServer();
+            connectToServer();
             return true;
         }else if (id == R.id.edit_ip_and_port ){
             fragmentIP();
@@ -79,7 +100,7 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         } else if (id == R.id.mixer) {
             fragmentMixer();
         } else if (id == R.id.disconnect) {
-            controller.closeConnection();
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -105,7 +126,6 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         transaction.replace(R.id.fr_id, fragUp);
         transaction.addToBackStack(null);
         transaction.commit();
-//        transaction.commitAllowingStateLoss();
     }
 
     private void fragmentIP() {
@@ -114,7 +134,6 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         transaction.replace(R.id.fr_id, fragEdit);
         transaction.addToBackStack(null);
        transaction.commit();
-//        transaction.commitAllowingStateLoss();
     }
 
     private void fragmentMixer() {
@@ -125,9 +144,7 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         transaction.commit();
     }
 
-    public Controller getController() {
-        return controller;
-    }
+
 
     //implemented method for interface Communication
     @Override
@@ -135,27 +152,24 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
 
         setConnectedButton(bool);
         bool = !bool;
-
-     /*   if(bool)
-            findViewById(R.id.btnSave).setVisibility(View.INVISIBLE);
-        else
-            findViewById(R.id.btnSave).setVisibility(View.VISIBLE);
-        bool = !bool;
-     */
-
     }
 
     //implemented method for interface Communication
     @Override
     public void connectNow() {
-        controller.connectToServer();
+        connectToServer();
     }
 
     //implemented method for interface Communication
     @Override
-    public void sendMessage(String string) {
+    public void sendMessage(String message) {
 
-        controller.sendMessageToServer(string);
+        client.sendMessage(message);
+    }
+
+    public void closeConnection(){
+        sendMessage("STOP");
+
     }
 
     public void setConnectedButton(final boolean bool) {
@@ -165,7 +179,7 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(bool) {
+                if (bool) {
                     findViewById(R.id.topLeftOff).setVisibility(View.GONE);
                     findViewById(R.id.topLeftOn).setVisibility(View.VISIBLE);
                 } else {
@@ -174,16 +188,27 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
                 }
 
             }
-            });
+        });
     }
 
     public void setServerMessage(final String message) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                tvMessage = (TextView) findViewById(R.id.tvServerMessage);
                 tvMessage.setText(message);
             }
         });
+    }
+
+
+    private class ButtonChanger extends TimerTask {
+
+        @Override
+        public void run() {
+
+            doSomething();
+        }
     }
 }
 

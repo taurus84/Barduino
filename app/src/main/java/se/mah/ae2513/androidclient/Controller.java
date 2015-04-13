@@ -37,7 +37,7 @@ public class Controller {
             }
         });
         */
-        mTcpClient = new TCPClient(entity.getIpNbr(),entity.getPortNbr(),this);
+       // mTcpClient = new TCPClient(entity.getIpNbr(),entity.getPortNbr(),this);
         mTcpClient.start();
         getStatus();
         changeButtons();
@@ -60,6 +60,7 @@ public class Controller {
         if(message.equals("DAVID")) {
             main.doSomething();
         }
+
         main.setServerMessage(message);
         Log.i("Controller prints: ", message);
     }
