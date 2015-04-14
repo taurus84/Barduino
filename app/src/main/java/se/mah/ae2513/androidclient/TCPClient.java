@@ -68,8 +68,8 @@ public class TCPClient extends Thread {
                         break;
                     }
                     if (serverMessage != null ) {
-                       if(!serverMessage.contains("ERROR")) {
-                           entity.setServerMessage(serverMessage);
+                       if(serverMessage.contains("INGREDIENTS")) {
+                           entity.setIngredients(serverMessage);
                            mainActivity.setServerMessage();
                        }
 
