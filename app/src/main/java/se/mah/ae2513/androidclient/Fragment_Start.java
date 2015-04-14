@@ -72,13 +72,21 @@ public class Fragment_Start extends Fragment {
 
     }
 
-    public void setLiquidTextView(){
-        liquid1.setText(entity.getLiquids(0));
-        liquid2.setText(entity.getLiquids(1));
-        liquid3.setText(entity.getLiquids(2));
-        liquid4.setText(entity.getLiquids(3));
+    public void setLiquid1(){
+
     }
 
+    public void setLiquid2(){
+
+    }
+
+    public void setLiquid3(){
+
+    }
+
+    public void setLiquid4(){
+
+    }
 
 
     private class SeekBarsListener implements SeekBar.OnSeekBarChangeListener{
