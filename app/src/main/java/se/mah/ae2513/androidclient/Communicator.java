@@ -12,4 +12,5 @@ public interface Communicator {
     public void connectToServer();
 
     public void sendMessage(String string);
+    
 }

@@ -21,12 +21,8 @@ public class TCPClient extends Thread {
     private PrintWriter out;
     private BufferedReader in;
     private String serverMessage;
-    private OnMessageReceived mMessageListener = null;
     private boolean mRun = false;
     private MainActivity mainActivity;
-    Controller controller;
-    Entity entity = Entity.getInstance();
-
 
     public TCPClient(String ipNumber, int port, MainActivity mainActivity) {
         this.ipNumber = ipNumber;
@@ -68,10 +64,8 @@ public class TCPClient extends Thread {
                         break;
                     }
                     if (serverMessage != null ) {
-                       if(serverMessage.contains("INGREDIENTS")) {
-                           entity.setLiquids(serverMessage);
-                           mainActivity.setLiquids(serverMessage);
-                       }
+                        mainActivity.msgFromClient(serverMessage);
+
 
                         //Prints out the message on consol in debugging perpose
                         //mainActivity.setServerMessage(serverMessage);
@@ -91,9 +85,5 @@ public class TCPClient extends Thread {
         } catch (IOException e) {
             Log.e("TCP", "C: Error", e);
         }
-    }
-
-    public interface OnMessageReceived {
-        public void messageReceived(String message);
     }
 }

@@ -4,12 +4,14 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Handler;
 
 /**
@@ -88,7 +90,8 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         } else if (id == R.id.testButton) {
             //setLiquids();
             //Log.i("Ingredients", entity.getLiquids(1));
-            entity.setLiquids("INGREDIENTS:hallon,äpple,smuts,unk");
+            //entity.setLiquids("INGREDIENTS:hallon,äpple,smuts,unk");
+            updateFluids();
             //setLiquidsOnFragment();
         }
 
@@ -131,12 +134,8 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         transaction.commit();
     }
 
-
-
-
     public void closeConnection(){
         sendMessage("STOP");
-
     }
 
     public void setConnectedButton(final boolean bool) {
@@ -156,6 +155,16 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
 
             }
         });
+    }
+    public void msgFromClient(String message) {
+        if(message.contains("AVAILABLE")) {
+            setConnectedButton(true);
+        } else if( message.contains("ERROR")) {
+            setConnectedButton(false);
+        } else if(message.contains("INGREDIENTS")) {
+            setConnectedButton(true);
+            setLiquids(message);
+        }
     }
 
     public void setLiquids(final String liquids) {
@@ -204,6 +213,24 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     @Override
     public void sendMessage(String message) {
 
+        Log.i("Message:", message);
         client.sendMessage(message);
+    }
+
+    public void sendAvareqToServer() {
+        sendMessage("AVAREQ");
+    }
+    public void startTimer() {
+        timer = new Timer();
+        timer.schedule(new CheckServer(), 2000,5000);
+    }
+
+    private class CheckServer extends TimerTask {
+
+        @Override
+        public void run() {
+            sendAvareqToServer();
+
+        }
     }
 }
