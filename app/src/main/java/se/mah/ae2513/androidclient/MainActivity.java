@@ -2,22 +2,16 @@ package se.mah.ae2513.androidclient;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 /**
  * The class creates a connection to a server where user chooses
@@ -200,9 +194,9 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         client.sendMessage("INGREDIENTS");
     }
 
-    public void setLiquidsOnFragment() {
-        fragStart.setLiquidTextView();
-    }
+   // public void setLiquidsOnFragment() {
+     //   fragStart.setLiquidTextView();
+    //}
 
 
     private class ButtonChanger extends TimerTask {
