@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/seekBar1"
                     android:layout_marginLeft="10dp"
-                    android:max="20"
+                    android:max="25"
                     android:layout_gravity="center" />
 
             </LinearLayout>
@@ -128,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/seekBar2"
                     android:layout_marginLeft="10dp"
-                    android:max="20"
+                    android:max="25"
                     android:layout_gravity="center" />
 
             </LinearLayout>
@@ -190,7 +190,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/seekBar3"
                     android:layout_marginLeft="10dp"
-                    android:max="20"
+                    android:max="25"
                     android:layout_gravity="center" />
 
             </LinearLayout>
@@ -252,7 +252,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/seekBar4"
                     android:layout_marginLeft="10dp"
-                    android:max="20"
+                    android:max="25"
                     android:layout_gravity="center" />
 
                 </LinearLayout>

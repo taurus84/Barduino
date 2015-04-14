@@ -16,10 +16,16 @@ import java.util.Iterator;
  */
 public class Fragment_Start extends Fragment {
     private SeekBar seekBar1, seekBar2, seekBar3, seekBar4;
-    private TextView cl1,cl2,cl3,cl4;
+    private TextView cl1,cl2,cl3,cl4,liquid1,liquid2,liquid3,liquid4;
     private int seekbarMax = 25;
     private ArrayList <SeekBar> seekBarList = new ArrayList<SeekBar>();
     private ArrayList <TextView> textViewList = new ArrayList<TextView>();
+    private Entity entity = Entity.getInstance();
+    int sumSliders = 0;
+    Iterator<TextView> iterLabel;
+    Iterator<SeekBar> iterSlider = seekBarList.iterator();
+    SeekBar tempSlider;
+    TextView tempLabel;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -31,10 +37,23 @@ public class Fragment_Start extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         SeekBarsListener listener = new SeekBarsListener();
+
         seekBar1 = (SeekBar) getActivity().findViewById(R.id.seekBar1);
         seekBar2 = (SeekBar) getActivity().findViewById(R.id.seekBar2);
         seekBar3 = (SeekBar) getActivity().findViewById(R.id.seekBar3);
         seekBar4 = (SeekBar) getActivity().findViewById(R.id.seekBar4);
+
+        cl1 = (TextView) getActivity().findViewById(R.id.cl1);
+        cl2 = (TextView) getActivity().findViewById(R.id.cl2);
+        cl3 = (TextView) getActivity().findViewById(R.id.cl3);
+        cl4 = (TextView) getActivity().findViewById(R.id.cl4);
+
+        liquid1 = (TextView) getActivity().findViewById(R.id.liquid1);
+        liquid2 = (TextView) getActivity().findViewById(R.id.liquid2);
+        liquid3 = (TextView) getActivity().findViewById(R.id.liquid3);
+        liquid4 = (TextView) getActivity().findViewById(R.id.liquid4);
+
+
         seekBarList.add(seekBar1);
         seekBarList.add(seekBar2);
         seekBarList.add(seekBar3);
@@ -49,16 +68,23 @@ public class Fragment_Start extends Fragment {
         seekBar2.setOnSeekBarChangeListener(listener);
         seekBar3.setOnSeekBarChangeListener(listener);
         seekBar4.setOnSeekBarChangeListener(listener);
+        
+
     }
 
-    public class SeekBarsListener implements SeekBar.OnSeekBarChangeListener{
+    public void setLiquidTextView(){
+        liquid1.setText(entity.getLiquids(0));
+        liquid2.setText(entity.getLiquids(1));
+        liquid3.setText(entity.getLiquids(2));
+        liquid4.setText(entity.getLiquids(3));
+    }
+
+
+
+    private class SeekBarsListener implements SeekBar.OnSeekBarChangeListener{
 
         private void updateValues(Object object) {
-            int sumSliders = 0;
-            Iterator<TextView> iterLabel;
-            Iterator<SeekBar> iterSlider = seekBarList.iterator();
-            SeekBar tempSlider;
-            TextView tempLabel;
+
 
             while (iterSlider.hasNext()) {
                 tempSlider = iterSlider.next();
@@ -109,10 +135,10 @@ public class Fragment_Start extends Fragment {
                 sliderValue = iterSlider.next().getProgress();
                 percentageDouble = ((double) sliderValue / sumSliders) * seekbarMax;
                 percentage = (int) percentageDouble;
-                if (percentageDouble - percentage > 0.5)
+                if (percentageDouble - percentage > 0.5) {
                     percentage++;
-
-                tempLabel.setText(percentage + " cl");
+                }
+               tempLabel.setText(percentage + " cl");
             }
         }
 
