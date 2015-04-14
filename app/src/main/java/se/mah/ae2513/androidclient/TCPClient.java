@@ -7,6 +7,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -22,7 +23,6 @@ public class TCPClient extends Thread {
     private String serverMessage;
     private OnMessageReceived mMessageListener = null;
     private boolean mRun = false;
-    private boolean first = true;
     private MainActivity mainActivity;
     Controller controller;
     Entity entity = Entity.getInstance();
@@ -67,15 +67,10 @@ public class TCPClient extends Thread {
                     if(serverMessage.equals("STOP")) {
                         break;
                     }
-                    if(serverMessage != null && first == true) {
-                        if(serverMessage.contains("INGREDIENTS")) {
-                            entity.setLiquids(serverMessage);
-                            first = false;
-                        }
-                    } else if (serverMessage != null ) {
+                    if (serverMessage != null ) {
                        if(serverMessage.contains("INGREDIENTS")) {
                            entity.setLiquids(serverMessage);
-                           //mainActivity.setLiquidsOnFragment();
+                           mainActivity.setLiquids(serverMessage);
                        }
 
                         //Prints out the message on consol in debugging perpose

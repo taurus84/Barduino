@@ -9,7 +9,7 @@ public interface Communicator {
 
     public void doSomething();
 
-    public void connectNow();
+    public void connectToServer();
 
     public void sendMessage(String string);
 }

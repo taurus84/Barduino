@@ -12,7 +12,7 @@ import android.widget.TextView;
 /**
  * Created by John on 15-04-08.
  */
-public class Fragment_Start extends Fragment implements SeekBar.OnSeekBarChangeListener {
+public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeListener {
     private SeekBar seekBar1, seekBar2, seekBar3, seekBar4;
     private TextView cl1,cl2,cl3,cl4,liquid1,liquid2,liquid3,liquid4;
 

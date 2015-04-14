@@ -39,7 +39,7 @@
             android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/fr_id"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
@@ -49,6 +49,6 @@
 
 
 
-    </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>

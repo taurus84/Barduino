@@ -26,6 +26,10 @@ public class Entity {
         return entity;
     }
 
+    public synchronized void setLiquidSpecific(String liquid, int i) {
+        liquids[i] = liquid;
+    }
+
     public synchronized void setLiquids(String ingredients) {
         StringTokenizer st = new StringTokenizer(ingredients,":");
         String waste = st.nextToken();

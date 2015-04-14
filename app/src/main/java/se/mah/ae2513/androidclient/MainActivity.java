@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Handler;
 
 /**
@@ -24,9 +23,9 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     private Fragment_Connect fragCon;
     private Fragment_Update fragUp;
     private Fragment_Edit fragEdit;
-    private Fragment_Start fragStart;
+    private Fragment_Mixer fragMix;
     private boolean bool = true;
-    private TextView liquid1;
+    private TextView liquid1, liquid2,liquid3,liquid4;
     private Handler handler;
     private TCPClient client;
     private Entity entity = Entity.getInstance();
@@ -83,11 +82,14 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         } else if (id == R.id.mixer) {
             fragmentMixer();
         } else if (id == R.id.disconnect) {
-            closeConnection();
+            //closeConnection();
             //timer = new Timer();
             //timer.schedule(new ButtonChanger(), 1000, 5000 );
         } else if (id == R.id.testButton) {
-            setLiquid1();
+            //setLiquids();
+            //Log.i("Ingredients", entity.getLiquids(1));
+            entity.setLiquids("INGREDIENTS:hallon,äpple,smuts,unk");
+            //setLiquidsOnFragment();
         }
 
         return super.onOptionsItemSelected(item);
@@ -98,13 +100,11 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         fragCon = new Fragment_Connect();
         fragUp = new Fragment_Update();
         fragEdit = new Fragment_Edit();
-        fragStart = new Fragment_Start();
+        fragMix = new Fragment_Mixer();
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
-        transaction.add(R.id.fr_id,fragEdit);
+        transaction.add(R.id.fr_id, fragEdit);
         transaction.commit();
-        //transaction.add(R.id.fr_id,fragUp);
-        //transaction.add(R.id.fr_id,fragEdit);
     }
 
     private void update() {
@@ -120,39 +120,19 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         transaction = fm.beginTransaction();
         transaction.replace(R.id.fr_id, fragEdit);
         transaction.addToBackStack(null);
-       transaction.commit();
+        transaction.commit();
     }
 
     private void fragmentMixer() {
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
-        transaction.replace(R.id.fr_id, fragStart);
+        transaction.replace(R.id.fr_id, fragMix);
         transaction.addToBackStack(null);
         transaction.commit();
     }
 
 
 
-    //implemented method for interface Communication
-    @Override
-    public void doSomething() {
-
-        setConnectedButton(bool);
-        bool = !bool;
-    }
-
-    //implemented method for interface Communication
-    @Override
-    public void connectNow() {
-        connectToServer();
-    }
-
-    //implemented method for interface Communication
-    @Override
-    public void sendMessage(String message) {
-
-        client.sendMessage(message);
-    }
 
     public void closeConnection(){
         sendMessage("STOP");
@@ -178,12 +158,14 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         });
     }
 
-    public void setLiquid1() {
+    public void setLiquids(final String liquids) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                liquid1 = (TextView) findViewById(R.id.liquid1);
-                liquid1.setText("DRICKA");
+                //entity.setLiquidSpecific("Äpple", 0);
+                entity.setLiquids(liquids);
+              //  liquid1 = (TextView) findViewById(R.id.liquid1);
+              //  liquid1.setText(entity.getLiquids(0));
 
                 //fragUp.setTextFromServer(entity.getServerMessage());
             }
@@ -191,19 +173,37 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     }
 
     public void updateFluids() {
+
         client.sendMessage("INGREDIENTS");
     }
 
-   // public void setLiquidsOnFragment() {
-     //   fragStart.setLiquidTextView();
-    //}
+    public void setLiquidsOnFragment() {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                liquid1 = (TextView) findViewById(R.id.liquid1);
+                liquid2 = (TextView) findViewById(R.id.liquid2);
+                liquid3 = (TextView) findViewById(R.id.liquid3);
+                liquid4 = (TextView) findViewById(R.id.liquid4);
+                liquid1.setText(entity.getLiquids(0));
+                liquid2.setText(entity.getLiquids(1));
+                liquid3.setText(entity.getLiquids(2));
+                liquid4.setText(entity.getLiquids(3));
+            }
+        });
+    }
 
 
-    private class ButtonChanger extends TimerTask {
+    //implemented method for interface Communication
+    @Override
+    public void doSomething() {
+    }
 
-        @Override
-        public void run() {
-            doSomething();
-        }
+    //implemented method for interface Communication
+    @Override
+    public void sendMessage(String message) {
+
+        client.sendMessage(message);
     }
 }
