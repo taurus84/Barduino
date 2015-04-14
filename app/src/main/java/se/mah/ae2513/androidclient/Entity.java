@@ -26,7 +26,7 @@ public class Entity {
         return entity;
     }
 
-    public synchronized void setIngredients(String ingredients) {
+    public synchronized void setLiquids(String ingredients) {
         StringTokenizer st = new StringTokenizer(ingredients,":");
         String waste = st.nextToken();
         String allIngredients = st.nextToken();
@@ -37,7 +37,7 @@ public class Entity {
         liquids[3] = st2.nextToken();
     }
 
-    public synchronized String getIngredients(int i) {
+    public synchronized String getLiquids(int i) {
         return liquids[i];
     }
 
