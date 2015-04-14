@@ -39,7 +39,6 @@ public class Fragment_Update extends Fragment implements View.OnClickListener{
         button2.setOnClickListener(this);
         button3.setOnClickListener(this);
         tvMess = (TextView) getActivity().findViewById(R.id.tvServerMessage);
-        tvMess.setText(Entity.getInstance().getLiquids(1));
         //type convert mainActivity to interface Communicator
         comm = (Communicator) getActivity();
     }

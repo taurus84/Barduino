@@ -15,11 +15,12 @@ import android.widget.TextView;
 public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeListener {
     private SeekBar seekBar1, seekBar2, seekBar3, seekBar4;
     private TextView cl1,cl2,cl3,cl4,liquid1,liquid2,liquid3,liquid4;
+    private Entity entity = Entity.getInstance();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.start_layout, container, false);
+        View v = inflater.inflate(R.layout.mixer_layout, container, false);
         return v;
     }
 
@@ -40,6 +41,10 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
         liquid2 = (TextView) getActivity().findViewById(R.id.liquid2);
         liquid3 = (TextView) getActivity().findViewById(R.id.liquid3);
         liquid4 = (TextView) getActivity().findViewById(R.id.liquid4);
+        liquid1.setText(entity.getLiquids(0));
+        liquid2.setText(entity.getLiquids(1));
+        liquid3.setText(entity.getLiquids(2));
+        liquid4.setText(entity.getLiquids(3));
 
         seekBar1.setOnSeekBarChangeListener(this);
         seekBar2.setOnSeekBarChangeListener(this);
