@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Handler;
 
 /**
  * The class creates a connection to a server where user chooses
@@ -25,7 +24,6 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     private Fragment_Update fragUp;
     private Fragment_Edit fragEdit;
     private Fragment_Mixer fragMix;
-    private boolean bool = true;
     private TextView liquid1, liquid2,liquid3,liquid4;
     private TCPClient client;
     private Entity entity = Entity.getInstance();

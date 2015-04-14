@@ -13,21 +13,17 @@ public class Entity {
     private static Entity entity = new Entity();
     private int portNbr;
     private String ipNbr;
-    private int nbrOfFluids;
-    private String serverMessage = "";
     private String[] liquids = new String[4];
 
     private Entity() {
-        portNbr = 4444;
-        ipNbr = "192.168.1.53";
     }
 
     public static Entity getInstance() {
         return entity;
     }
 
-    public synchronized void setLiquidSpecific(String liquid, int i) {
-        liquids[i] = liquid;
+    public synchronized String getLiquids(int i) {
+        return liquids[i];
     }
 
     public synchronized void setLiquids(String ingredients) {
@@ -41,16 +37,8 @@ public class Entity {
         liquids[3] = st2.nextToken();
     }
 
-    public synchronized String getLiquids(int i) {
-        return liquids[i];
-    }
-
-    public synchronized String getServerMessage() {
-        return serverMessage;
-    }
-
-    public synchronized void setServerMessage(String serverMessage) {
-        this.serverMessage = serverMessage;
+    public synchronized void setLiquidSpecific(String liquid, int i) {
+        liquids[i] = liquid;
     }
 
     public synchronized int getPortNbr() {
