@@ -22,4 +22,8 @@
         android:title="@string/disconnect"
         android:orderInCategory="100"
         app:showAsAction="never" />
+    <item android:id="@+id/testButton"
+        android:title="@string/testBtn"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 </menu>

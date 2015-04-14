@@ -32,7 +32,7 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     private Fragment_Edit fragEdit;
     private Fragment_Start fragStart;
     private boolean bool = true;
-    private TextView tvMessage;
+    private TextView liquid1;
     private Handler handler;
     private TCPClient client;
     private Entity entity = Entity.getInstance();
@@ -53,19 +53,8 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         if(client != null) {
             client.sendMessage("STOP");
         }
-      /*
-        mTcpClient = new TCPClient(entity.getIpNbr(),entity.getPortNbr(), new TCPClient.OnMessageReceived() {
-            @Override
-            public void messageReceived(String message) {
-               if(message.contains("ERROR")) {
-                    main.setConnectedButton(false);
-                }
-            }
-        });
-        */
         client = new TCPClient(entity.getIpNbr(),entity.getPortNbr(), this);
         client.start();
-
     }
 
     /**
@@ -100,8 +89,11 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         } else if (id == R.id.mixer) {
             fragmentMixer();
         } else if (id == R.id.disconnect) {
-            timer = new Timer();
-            timer.schedule(new ButtonChanger(), 1000, 5000 );
+            closeConnection();
+            //timer = new Timer();
+            //timer.schedule(new ButtonChanger(), 1000, 5000 );
+        } else if (id == R.id.testButton) {
+            setLiquid1();
         }
 
         return super.onOptionsItemSelected(item);
@@ -192,19 +184,24 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         });
     }
 
-    public void setServerMessage() {
+    public void setLiquid1() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                //tvMessage = (TextView) findViewById(R.id.tvServerMessage);
-                //tvMessage.setText(message);
-                fragUp.setTextFromServer(entity.getServerMessage());
+                liquid1 = (TextView) findViewById(R.id.liquid1);
+                liquid1.setText("DRICKA");
+
+                //fragUp.setTextFromServer(entity.getServerMessage());
             }
         });
     }
 
     public void updateFluids() {
         client.sendMessage("INGREDIENTS");
+    }
+
+    public void setLiquidsOnFragment() {
+        fragStart.setLiquidTextView();
     }
 
 
