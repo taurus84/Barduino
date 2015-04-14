@@ -23,6 +23,7 @@ public class TCPClient extends Thread {
     private String serverMessage;
     private OnMessageReceived mMessageListener = null;
     private boolean mRun = false;
+    private boolean first = true;
     private MainActivity mainActivity;
     Controller controller;
     Entity entity = Entity.getInstance();
@@ -67,10 +68,15 @@ public class TCPClient extends Thread {
                     if(serverMessage.equals("STOP")) {
                         break;
                     }
-                    if (serverMessage != null ) {
+                    if(serverMessage != null && first == true) {
+                        if(serverMessage.contains("INGREDIENTS")) {
+                            entity.setLiquids(serverMessage);
+                            first = false;
+                        }
+                    } else if (serverMessage != null ) {
                        if(serverMessage.contains("INGREDIENTS")) {
-                           entity.setIngredients(serverMessage);
-                           mainActivity.setServerMessage();
+                           entity.setLiquids(serverMessage);
+                           mainActivity.setLiquidsOnFragment();
                        }
 
                         //Prints out the message on consol in debugging perpose
