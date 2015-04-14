@@ -47,6 +47,8 @@ public class Fragment_Edit extends Fragment implements View.OnClickListener {
         buttonConnectNow.setOnClickListener(this);
         etIP = (EditText) getActivity().findViewById(R.id.etIP);
         etPort = (EditText) getActivity().findViewById(R.id.etPort);
+        entity.setIpNbr(etIP.getText().toString());
+        entity.setPortNbr(Integer.parseInt(etPort.getText().toString()));
 
 
     }
@@ -57,7 +59,6 @@ public class Fragment_Edit extends Fragment implements View.OnClickListener {
             case R.id.btnSave:
                 entity.setIpNbr( etIP.getText().toString());
                 entity.setPortNbr(Integer.parseInt(etPort.getText().toString()));
-                comm.doSomething();
                 break;
             case R.id.btnConnectNow:
                 entity.setIpNbr( etIP.getText().toString());

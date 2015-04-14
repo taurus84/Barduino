@@ -22,23 +22,20 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
 
     private FragmentManager fm;
     private FragmentTransaction transaction;
-    private Fragment_Connect fragCon;
     private Fragment_Update fragUp;
     private Fragment_Edit fragEdit;
     private Fragment_Mixer fragMix;
     private boolean bool = true;
     private TextView liquid1, liquid2,liquid3,liquid4;
-    private Handler handler;
     private TCPClient client;
     private Entity entity = Entity.getInstance();
-    private boolean toggler;
     private Timer timer;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_test);
+        setContentView(R.layout.main_window);
         createFragments();
         setComponents();
     }
@@ -76,7 +73,6 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         //noinspection SimplifiableIfStatement
         if (id == R.id.connect_now) {
             connectToServer();
-            return true;
         }else if (id == R.id.edit_ip_and_port ){
             fragmentIP();
         } else if (id == R.id.update_now) {
@@ -100,7 +96,6 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
 
     private void createFragments() {
 
-        fragCon = new Fragment_Connect();
         fragUp = new Fragment_Update();
         fragEdit = new Fragment_Edit();
         fragMix = new Fragment_Mixer();
@@ -161,6 +156,8 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
             setConnectedButton(true);
         } else if( message.contains("ERROR")) {
             setConnectedButton(false);
+        } else if(message.contains("GROGOK")) {
+            setConnectedButton(true);
         } else if(message.contains("INGREDIENTS")) {
             setConnectedButton(true);
             setLiquids(message);
