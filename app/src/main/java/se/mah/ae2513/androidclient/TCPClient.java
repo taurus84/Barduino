@@ -44,7 +44,7 @@ public class TCPClient extends Thread {
     }
 
     public void run() {
-        mRun = true;
+        //mRun = true;
         try {
             //create a socket to make the connection with the server
             Socket socket = new Socket(ipNumber, port);
@@ -57,16 +57,14 @@ public class TCPClient extends Thread {
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                 //in this while the client listens for the messages sent by the server
-                while (mRun) {
+                while (true) {
                     serverMessage = in.readLine();
 
                     if(serverMessage.equals("STOP")) {
                         break;
                     }
                     if (serverMessage != null ) {
-                        mainActivity.msgFromClient(serverMessage);
-
-
+                        mainActivity.msgFromServer(serverMessage);
                         //Prints out the message on consol in debugging perpose
                         //mainActivity.setServerMessage(serverMessage);
                         Log.i("RESPONSE FROM SERVER", "S: Received Message: '" + serverMessage + "'");
@@ -81,7 +79,6 @@ public class TCPClient extends Thread {
             } catch (Exception e) {
                 Log.e("TCP", "S: Error", e);
             }
-
         } catch (IOException e) {
             Log.e("TCP", "C: Error", e);
         }

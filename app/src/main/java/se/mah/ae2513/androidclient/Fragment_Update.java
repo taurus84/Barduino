@@ -55,10 +55,5 @@ public class Fragment_Update extends Fragment implements View.OnClickListener{
             case R.id.btnSendMessage:
                 comm.sendMessage(editText.getText().toString());
         }
-
-    }
-
-    public void setTextFromServer(String message) {
-        tvMess.setText(message);
     }
 }

@@ -23,7 +23,7 @@
             android:src="@drawable/stop"
             android:id="@+id/topLeftOff"
             android:layout_alignParentLeft="true"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
         <ImageView
             android:layout_width="60dp"
             android:layout_height="match_parent"

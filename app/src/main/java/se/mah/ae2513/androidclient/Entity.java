@@ -14,6 +14,7 @@ public class Entity {
     private int portNbr;
     private String ipNbr;
     private String[] liquids = new String[4];
+    private String serverStatus = "Not connected";
 
     private Entity() {
     }
@@ -35,6 +36,12 @@ public class Entity {
         liquids[1] = st2.nextToken();
         liquids[2] = st2.nextToken();
         liquids[3] = st2.nextToken();
+    }
+    public synchronized void setServerStatus(String status) {
+        this.serverStatus = status;
+    }
+    public synchronized String getServerStatus() {
+        return serverStatus;
     }
 
     public synchronized void setLiquidSpecific(String liquid, int i) {

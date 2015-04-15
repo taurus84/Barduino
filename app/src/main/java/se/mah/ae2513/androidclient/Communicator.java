@@ -7,10 +7,10 @@ package se.mah.ae2513.androidclient;
  */
 public interface Communicator {
 
-    public void doSomething();
-
     public void connectToServer();
 
     public void sendMessage(String string);
+
+    public void doSomething();
     
 }

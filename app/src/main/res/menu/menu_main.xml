@@ -26,4 +26,8 @@
         android:title="@string/testBtn"
         android:orderInCategory="100"
         app:showAsAction="never" />
+    <item android:id="@+id/startTimer"
+        android:title="@string/startTimer"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 </menu>

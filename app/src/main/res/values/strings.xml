@@ -9,8 +9,11 @@
     <string name="messageToServer">AVAREQ</string>
     <string name="mixer">Mix Drinks</string>
     <string name="disconnect">Disconnect</string>
-    <string name="ipNummer">192.168.0.19</string>
+    <string name="ipNummer">10.2.15.111</string>
     <string name="messageFrServer">Message \n from server</string>
     <string name="testBtn">Test Button</string>
+    <string name="startTimer">Start timer</string>
     <color name="appBg">#02644F</color>
+    <color name="headerColor">#000000</color>
+    <color name="textColor">#00979C</color>
 </resources>

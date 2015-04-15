@@ -9,7 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,15 +21,16 @@ import java.util.TimerTask;
  */
 public class MainActivity extends ActionBarActivity implements Communicator  {
 
+    private Entity entity = Entity.getInstance();
     private FragmentManager fm;
     private FragmentTransaction transaction;
-    private Fragment_Update fragUp;
+    private Fragment_Update fragUpdate;
     private Fragment_Edit fragEdit;
     private Fragment_Mixer fragMix;
-    private TextView liquid1, liquid2,liquid3,liquid4;
     private TCPClient client;
-    private Entity entity = Entity.getInstance();
     private Timer timer;
+    private Random rand = new Random();
+    private boolean timerRunning;
 
 
     @Override
@@ -35,23 +38,17 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_window);
         createFragments();
-        setComponents();
     }
 
     public void connectToServer() {
+        timerRunning = false;
         //message STOP returned from server if socket closes
         if(client != null) {
+            Toast.makeText(getApplicationContext(), "New Connection", Toast.LENGTH_SHORT).show();
             client.sendMessage("STOP");
         }
         client = new TCPClient(entity.getIpNbr(),entity.getPortNbr(), this);
         client.start();
-    }
-
-    /**
-     * Setting up buttons and editTexts
-     */
-    private void setComponents() {
-
     }
 
     @Override
@@ -66,35 +63,57 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        //int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.connect_now) {
-            connectToServer();
-        }else if (id == R.id.edit_ip_and_port ){
-            fragmentIP();
-        } else if (id == R.id.update_now) {
-            update();
-        } else if (id == R.id.mixer) {
-            fragmentMixer();
-        } else if (id == R.id.disconnect) {
-            //closeConnection();
-            //timer = new Timer();
-            //timer.schedule(new ButtonChanger(), 1000, 5000 );
-        } else if (id == R.id.testButton) {
-            //setLiquids();
-            //Log.i("Ingredients", entity.getLiquids(1));
-            //entity.setLiquids("INGREDIENTS:hallon,äpple,smuts,unk");
-            updateFluids();
-            //setLiquidsOnFragment();
+        switch (item.getItemId()) {
+            case R.id.connect_now:
+                connectToServer();
+                break;
+            case R.id.edit_ip_and_port:
+                fragmentIP();
+                break;
+            case R.id.update_now:
+                fragmentUpdate();
+                break;
+            case R.id.mixer:
+                fragmentMixer();
+                break;
+            case R.id.disconnect:
+
+                //stop timer
+                if(client != null) {
+                    closeConnection();
+                } if(timer != null) {
+                    timer.cancel();
+                }
+                timerRunning = false;
+                break;
+            case R.id.testButton:
+                //updateFluidsFromServer();
+               /* if(fragMix.isVisible()) {
+                    String text = rand.nextInt(100) + 100 + "";
+                    fragMix.setButtonText(text);
+                    break;
+                }
+                */
+                //setTextOnButton();
+                sendMessage("INGREDIENTS");
+                //fragMix.fadeButton(false);
+                Toast.makeText(getApplicationContext(), "Ingredients up to date", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.startTimer:
+                startTimer();
+                break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+     * Creating all fragments to be used in the program.
+     */
     private void createFragments() {
 
-        fragUp = new Fragment_Update();
+        fragUpdate = new Fragment_Update();
         fragEdit = new Fragment_Edit();
         fragMix = new Fragment_Mixer();
         fm = getFragmentManager();
@@ -103,10 +122,11 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         transaction.commit();
     }
 
-    private void update() {
+    /*<<<<<<<<<<fragments>>>>>>>>>>>>>>>>>>>>>>>*/
+    private void fragmentUpdate() {
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
-        transaction.replace(R.id.fr_id, fragUp);
+        transaction.replace(R.id.fr_id, fragUpdate);
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -128,76 +148,70 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     }
 
     public void closeConnection(){
-        sendMessage("STOP");
+        if(client != null) {
+            sendMessage("STOP");
+        }
     }
 
-    public void setConnectedButton(final boolean bool) {
-        //to avoid exception android.view.ViewRoot$CalledFromWrongThreadException:
-        //Only the original thread that created a view hierarchy can touch its views.
-        //This method allows the action to be run in the UI thread.
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (bool) {
-                    findViewById(R.id.topLeftOff).setVisibility(View.GONE);
-                    findViewById(R.id.topLeftOn).setVisibility(View.VISIBLE);
-                } else {
-                    findViewById(R.id.topLeftOff).setVisibility(View.VISIBLE);
-                    findViewById(R.id.topLeftOn).setVisibility(View.GONE);
-                }
-
-            }
-        });
-    }
-    public void msgFromClient(String message) {
+    /**
+     * Method receives messages from server and setting the
+     * serverstatus to entity. Depending on messages the button
+     * on fragment mixer will either active or inactive.
+     * @param message
+     */
+    public void msgFromServer(String message) {
         if(message.contains("AVAILABLE")) {
-            setConnectedButton(true);
-        } else if( message.contains("ERROR")) {
-            setConnectedButton(false);
+            entity.setServerStatus("AVAILABLE");
+            fadeButton(true);
+        } else if( message.contains("ERROR BUSY")) {
+            entity.setServerStatus("BUSY");
+            fadeButton(false);
+        } else if( message.contains("ERROR NOCONNECTION")) {
+            entity.setServerStatus("ERROR");
+            fadeButton(false);
         } else if(message.contains("GROGOK")) {
-            setConnectedButton(true);
+            fadeButton(false);
         } else if(message.contains("INGREDIENTS")) {
-            setConnectedButton(true);
+            entity.setServerStatus("AVAILABLE");
+            if(!timerRunning) {
+                startTimer();
+                if(fragMix.isVisible()) {
+                    fadeButton(true);
+                }
+                timerRunning = true;
+            }
             setLiquids(message);
         }
+        setTextOnButton();
     }
 
     public void setLiquids(final String liquids) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                //entity.setLiquidSpecific("Äpple", 0);
                 entity.setLiquids(liquids);
-              //  liquid1 = (TextView) findViewById(R.id.liquid1);
-              //  liquid1.setText(entity.getLiquids(0));
-
-                //fragUp.setTextFromServer(entity.getServerMessage());
+                if(fragMix.isVisible())
+                    fragMix.setTextLiquids();
             }
         });
     }
 
-    public void updateFluids() {
-
-        client.sendMessage("INGREDIENTS");
-    }
-
-    public void setLiquidsOnFragment() {
-
+    public void fadeButton(final boolean fade) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                liquid1 = (TextView) findViewById(R.id.liquid1);
-                liquid2 = (TextView) findViewById(R.id.liquid2);
-                liquid3 = (TextView) findViewById(R.id.liquid3);
-                liquid4 = (TextView) findViewById(R.id.liquid4);
-                liquid1.setText(entity.getLiquids(0));
-                liquid2.setText(entity.getLiquids(1));
-                liquid3.setText(entity.getLiquids(2));
-                liquid4.setText(entity.getLiquids(3));
+                if(fragMix.isVisible())
+                    fragMix.fadeButton(fade);
             }
         });
     }
 
+    public void updateFluidsFromServer() {
+
+        if(client != null) {
+            client.sendMessage("INGREDIENTS");
+        }
+    }
 
     //implemented method for interface Communication
     @Override
@@ -208,8 +222,9 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     @Override
     public void sendMessage(String message) {
 
-        Log.i("Message:", message);
-        client.sendMessage(message);
+        if(client != null) {
+            client.sendMessage(message);
+        }
     }
 
     public void sendAvareqToServer() {
@@ -218,6 +233,7 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     public void startTimer() {
         timer = new Timer();
         timer.schedule(new CheckServer(), 2000,5000);
+        //timer.schedule(new ButtonSwitcher(), 0, 2000);
     }
 
     private class CheckServer extends TimerTask {
@@ -227,5 +243,26 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
             sendAvareqToServer();
 
         }
+    }
+
+    private class ButtonSwitcher extends TimerTask {
+
+        @Override
+        public void run() {
+            setTextOnButton();
+
+        }
+    }
+
+    private void setTextOnButton() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(fragMix.isVisible()) {
+                    //String text = rand.nextInt(Integer.MAX_VALUE) + 100000 + "";
+                    fragMix.setButtonText(entity.getServerStatus());
+                }
+            }
+        });
     }
 }

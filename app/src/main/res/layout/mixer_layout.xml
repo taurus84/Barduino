@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="Mix and drink"
-            android:textColor="#000000"
+            android:textColor="@color/headerColor"
             android:textSize="50dp"/>
             </RelativeLayout>
     </LinearLayout>
@@ -45,7 +45,8 @@
                 android:layout_height="wrap_content"
                 android:text="Liquid 1"
                 android:layout_marginLeft="20dp"
-                android:textSize="15dp"
+                android:textSize="@dimen/textViewLiquidSize"
+                android:textColor="@color/textColor"
                 android:layout_gravity="center"/>
 
         </LinearLayout>
@@ -81,7 +82,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0 CL"
-                    android:textSize="20dp"
+                    android:textSize="@dimen/textViewCL"
+                    android:textColor="@color/textColor"
                     android:layout_gravity="center"/>
 
             </LinearLayout>
@@ -107,7 +109,8 @@
                 android:layout_height="wrap_content"
                 android:text="Liquid 2"
                 android:layout_marginLeft="20dp"
-                android:textSize="15dp"
+                android:textSize="@dimen/textViewLiquidSize"
+                android:textColor="@color/textColor"
                 android:layout_gravity="center"/>
 
         </LinearLayout>
@@ -143,7 +146,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0 CL"
-                    android:textSize="20dp"
+                    android:textSize="@dimen/textViewCL"
+                    android:textColor="@color/textColor"
                     android:layout_gravity="center"/>
 
             </LinearLayout>
@@ -169,7 +173,8 @@
                 android:layout_height="wrap_content"
                 android:text="Liquid 3"
                 android:layout_marginLeft="20dp"
-                android:textSize="15dp"
+                android:textSize="@dimen/textViewLiquidSize"
+                android:textColor="@color/textColor"
                 android:layout_gravity="center"/>
 
         </LinearLayout>
@@ -205,7 +210,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0 CL"
-                    android:textSize="20dp"
+                    android:textSize="@dimen/textViewCL"
+                    android:textColor="@color/textColor"
                     android:layout_gravity="center"/>
 
             </LinearLayout>
@@ -231,7 +237,8 @@
                 android:layout_height="wrap_content"
                 android:text="Liquid 4"
                 android:layout_marginLeft="20dp"
-                android:textSize="15dp"
+                android:textSize="@dimen/textViewLiquidSize"
+                android:textColor="@color/textColor"
                 android:layout_gravity="center"/>
 
         </LinearLayout>
@@ -267,7 +274,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0 CL"
-                    android:textSize="20dp"
+                    android:textSize="@dimen/textViewCL"
+                    android:textColor="@color/textColor"
                     android:layout_gravity="center"/>
 
                 </LinearLayout>
@@ -290,11 +298,11 @@
 
             <Button
                 android:id="@+id/btnOrder"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="Order drink"
-                android:textSize="50dp"
+                android:textSize="30dp"
                 android:textStyle="bold|italic"
                 android:textColor="#000000" />
 

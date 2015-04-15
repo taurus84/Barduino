@@ -39,8 +39,6 @@ public class Controller {
         */
        // mTcpClient = new TCPClient(entity.getIpNbr(),entity.getPortNbr(),this);
         mTcpClient.start();
-        getStatus();
-        changeButtons();
     }
 
     public void sendMessageToServer(String message) {
@@ -63,40 +61,5 @@ public class Controller {
 
        // main.setServerMessage(message);
         Log.i("Controller prints: ", message);
-    }
-
-    public void getStatus() {
-        timer = new Timer();
-        timer.schedule(new CheckServer(), 5000, 10000 );
-    }
-
-    private void changeButtons() {
-        buttonChanger = new Timer();
-        buttonChanger.schedule(new ButtonChanger(), 0,1000);
-    }
-
-    /**
-     * Inner class for checking connection with server by sending
-     * AVAREQ messages, with an interval determined when TimerTask()
-     * is called.
-     */
-    private class CheckServer extends TimerTask {
-
-        @Override
-        public void run() {
-            sendMessageToServer("AVAREQ");
-
-        }
-    }
-
-    private class ButtonChanger extends TimerTask {
-
-        boolean toggler;
-        @Override
-        public void run() {
-
-            main.setConnectedButton(toggler);
-            toggler = !toggler;
-        }
     }
 }

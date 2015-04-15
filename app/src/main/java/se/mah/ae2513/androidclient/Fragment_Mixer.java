@@ -56,6 +56,7 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
         seekBar4.setOnSeekBarChangeListener(this);
 
         btnOrder = (Button) getActivity().findViewById(R.id.btnOrder);
+        btnOrder.setText(entity.getServerStatus());
         btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,10 +91,6 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
                 comm.sendMessage(message);
             }
         });
-
-
-        
-
     }
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -109,8 +106,6 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
 
             cl4 = (TextView) getActivity().findViewById(R.id.cl4);
             cl4.setText(seekBar4.getProgress() + " cl");
-
-
         }
 
         @Override
@@ -121,6 +116,25 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
 
+        }
+        public void setButtonText(String text) {
+            btnOrder.setText(text);
+
+        }
+
+        public void setTextLiquids() {
+            liquid1.setText(entity.getLiquids(0));
+            liquid2.setText(entity.getLiquids(1));
+            liquid3.setText(entity.getLiquids(2));
+            liquid4.setText(entity.getLiquids(3));
+        }
+
+        public void fadeButton(boolean fade) {
+            if(fade) {
+                btnOrder.setEnabled(true);
+            } else {
+                btnOrder.setEnabled(false);
+            }
         }
 
     }
