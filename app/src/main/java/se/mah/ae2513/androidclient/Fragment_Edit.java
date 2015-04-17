@@ -9,10 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by John on 15-04-07.
@@ -66,5 +62,9 @@ public class Fragment_Edit extends Fragment implements View.OnClickListener {
                 comm.connectToServer();
                 break;
         }
+    }
+
+    public void setText(String ipnummer) {
+        etIP.setText(ipnummer);
     }
 }

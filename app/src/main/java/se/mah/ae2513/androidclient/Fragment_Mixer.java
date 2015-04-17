@@ -129,8 +129,8 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
             liquid4.setText(entity.getLiquids(3));
         }
 
-        public void fadeButton(boolean fade) {
-            if(fade) {
+        public void showButton(boolean show) {
+            if(show) {
                 btnOrder.setEnabled(true);
             } else {
                 btnOrder.setEnabled(false);

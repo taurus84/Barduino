@@ -78,9 +78,11 @@ public class TCPClient extends Thread {
                 Log.i("Meddelande: ", "Socket closed");
             } catch (Exception e) {
                 Log.e("TCP", "S: Error", e);
+                mainActivity.connectionDown();
             }
         } catch (IOException e) {
             Log.e("TCP", "C: Error", e);
+            mainActivity.connectionDown();
         }
     }
 }

@@ -1,14 +1,14 @@
 package se.mah.ae2513.androidclient;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.Random;
@@ -29,8 +29,6 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     private Fragment_Mixer fragMix;
     private TCPClient client;
     private Timer timer;
-    private Random rand = new Random();
-    private boolean timerRunning;
 
 
     @Override
@@ -38,10 +36,19 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_window);
         createFragments();
+        //setTextTesting(ip);
+        entity.setIpNbr(getIntent().getStringExtra("ipnumber"));
+        entity.setPortNbr(Integer.parseInt(getIntent().getStringExtra("port")));
+        entity.setUsername(getIntent().getStringExtra("username"));
+        entity.setPassword(getIntent().getStringExtra("password"));
+        connectToServer();
+
+
+
+
     }
 
     public void connectToServer() {
-        timerRunning = false;
         //message STOP returned from server if socket closes
         if(client != null) {
             Toast.makeText(getApplicationContext(), "New Connection", Toast.LENGTH_SHORT).show();
@@ -49,6 +56,15 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         }
         client = new TCPClient(entity.getIpNbr(),entity.getPortNbr(), this);
         client.start();
+        startTimer();
+        login();
+
+    }
+
+    private void login() {
+        String message = "LOGIN " + entity.getUsername() +
+                        ":" + entity.getPassword();
+        sendMessage(message);
     }
 
     @Override
@@ -67,7 +83,8 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
 
         switch (item.getItemId()) {
             case R.id.connect_now:
-                connectToServer();
+                //connectToServer();
+                sendMessage("LOGIN test:password");
                 break;
             case R.id.edit_ip_and_port:
                 fragmentIP();
@@ -81,12 +98,13 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
             case R.id.disconnect:
 
                 //stop timer
-                if(client != null) {
-                    closeConnection();
-                } if(timer != null) {
+                if(timer != null) {
                     timer.cancel();
                 }
-                timerRunning = false;
+                if(client != null) {
+                    closeConnection();
+                }
+                finish();
                 break;
             case R.id.testButton:
                 //updateFluidsFromServer();
@@ -97,12 +115,16 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
                 }
                 */
                 //setTextOnButton();
-                sendMessage("INGREDIENTS");
-                //fragMix.fadeButton(false);
-                Toast.makeText(getApplicationContext(), "Ingredients up to date", Toast.LENGTH_LONG).show();
+                //sendMessage("INGREDIENTS");
+                //fragMix.showOrderButton(false);
+                Toast.makeText(getApplicationContext(), entity.getUsername(), Toast.LENGTH_SHORT).show();
+                login();
+
                 break;
             case R.id.startTimer:
-                startTimer();
+                //startTimer();
+                //finish();
+                Toast.makeText(getApplicationContext(), entity.getPassword(), Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -118,12 +140,13 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         fragMix = new Fragment_Mixer();
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
-        transaction.add(R.id.fr_id, fragEdit);
+        transaction.add(R.id.fr_id, fragMix);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
     /*<<<<<<<<<<fragments>>>>>>>>>>>>>>>>>>>>>>>*/
-    private void fragmentUpdate() {
+   private void fragmentUpdate() {
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
         transaction.replace(R.id.fr_id, fragUpdate);
@@ -148,6 +171,8 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     }
 
     public void closeConnection(){
+        if(timer != null)
+            timer.cancel();
         if(client != null) {
             sendMessage("STOP");
         }
@@ -160,48 +185,56 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
      * @param message
      */
     public void msgFromServer(String message) {
-        if(message.contains("AVAILABLE")) {
+
+        if(message.split(" ")[0].equals("ERROR")) {
+            String errorType = message.split(" ")[1];
+            if(errorType.equals("NOCONNECTION")) {
+                entity.setServerStatus("ERROR");
+                showOrderButton(false);
+            } else if(errorType.equals("BUSY")) {
+                entity.setServerStatus("BUSY");
+                showOrderButton(false);
+            } else if(errorType.equals("NOLOGIN")) {
+                entity.setServerStatus("Not logged in");
+                showOrderButton(false);
+            }
+        } else if(message.contains("AVAILABLE")) {
             entity.setServerStatus("AVAILABLE");
-            fadeButton(true);
-        } else if( message.contains("ERROR BUSY")) {
-            entity.setServerStatus("BUSY");
-            fadeButton(false);
-        } else if( message.contains("ERROR NOCONNECTION")) {
-            entity.setServerStatus("ERROR");
-            fadeButton(false);
+            showOrderButton(true);
         } else if(message.contains("GROGOK")) {
-            fadeButton(false);
+            //some code
         } else if(message.contains("INGREDIENTS")) {
             entity.setServerStatus("AVAILABLE");
-            if(!timerRunning) {
-                startTimer();
                 if(fragMix.isVisible()) {
-                    fadeButton(true);
+                    showOrderButton(true);
                 }
-                timerRunning = true;
-            }
+            login();
             setLiquids(message);
+
         }
+
+
         setTextOnButton();
     }
 
-    public void setLiquids(final String liquids) {
+    public void setLiquids(final String string) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                String[] liquids = string.split(":")[1].split(",");
                 entity.setLiquids(liquids);
-                if(fragMix.isVisible())
+                if (fragMix.isVisible())
                     fragMix.setTextLiquids();
             }
         });
     }
 
-    public void fadeButton(final boolean fade) {
+    public void showOrderButton(final boolean show) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if(fragMix.isVisible())
-                    fragMix.fadeButton(fade);
+                    fragMix.showButton(show);
             }
         });
     }
@@ -236,6 +269,12 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         //timer.schedule(new ButtonSwitcher(), 0, 2000);
     }
 
+    public void connectionDown() {
+        if(timer != null)
+            timer.cancel();
+        finish();
+    }
+
     private class CheckServer extends TimerTask {
 
         @Override
@@ -261,6 +300,17 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
                 if(fragMix.isVisible()) {
                     //String text = rand.nextInt(Integer.MAX_VALUE) + 100000 + "";
                     fragMix.setButtonText(entity.getServerStatus());
+                }
+            }
+        });
+    }
+
+    private void setTextTesting(final String string) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(fragMix.isVisible()) {
+                    fragMix.setButtonText(string);
                 }
             }
         });

@@ -12,9 +12,9 @@ public class Entity {
 
     private static Entity entity = new Entity();
     private int portNbr;
-    private String ipNbr;
+    private String ipNbr, username, password;
     private String[] liquids = new String[4];
-    private String serverStatus = "Not connected";
+    private String serverStatus = "Not connect";
 
     private Entity() {
     }
@@ -27,8 +27,8 @@ public class Entity {
         return liquids[i];
     }
 
-    public synchronized void setLiquids(String ingredients) {
-        StringTokenizer st = new StringTokenizer(ingredients,":");
+    public synchronized void setLiquids(String[] ingredients) {
+/*        StringTokenizer st = new StringTokenizer(ingredients,":");
         String waste = st.nextToken();
         String allIngredients = st.nextToken();
         StringTokenizer st2 = new StringTokenizer(allIngredients,",");
@@ -36,6 +36,12 @@ public class Entity {
         liquids[1] = st2.nextToken();
         liquids[2] = st2.nextToken();
         liquids[3] = st2.nextToken();
+*/
+        liquids[0] = ingredients[0];
+        liquids[1] = ingredients[1];
+        liquids[2] = ingredients[2];
+        liquids[3] = ingredients[3];
+
     }
     public synchronized void setServerStatus(String status) {
         this.serverStatus = status;
@@ -64,5 +70,19 @@ public class Entity {
         this.ipNbr = ipNbr;
     }
 
+    public synchronized String getUsername() {
+        return username;
+    }
 
+    public synchronized void setUsername(String username) {
+        this.username = username;
+    }
+
+    public synchronized String getPassword() {
+        return password;
+    }
+
+    public synchronized void setPassword(String password) {
+        this.password = password;
+    }
 }
