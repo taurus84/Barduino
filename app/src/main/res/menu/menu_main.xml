@@ -2,32 +2,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
-    <item android:id="@+id/connect_now"
-        android:title="@string/connect_now"
+
+    <item android:id="@+id/logInOut"
+        android:title="@string/logInOut"
         android:orderInCategory="100"
-        app:showAsAction="never" />
-    <item android:id="@+id/edit_ip_and_port"
-        android:title="@string/edit_ip_and_port"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
-    <item android:id="@+id/update_now"
-        android:title="@string/update_now"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
     <item android:id="@+id/mixer"
         android:title="@string/mixer"
         android:orderInCategory="100"
-        app:showAsAction="never" />
-    <item android:id="@+id/disconnect"
-        android:title="@string/disconnect"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
     <item android:id="@+id/testButton"
         android:title="@string/testBtn"
         android:orderInCategory="100"
-        app:showAsAction="never" />
-    <item android:id="@+id/startTimer"
-        android:title="@string/startTimer"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
+
+
 </menu>

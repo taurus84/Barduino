@@ -6,8 +6,10 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     private Fragment_Update fragUpdate;
     private Fragment_Edit fragEdit;
     private Fragment_Mixer fragMix;
+    private Fragment_Login fragLogin;
     private TCPClient client;
     private Timer timer;
 
@@ -61,6 +64,23 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
 
     }
 
+    private void logInOutPressed() {
+        ActionMenuItemView item = (ActionMenuItemView) findViewById(R.id.logInOut);
+        if(item.getText().equals("LOG IN")) {
+            fragmentLogin();
+        } else {
+            if(timer != null) {
+                timer.cancel();
+            }
+            if(client != null) {
+                closeConnection();
+            }
+            finish();
+
+        }
+
+    }
+
     private void login() {
         String message = "LOGIN " + entity.getUsername() +
                         ":" + entity.getPassword();
@@ -82,7 +102,7 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         //int id = item.getItemId();
 
         switch (item.getItemId()) {
-            case R.id.connect_now:
+/*            case R.id.connect_now:
                 //connectToServer();
                 sendMessage("LOGIN test:password");
                 break;
@@ -92,9 +112,7 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
             case R.id.update_now:
                 fragmentUpdate();
                 break;
-            case R.id.mixer:
-                fragmentMixer();
-                break;
+
             case R.id.disconnect:
 
                 //stop timer
@@ -105,6 +123,11 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
                     closeConnection();
                 }
                 finish();
+                break;
+            */
+            case R.id.mixer:
+                //fragmentMixer();
+                closeConnection();
                 break;
             case R.id.testButton:
                 //updateFluidsFromServer();
@@ -117,15 +140,15 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
                 //setTextOnButton();
                 //sendMessage("INGREDIENTS");
                 //fragMix.showOrderButton(false);
-                Toast.makeText(getApplicationContext(), entity.getUsername(), Toast.LENGTH_SHORT).show();
-                login();
+                //Toast.makeText(getApplicationContext(), entity.getUsername(), Toast.LENGTH_SHORT).show();
+                //login();
+                ActionMenuItemView item2 = (ActionMenuItemView) findViewById(R.id.logInOut);
+                item2.setText("LOG OUT");
 
                 break;
-            case R.id.startTimer:
-                //startTimer();
-                //finish();
-                Toast.makeText(getApplicationContext(), entity.getPassword(), Toast.LENGTH_SHORT).show();
-                break;
+
+            case R.id.logInOut:
+                logInOutPressed();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -138,6 +161,7 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         fragUpdate = new Fragment_Update();
         fragEdit = new Fragment_Edit();
         fragMix = new Fragment_Mixer();
+        fragLogin = new Fragment_Login();
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
         transaction.add(R.id.fr_id, fragMix);
@@ -154,10 +178,10 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         transaction.commit();
     }
 
-    private void fragmentIP() {
+    private void fragmentLogin() {
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
-        transaction.replace(R.id.fr_id, fragEdit);
+        transaction.replace(R.id.fr_id, fragLogin);
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -198,6 +222,14 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
                 entity.setServerStatus("Not logged in");
                 showOrderButton(false);
             }
+        } else if(message.split(" ")[0].equals("LOGIN")) {
+            String login = message.split(" ")[1];
+            if(login.equals("BAD")) {
+                //Toast.makeText(getApplicationContext(), "Wrong username or password", Toast.LENGTH_SHORT).show();
+            } else if(login.equals("OK")) {
+                //Toast.makeText(getApplicationContext(), "You are now logged in", Toast.LENGTH_SHORT).show();
+                changeLoginToLogout();
+            }
         } else if(message.contains("AVAILABLE")) {
             entity.setServerStatus("AVAILABLE");
             showOrderButton(true);
@@ -215,6 +247,18 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
 
 
         setTextOnButton();
+    }
+
+    private void changeLoginToLogout() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ActionMenuItemView item2 = (ActionMenuItemView) findViewById(R.id.logInOut);
+//                item2.setText("LOG OUT");
+            }
+        });
+
+
     }
 
     public void setLiquids(final String string) {
@@ -249,6 +293,10 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     //implemented method for interface Communication
     @Override
     public void doSomething() {
+        //ActionMenuItemView itemIn = (ActionMenuItemView) findViewById(R.id.login);
+        //itemIn.setTextColor(0xffffff);
+        //itemOut.setVisible(true);
+
     }
 
     //implemented method for interface Communication
