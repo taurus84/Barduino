@@ -41,7 +41,7 @@ public class Login extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this, MainActivity.class);
+                Intent intent = new Intent(".MainActivity");
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
                 if(!username.isEmpty()) {

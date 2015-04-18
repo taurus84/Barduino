@@ -3,8 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#ffffff"
-    android:fillViewport="true"
-    tools:context="se.mah.ae2513.androidclient.activity_login">
+    android:fillViewport="true">
 
     <RelativeLayout
         android:layout_width="fill_parent"
