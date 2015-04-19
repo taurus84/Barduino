@@ -12,9 +12,8 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="5"
-        android:background="@color/appBg"
+        android:layout_height="100dp"
+        android:background="@layout/header_gradient"
         android:orientation="horizontal">
 
         <ImageView
@@ -23,20 +22,26 @@
             android:src="@drawable/stop"
             android:id="@+id/topLeftOff"
             android:layout_alignParentLeft="true"
-            android:visibility="gone"/>
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/con66"
-            android:id="@+id/topLeftOn"
-            android:layout_alignParentLeft="true"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:layout_gravity="right"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/barduino"
             android:id="@+id/topCenter"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/tvLoginLogoff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign in"
+            android:gravity="bottom"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:paddingRight="10dp"
+            android:clickable="true"/>
     </RelativeLayout>
 
     <FrameLayout

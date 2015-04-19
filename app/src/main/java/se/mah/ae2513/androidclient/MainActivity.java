@@ -1,5 +1,6 @@
 package se.mah.ae2513.androidclient;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
@@ -21,7 +23,7 @@ import java.util.TimerTask;
  * The class creates a connection to a server where user chooses
  * ip-address and port number of the server.
  */
-public class MainActivity extends ActionBarActivity implements Communicator  {
+public class MainActivity extends Activity implements Communicator  {
 
     private Entity entity = Entity.getInstance();
     private FragmentManager fm;
@@ -32,6 +34,7 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
     private Fragment_Login fragLogin;
     private TCPClient client;
     private Timer timer;
+    private TextView tvLogin;
 
 
     @Override
@@ -39,6 +42,7 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_window);
         createFragments();
+        initializeComponents();
         //setTextTesting(ip);
         entity.setIpNbr(getIntent().getStringExtra("ipnumber"));
         entity.setPortNbr(Integer.parseInt(getIntent().getStringExtra("port")));
@@ -49,6 +53,29 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
 
 
 
+    }
+
+    private void initializeComponents() {
+        tvLogin = (TextView) findViewById(R.id.tvLoginLogoff);
+        tvLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(tvLogin.getText().equals("Sign in")) {
+                    testLogin();
+                } else {
+                    closeConnection();
+                    finish();
+                }
+
+
+
+            }
+        });
+    }
+
+    private void testLogin() {
+
+        tvLogin.setText("Sign out");
     }
 
     public void connectToServer() {
@@ -142,8 +169,9 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
                 //fragMix.showOrderButton(false);
                 //Toast.makeText(getApplicationContext(), entity.getUsername(), Toast.LENGTH_SHORT).show();
                 //login();
-                ActionMenuItemView item2 = (ActionMenuItemView) findViewById(R.id.logInOut);
-                item2.setText("LOG OUT");
+                //ActionMenuItemView item2 = (ActionMenuItemView) findViewById(R.id.logInOut);
+                //item2.setText("LOG OUT");
+                testLogin();
 
                 break;
 
@@ -152,6 +180,7 @@ public class MainActivity extends ActionBarActivity implements Communicator  {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     /*
      * Creating all fragments to be used in the program.
