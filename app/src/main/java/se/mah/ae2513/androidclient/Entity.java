@@ -15,9 +15,20 @@ public class Entity {
     private String ipNbr, username, password;
     private String[] liquids = new String[4];
     private String serverStatus = "Not connect";
+    private boolean loggedIn;
+
 
     private Entity() {
     }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
 
     public static Entity getInstance() {
         return entity;

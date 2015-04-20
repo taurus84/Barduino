@@ -47,7 +47,9 @@ public class Fragment_Login extends Fragment {
                 String message = "LOGIN " + entity.getUsername() +
                         ":" + entity.getPassword();
                 comm.sendMessage(message);
-                getActivity().getFragmentManager().popBackStack();
+                    getActivity().getFragmentManager().popBackStack();
+
+
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {

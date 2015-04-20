@@ -50,7 +50,8 @@
                 android:layout_marginTop="5dip"
                 android:layout_marginBottom="20dip"
                 android:singleLine="true"
-                android:id="@+id/etIP"/>
+                android:id="@+id/etIP"
+                android:text="10.1.10.121"/>
             <!--  Port Label -->
             <TextView android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -63,7 +64,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dip"
                 android:layout_marginBottom="20dip"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                android:text="4444"/>
             <!--  Username Label -->
             <TextView android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

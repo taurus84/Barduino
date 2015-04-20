@@ -3,6 +3,7 @@ package se.mah.ae2513.androidclient;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by John on 15-04-08.
@@ -89,7 +91,17 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
                 } else {
                     message += sb4 + " ";
                 }
-                comm.sendMessage(message);
+                if(sb1 == 0 && sb2 == 0 && sb3 == 0 && sb4 == 0) {
+                    Toast toast = Toast.makeText(getActivity(), "Maybe you want something in your glass?", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
+                    toast.show();
+                } else {
+                    comm.sendMessage(message);
+                    Toast toast = Toast.makeText(getActivity(), "Sending grog", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
+                    toast.show();
+                }
+
             }
         });
     }

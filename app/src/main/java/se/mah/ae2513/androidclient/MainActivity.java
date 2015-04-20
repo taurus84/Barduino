@@ -35,6 +35,7 @@ public class MainActivity extends Activity implements Communicator  {
     private TCPClient client;
     private Timer timer;
     private TextView tvLogin;
+    private boolean myDrink;
 
 
     @Override
@@ -48,11 +49,15 @@ public class MainActivity extends Activity implements Communicator  {
         entity.setPortNbr(Integer.parseInt(getIntent().getStringExtra("port")));
         entity.setUsername(getIntent().getStringExtra("username"));
         entity.setPassword(getIntent().getStringExtra("password"));
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         connectToServer();
-
-
-
-
+        startTimer();
+        //testLogin();
     }
 
     private void initializeComponents() {
@@ -61,21 +66,38 @@ public class MainActivity extends Activity implements Communicator  {
             @Override
             public void onClick(View v) {
                 if(tvLogin.getText().equals("Sign in")) {
-                    testLogin();
+                    //testLogin();
+                    fragmentLogin();
                 } else {
                     closeConnection();
                     finish();
                 }
-
-
-
             }
         });
     }
 
-    private void testLogin() {
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        login();
+    }
 
-        tvLogin.setText("Sign out");
+    private void setTvLogOut() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tvLogin.setText("Sign out");
+            }
+        });
+    }
+
+    private void setTvLogIn() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tvLogin.setText("Sign in");
+            }
+        });
     }
 
     public void connectToServer() {
@@ -83,29 +105,11 @@ public class MainActivity extends Activity implements Communicator  {
         if(client != null) {
             Toast.makeText(getApplicationContext(), "New Connection", Toast.LENGTH_SHORT).show();
             client.sendMessage("STOP");
+            setTvLogIn();
         }
         client = new TCPClient(entity.getIpNbr(),entity.getPortNbr(), this);
         client.start();
-        startTimer();
         login();
-
-    }
-
-    private void logInOutPressed() {
-        ActionMenuItemView item = (ActionMenuItemView) findViewById(R.id.logInOut);
-        if(item.getText().equals("LOG IN")) {
-            fragmentLogin();
-        } else {
-            if(timer != null) {
-                timer.cancel();
-            }
-            if(client != null) {
-                closeConnection();
-            }
-            finish();
-
-        }
-
     }
 
     private void login() {
@@ -129,54 +133,14 @@ public class MainActivity extends Activity implements Communicator  {
         //int id = item.getItemId();
 
         switch (item.getItemId()) {
-/*            case R.id.connect_now:
-                //connectToServer();
-                sendMessage("LOGIN test:password");
-                break;
-            case R.id.edit_ip_and_port:
-                fragmentIP();
-                break;
-            case R.id.update_now:
-                fragmentUpdate();
-                break;
-
-            case R.id.disconnect:
-
-                //stop timer
-                if(timer != null) {
-                    timer.cancel();
-                }
-                if(client != null) {
-                    closeConnection();
-                }
-                finish();
-                break;
-            */
             case R.id.mixer:
                 //fragmentMixer();
                 closeConnection();
                 break;
             case R.id.testButton:
-                //updateFluidsFromServer();
-               /* if(fragMix.isVisible()) {
-                    String text = rand.nextInt(100) + 100 + "";
-                    fragMix.setButtonText(text);
-                    break;
-                }
-                */
-                //setTextOnButton();
-                //sendMessage("INGREDIENTS");
-                //fragMix.showOrderButton(false);
-                //Toast.makeText(getApplicationContext(), entity.getUsername(), Toast.LENGTH_SHORT).show();
-                //login();
-                //ActionMenuItemView item2 = (ActionMenuItemView) findViewById(R.id.logInOut);
-                //item2.setText("LOG OUT");
-                testLogin();
-
+                setTvLogOut();
                 break;
-
             case R.id.logInOut:
-                logInOutPressed();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -242,52 +206,50 @@ public class MainActivity extends Activity implements Communicator  {
         if(message.split(" ")[0].equals("ERROR")) {
             String errorType = message.split(" ")[1];
             if(errorType.equals("NOCONNECTION")) {
-                entity.setServerStatus("ERROR");
+                entity.setServerStatus("No Arduino");
                 showOrderButton(false);
             } else if(errorType.equals("BUSY")) {
                 entity.setServerStatus("BUSY");
                 showOrderButton(false);
             } else if(errorType.equals("NOLOGIN")) {
+                login();
                 entity.setServerStatus("Not logged in");
                 showOrderButton(false);
             }
         } else if(message.split(" ")[0].equals("LOGIN")) {
             String login = message.split(" ")[1];
             if(login.equals("BAD")) {
+                entity.setServerStatus("Not logged in");
                 //Toast.makeText(getApplicationContext(), "Wrong username or password", Toast.LENGTH_SHORT).show();
             } else if(login.equals("OK")) {
+                entity.setServerStatus("Loggin in...");
+                entity.setLoggedIn(true);
+                updateFluidsFromServer();
                 //Toast.makeText(getApplicationContext(), "You are now logged in", Toast.LENGTH_SHORT).show();
-                changeLoginToLogout();
+                setTvLogOut();
             }
         } else if(message.contains("AVAILABLE")) {
-            entity.setServerStatus("AVAILABLE");
-            showOrderButton(true);
+            if(myDrink) {
+                entity.setServerStatus("Finished!");
+                myDrink = !myDrink;
+            } else {
+                entity.setServerStatus("Order Drink");
+                showOrderButton(true);
+            }
         } else if(message.contains("GROGOK")) {
-            //some code
+            //setTextOnButtonWithString("Wait..");
+            myDrink = !myDrink;
+            entity.setServerStatus("Wait...");
+
+            showOrderButton(false);
         } else if(message.contains("INGREDIENTS")) {
-            entity.setServerStatus("AVAILABLE");
-                if(fragMix.isVisible()) {
-                    showOrderButton(true);
-                }
-            login();
+            if(fragMix.isVisible()) {
+                showOrderButton(true);
+            }
             setLiquids(message);
 
         }
-
-
         setTextOnButton();
-    }
-
-    private void changeLoginToLogout() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ActionMenuItemView item2 = (ActionMenuItemView) findViewById(R.id.logInOut);
-//                item2.setText("LOG OUT");
-            }
-        });
-
-
     }
 
     public void setLiquids(final String string) {
@@ -382,7 +344,7 @@ public class MainActivity extends Activity implements Communicator  {
         });
     }
 
-    private void setTextTesting(final String string) {
+    private void setTextOnButtonWithString(final String string) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
