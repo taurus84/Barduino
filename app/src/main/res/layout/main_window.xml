@@ -14,7 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:background="@layout/header_gradient"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/topLogo">
 
         <ImageView
             android:layout_width="60dp"
@@ -31,18 +32,38 @@
             android:id="@+id/topCenter"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"/>
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/semiHeaderDim"
+        android:background="@color/appBg">
+
         <TextView
-            android:id="@+id/tvLoginLogoff"
+            android:id="@+id/tvSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign in"
-            android:gravity="bottom"
+            android:gravity="center"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
             android:paddingRight="10dp"
             android:clickable="true"/>
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/tvUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update"
+            android:gravity="center"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="10dp"
+            android:clickable="true"
+            android:visibility="gone"/>
+
+        </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/fr_id"

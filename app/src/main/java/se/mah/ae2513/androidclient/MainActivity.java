@@ -1,13 +1,16 @@
 package se.mah.ae2513.androidclient;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.internal.view.menu.ActionMenuItemView;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,8 +37,9 @@ public class MainActivity extends Activity implements Communicator  {
     private Fragment_Login fragLogin;
     private TCPClient client;
     private Timer timer;
-    private TextView tvLogin;
+    private TextView tvLogin, tvUpdate;
     private boolean myDrink;
+    private final int SHORT = 1, LONG = 2;
 
 
     @Override
@@ -57,11 +61,14 @@ public class MainActivity extends Activity implements Communicator  {
         super.onStart();
         connectToServer();
         startTimer();
-        //testLogin();
+        login();
+
     }
 
     private void initializeComponents() {
-        tvLogin = (TextView) findViewById(R.id.tvLoginLogoff);
+        tvLogin = (TextView) findViewById(R.id.tvSignIn);
+        tvUpdate = (TextView) findViewById(R.id.tvUpdate);
+
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,11 +76,40 @@ public class MainActivity extends Activity implements Communicator  {
                     //testLogin();
                     fragmentLogin();
                 } else {
-                    closeConnection();
-                    finish();
+                    confirmSignOut();
+                    //closeConnection();
+                    //finish();
                 }
             }
         });
+        tvUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateFluidsFromServer();
+
+            }
+        });
+    }
+
+    private void confirmSignOut() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sign out!")
+                .setMessage("Are you sure you want to sign out?")
+                .setCancelable(true)
+
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        closeConnection();
+                        finish();
+                    }
+                });
+
+        builder.create().show();        // create and show the alert dialog
     }
 
     @Override
@@ -87,6 +123,7 @@ public class MainActivity extends Activity implements Communicator  {
             @Override
             public void run() {
                 tvLogin.setText("Sign out");
+                tvUpdate.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -96,6 +133,7 @@ public class MainActivity extends Activity implements Communicator  {
             @Override
             public void run() {
                 tvLogin.setText("Sign in");
+                tvUpdate.setVisibility(View.GONE);
             }
         });
     }
@@ -212,7 +250,6 @@ public class MainActivity extends Activity implements Communicator  {
                 entity.setServerStatus("BUSY");
                 showOrderButton(false);
             } else if(errorType.equals("NOLOGIN")) {
-                login();
                 entity.setServerStatus("Not logged in");
                 showOrderButton(false);
             }
@@ -220,12 +257,14 @@ public class MainActivity extends Activity implements Communicator  {
             String login = message.split(" ")[1];
             if(login.equals("BAD")) {
                 entity.setServerStatus("Not logged in");
-                //Toast.makeText(getApplicationContext(), "Wrong username or password", Toast.LENGTH_SHORT).show();
+
+
+                makeToast("Wrong username or password", LONG);
             } else if(login.equals("OK")) {
                 entity.setServerStatus("Loggin in...");
                 entity.setLoggedIn(true);
                 updateFluidsFromServer();
-                //Toast.makeText(getApplicationContext(), "You are now logged in", Toast.LENGTH_SHORT).show();
+                makeToast("Login successful", SHORT);
                 setTvLogOut();
             }
         } else if(message.contains("AVAILABLE")) {
@@ -247,6 +286,7 @@ public class MainActivity extends Activity implements Communicator  {
                 showOrderButton(true);
             }
             setLiquids(message);
+            //makeToast("Fluids updated", SHORT);
 
         }
         setTextOnButton();
@@ -257,11 +297,26 @@ public class MainActivity extends Activity implements Communicator  {
             @Override
             public void run() {
                 String[] liquids = string.split(":")[1].split(",");
-                entity.setLiquids(liquids);
-                if (fragMix.isVisible())
-                    fragMix.setTextLiquids();
+                if(checkLiquidsSameSame(liquids)) {
+                    makeToast("No new liquids", SHORT);
+                } else {
+                    entity.setLiquids(liquids);
+                    if (fragMix.isVisible())
+                        fragMix.setTextLiquids();
+                    makeToast("Fluids updated!", SHORT);
+                }
+
             }
         });
+    }
+    private boolean checkLiquidsSameSame(String[] liquids) {
+        if(liquids[0].equals(entity.getLiquids(0)) &&
+                liquids[1].equals(entity.getLiquids(1)) &&
+                liquids[2].equals(entity.getLiquids(2)) &&
+                liquids[3].equals(entity.getLiquids(3))) {
+            return true;
+        }
+        return false;
     }
 
     public void showOrderButton(final boolean show) {
@@ -284,10 +339,6 @@ public class MainActivity extends Activity implements Communicator  {
     //implemented method for interface Communication
     @Override
     public void doSomething() {
-        //ActionMenuItemView itemIn = (ActionMenuItemView) findViewById(R.id.login);
-        //itemIn.setTextColor(0xffffff);
-        //itemOut.setVisible(true);
-
     }
 
     //implemented method for interface Communication
@@ -305,6 +356,7 @@ public class MainActivity extends Activity implements Communicator  {
     public void startTimer() {
         timer = new Timer();
         timer.schedule(new CheckServer(), 2000,5000);
+        login();
         //timer.schedule(new ButtonSwitcher(), 0, 2000);
     }
 
@@ -323,15 +375,6 @@ public class MainActivity extends Activity implements Communicator  {
         }
     }
 
-    private class ButtonSwitcher extends TimerTask {
-
-        @Override
-        public void run() {
-            setTextOnButton();
-
-        }
-    }
-
     private void setTextOnButton() {
         runOnUiThread(new Runnable() {
             @Override
@@ -340,6 +383,23 @@ public class MainActivity extends Activity implements Communicator  {
                     //String text = rand.nextInt(Integer.MAX_VALUE) + 100000 + "";
                     fragMix.setButtonText(entity.getServerStatus());
                 }
+            }
+        });
+    }
+    private void makeToast(final String message, final int length) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(length == SHORT) {
+                    Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
+                    toast.show();
+                } else if(length == LONG ) {
+                    Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
+                    toast.show();
+                }
+
             }
         });
     }
