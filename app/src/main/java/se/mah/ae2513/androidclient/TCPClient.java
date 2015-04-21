@@ -21,8 +21,8 @@ public class TCPClient extends Thread {
     private PrintWriter out;
     private BufferedReader in;
     private String serverMessage;
-    private boolean mRun = false;
     private MainActivity mainActivity;
+    private boolean connected, connectFailed;
 
     public TCPClient(String ipNumber, int port, MainActivity mainActivity) {
         this.ipNumber = ipNumber;
@@ -44,10 +44,10 @@ public class TCPClient extends Thread {
     }
 
     public void run() {
-        //mRun = true;
         try {
             //create a socket to make the connection with the server
             Socket socket = new Socket(ipNumber, port);
+
             Log.i("Connected to ip: ", ipNumber);
 
             try {
@@ -56,6 +56,7 @@ public class TCPClient extends Thread {
                 //receive the message which the server sends back
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
+                connected = true;
                 //in this while the client listens for the messages sent by the server
                 while (true) {
                     serverMessage = in.readLine();
@@ -78,11 +79,22 @@ public class TCPClient extends Thread {
                 Log.i("Meddelande: ", "Socket closed");
             } catch (Exception e) {
                 Log.e("TCP", "S: Error", e);
+                connectFailed = true;
+                connected = false;
                 mainActivity.connectionDown();
             }
         } catch (IOException e) {
             Log.e("TCP", "C: Error", e);
+            connectFailed = true;
+            connected = false;
             mainActivity.connectionDown();
         }
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+    public boolean isConnectFailed() {
+        return connectFailed;
     }
 }

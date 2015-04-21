@@ -2,23 +2,16 @@ package se.mah.ae2513.androidclient;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,8 +24,6 @@ public class MainActivity extends Activity implements Communicator  {
     private Entity entity = Entity.getInstance();
     private FragmentManager fm;
     private FragmentTransaction transaction;
-    private Fragment_Update fragUpdate;
-    private Fragment_Edit fragEdit;
     private Fragment_Mixer fragMix;
     private Fragment_Login fragLogin;
     private TCPClient client;
@@ -61,7 +52,14 @@ public class MainActivity extends Activity implements Communicator  {
         super.onStart();
         connectToServer();
         startTimer();
-        login();
+        while(!client.isConnected()) {
+            if(client.isConnectFailed()) {
+                break;
+            }
+        }
+       if(client.isConnected() && !client.isConnectFailed()) {
+           login();
+       }
 
     }
 
@@ -115,7 +113,7 @@ public class MainActivity extends Activity implements Communicator  {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        login();
+        //login();
     }
 
     private void setTvLogOut() {
@@ -147,7 +145,6 @@ public class MainActivity extends Activity implements Communicator  {
         }
         client = new TCPClient(entity.getIpNbr(),entity.getPortNbr(), this);
         client.start();
-        login();
     }
 
     private void login() {
@@ -189,8 +186,6 @@ public class MainActivity extends Activity implements Communicator  {
      */
     private void createFragments() {
 
-        fragUpdate = new Fragment_Update();
-        fragEdit = new Fragment_Edit();
         fragMix = new Fragment_Mixer();
         fragLogin = new Fragment_Login();
         fm = getFragmentManager();
@@ -201,13 +196,6 @@ public class MainActivity extends Activity implements Communicator  {
     }
 
     /*<<<<<<<<<<fragments>>>>>>>>>>>>>>>>>>>>>>>*/
-   private void fragmentUpdate() {
-        fm = getFragmentManager();
-        transaction = fm.beginTransaction();
-        transaction.replace(R.id.fr_id, fragUpdate);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
 
     private void fragmentLogin() {
         fm = getFragmentManager();
@@ -367,7 +355,6 @@ public class MainActivity extends Activity implements Communicator  {
     }
 
     private class CheckServer extends TimerTask {
-
         @Override
         public void run() {
             sendAvareqToServer();

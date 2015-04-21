@@ -14,7 +14,7 @@ public class Entity {
     private int portNbr;
     private String ipNbr, username, password;
     private String[] liquids = new String[4];
-    private String serverStatus = "Not connect";
+    private String serverStatus = "Not connected";
     private boolean loggedIn;
 
 
