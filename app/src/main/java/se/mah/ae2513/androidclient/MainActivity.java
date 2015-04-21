@@ -39,7 +39,6 @@ public class MainActivity extends Activity implements Communicator  {
         setContentView(R.layout.main_window);
         createFragments();
         initializeComponents();
-        //setTextTesting(ip);
         entity.setIpNbr(getIntent().getStringExtra("ipnumber"));
         entity.setPortNbr(Integer.parseInt(getIntent().getStringExtra("port")));
         entity.setUsername(getIntent().getStringExtra("username"));
@@ -60,7 +59,6 @@ public class MainActivity extends Activity implements Communicator  {
        if(client.isConnected() && !client.isConnectFailed()) {
            login();
        }
-
     }
 
     private void initializeComponents() {
@@ -110,12 +108,6 @@ public class MainActivity extends Activity implements Communicator  {
         builder.create().show();        // create and show the alert dialog
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        //login();
-    }
-
     private void setTvLogOut() {
         runOnUiThread(new Runnable() {
             @Override
@@ -156,7 +148,7 @@ public class MainActivity extends Activity implements Communicator  {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -166,17 +158,6 @@ public class MainActivity extends Activity implements Communicator  {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         //int id = item.getItemId();
-
-        switch (item.getItemId()) {
-            case R.id.mixer:
-                //fragmentMixer();
-                closeConnection();
-                break;
-            case R.id.testButton:
-                setTvLogOut();
-                break;
-            case R.id.logInOut:
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -280,7 +261,7 @@ public class MainActivity extends Activity implements Communicator  {
         setTextOnButton();
     }
 
-    public void setLiquids(final String string) {
+    private void setLiquids(final String string) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -307,7 +288,7 @@ public class MainActivity extends Activity implements Communicator  {
         return false;
     }
 
-    public void showOrderButton(final boolean show) {
+    private void showOrderButton(final boolean show) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -317,7 +298,7 @@ public class MainActivity extends Activity implements Communicator  {
         });
     }
 
-    public void updateFluidsFromServer() {
+    private void updateFluidsFromServer() {
 
         if(client != null) {
             client.sendMessage("INGREDIENTS");
@@ -338,16 +319,20 @@ public class MainActivity extends Activity implements Communicator  {
         }
     }
 
-    public void sendAvareqToServer() {
+    private void sendAvareqToServer() {
         sendMessage("AVAREQ");
     }
-    public void startTimer() {
+
+    private void startTimer() {
         timer = new Timer();
         timer.schedule(new CheckServer(), 2000,5000);
         login();
         //timer.schedule(new ButtonSwitcher(), 0, 2000);
     }
 
+    /**
+     * Method to kill the activity when connection to server is lost.
+     */
     public void connectionDown() {
         if(timer != null)
             timer.cancel();
@@ -358,7 +343,6 @@ public class MainActivity extends Activity implements Communicator  {
         @Override
         public void run() {
             sendAvareqToServer();
-
         }
     }
 
@@ -367,7 +351,6 @@ public class MainActivity extends Activity implements Communicator  {
             @Override
             public void run() {
                 if(fragMix.isVisible()) {
-                    //String text = rand.nextInt(Integer.MAX_VALUE) + 100000 + "";
                     fragMix.setButtonText(entity.getServerStatus());
                 }
             }
