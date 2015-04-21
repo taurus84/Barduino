@@ -43,7 +43,6 @@ public class MainActivity extends Activity implements Communicator  {
         entity.setPortNbr(Integer.parseInt(getIntent().getStringExtra("port")));
         entity.setUsername(getIntent().getStringExtra("username"));
         entity.setPassword(getIntent().getStringExtra("password"));
-
     }
 
     @Override
@@ -216,7 +215,14 @@ public class MainActivity extends Activity implements Communicator  {
                 entity.setServerStatus("No Arduino");
                 showOrderButton(false);
             } else if(errorType.equals("BUSY")) {
-                entity.setServerStatus("BUSY");
+                if(myDrink) {
+                    entity.setServerStatus("Blending..");
+                    makeToast("Making YOUR drink", SHORT);
+                } else {
+                    entity.setServerStatus("Busy not yours");
+                    makeToast("Not your drink..", SHORT);
+                }
+
                 showOrderButton(false);
             } else if(errorType.equals("NOLOGIN")) {
                 entity.setServerStatus("Not logged in");
@@ -325,7 +331,7 @@ public class MainActivity extends Activity implements Communicator  {
 
     private void startTimer() {
         timer = new Timer();
-        timer.schedule(new CheckServer(), 2000,5000);
+        timer.schedule(new CheckServer(), 2000,1500);
         login();
         //timer.schedule(new ButtonSwitcher(), 0, 2000);
     }

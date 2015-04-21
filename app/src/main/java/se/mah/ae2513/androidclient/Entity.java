@@ -17,7 +17,6 @@ public class Entity {
     private String serverStatus = "Not connected";
     private boolean loggedIn;
 
-
     private Entity() {
     }
 

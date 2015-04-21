@@ -299,12 +299,14 @@
 
             <Button
                 android:id="@+id/btnOrder"
-                android:layout_width="200dp"
+                android:layout_width="wrap_content"
+                android:background="#0000"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="Order drink"
-                android:textSize="30dp"
+                android:textSize="25dp"
                 android:textStyle="bold|italic"
+                android:singleLine="true"
                 android:textColor="#000000"
                 android:enabled="false"/>
 
