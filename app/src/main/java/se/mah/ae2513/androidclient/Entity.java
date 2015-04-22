@@ -14,7 +14,7 @@ public class Entity {
     private int portNbr;
     private String ipNbr, username, password;
     private String[] liquids = new String[4];
-    private String serverStatus = "Not connected";
+    private String buttonStatus = "Not connected";
     private boolean loggedIn;
 
     private Entity() {
@@ -53,11 +53,11 @@ public class Entity {
         liquids[3] = ingredients[3];
 
     }
-    public synchronized void setServerStatus(String status) {
-        this.serverStatus = status;
+    public synchronized void setButtonStatus(String status) {
+        this.buttonStatus = status;
     }
-    public synchronized String getServerStatus() {
-        return serverStatus;
+    public synchronized String getButtonStatus() {
+        return buttonStatus;
     }
 
     public synchronized void setLiquidSpecific(String liquid, int i) {

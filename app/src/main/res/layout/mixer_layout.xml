@@ -307,6 +307,8 @@
                 android:textSize="25dp"
                 android:textStyle="bold|italic"
                 android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:textColor="#000000"
                 android:enabled="false"/>
 

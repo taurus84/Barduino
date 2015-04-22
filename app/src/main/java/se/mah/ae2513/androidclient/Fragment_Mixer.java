@@ -1,6 +1,7 @@
 package se.mah.ae2513.androidclient;
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -59,7 +60,7 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
         seekBar4.setOnSeekBarChangeListener(this);
 
         btnOrder = (Button) getActivity().findViewById(R.id.btnOrder);
-        btnOrder.setText(entity.getServerStatus());
+        btnOrder.setText(entity.getButtonStatus());
         btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,6 +133,11 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
         }
         public void setButtonText(String text) {
             btnOrder.setText(text);
+            if(text.equals("Order Drink")) {
+                btnOrder.setBackgroundColor(Color.LTGRAY);
+            } else {
+                btnOrder.setBackgroundColor(Color.TRANSPARENT);
+            }
 
         }
 

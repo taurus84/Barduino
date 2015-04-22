@@ -212,31 +212,27 @@ public class MainActivity extends Activity implements Communicator  {
         if(message.split(" ")[0].equals("ERROR")) {
             String errorType = message.split(" ")[1];
             if(errorType.equals("NOCONNECTION")) {
-                entity.setServerStatus("No Arduino");
+                entity.setButtonStatus("No Arduino");
                 showOrderButton(false);
             } else if(errorType.equals("BUSY")) {
                 if(myDrink) {
-                    entity.setServerStatus("Blending..");
-                    makeToast("Making YOUR drink", SHORT);
+                    entity.setButtonStatus("Barduino is making your drink");
                 } else {
-                    entity.setServerStatus("Busy not yours");
-                    makeToast("Not your drink..", SHORT);
+                    entity.setButtonStatus("Barduino is busy with another drink");
                 }
 
                 showOrderButton(false);
             } else if(errorType.equals("NOLOGIN")) {
-                entity.setServerStatus("Not logged in");
+                entity.setButtonStatus("Not logged in");
                 showOrderButton(false);
             }
         } else if(message.split(" ")[0].equals("LOGIN")) {
             String login = message.split(" ")[1];
             if(login.equals("BAD")) {
-                entity.setServerStatus("Not logged in");
-
-
+                entity.setButtonStatus("Not logged in");
                 makeToast("Wrong username or password", LONG);
             } else if(login.equals("OK")) {
-                entity.setServerStatus("Loggin in...");
+                entity.setButtonStatus("Loggin in...");
                 entity.setLoggedIn(true);
                 updateFluidsFromServer();
                 makeToast("Login successful", SHORT);
@@ -244,16 +240,16 @@ public class MainActivity extends Activity implements Communicator  {
             }
         } else if(message.contains("AVAILABLE")) {
             if(myDrink) {
-                entity.setServerStatus("Finished!");
+                entity.setButtonStatus("Finished!");
                 myDrink = !myDrink;
             } else {
-                entity.setServerStatus("Order Drink");
+                entity.setButtonStatus("Order Drink");
                 showOrderButton(true);
             }
         } else if(message.contains("GROGOK")) {
             //setTextOnButtonWithString("Wait..");
             myDrink = !myDrink;
-            entity.setServerStatus("Wait...");
+            entity.setButtonStatus("Wait...");
 
             showOrderButton(false);
         } else if(message.contains("INGREDIENTS")) {
@@ -357,11 +353,12 @@ public class MainActivity extends Activity implements Communicator  {
             @Override
             public void run() {
                 if(fragMix.isVisible()) {
-                    fragMix.setButtonText(entity.getServerStatus());
+                    fragMix.setButtonText(entity.getButtonStatus());
                 }
             }
         });
     }
+
     private void makeToast(final String message, final int length) {
         runOnUiThread(new Runnable() {
             @Override
