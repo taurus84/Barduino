@@ -28,7 +28,7 @@ public class MainActivity extends Activity implements Communicator  {
     private Fragment_Login fragLogin;
     private TCPClient client;
     private Timer timer;
-    private TextView tvLogin, tvUpdate;
+    private TextView tvLogin, tvUpdate, tvDisconnect;
     private boolean myDrink;
     private final int SHORT = 1, LONG = 2;
 
@@ -49,7 +49,7 @@ public class MainActivity extends Activity implements Communicator  {
     protected void onStart() {
         super.onStart();
         connectToServer();
-        startTimer();
+        //startTimer();
         while(!client.isConnected()) {
             if(client.isConnectFailed()) {
                 break;
@@ -63,17 +63,22 @@ public class MainActivity extends Activity implements Communicator  {
     private void initializeComponents() {
         tvLogin = (TextView) findViewById(R.id.tvSignIn);
         tvUpdate = (TextView) findViewById(R.id.tvUpdate);
+        tvDisconnect = (TextView) findViewById(R.id.tvDisconnect);
+
+        tvDisconnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(tvLogin.getText().equals("Sign in")) {
-                    //testLogin();
                     fragmentLogin();
                 } else {
                     confirmSignOut();
-                    //closeConnection();
-                    //finish();
                 }
             }
         });
@@ -112,6 +117,7 @@ public class MainActivity extends Activity implements Communicator  {
             @Override
             public void run() {
                 tvLogin.setText("Sign out");
+                tvDisconnect.setVisibility(View.GONE);
                 tvUpdate.setVisibility(View.VISIBLE);
             }
         });
@@ -123,6 +129,7 @@ public class MainActivity extends Activity implements Communicator  {
             public void run() {
                 tvLogin.setText("Sign in");
                 tvUpdate.setVisibility(View.GONE);
+                tvDisconnect.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -194,8 +201,7 @@ public class MainActivity extends Activity implements Communicator  {
     }
 
     public void closeConnection(){
-        if(timer != null)
-            timer.cancel();
+        stopTimer();
         if(client != null) {
             sendMessage("STOP");
         }
@@ -224,6 +230,7 @@ public class MainActivity extends Activity implements Communicator  {
                 showOrderButton(false);
             } else if(errorType.equals("NOLOGIN")) {
                 entity.setButtonStatus("Not logged in");
+                stopTimer();
                 showOrderButton(false);
             }
         } else if(message.split(" ")[0].equals("LOGIN")) {
@@ -233,10 +240,10 @@ public class MainActivity extends Activity implements Communicator  {
                 makeToast("Wrong username or password", LONG);
             } else if(login.equals("OK")) {
                 entity.setButtonStatus("Loggin in...");
-                entity.setLoggedIn(true);
                 updateFluidsFromServer();
                 makeToast("Login successful", SHORT);
                 setTvLogOut();
+                startTimer();
             }
         } else if(message.contains("AVAILABLE")) {
             if(myDrink) {
@@ -326,10 +333,15 @@ public class MainActivity extends Activity implements Communicator  {
     }
 
     private void startTimer() {
+        stopTimer();
         timer = new Timer();
-        timer.schedule(new CheckServer(), 2000,1500);
-        login();
-        //timer.schedule(new ButtonSwitcher(), 0, 2000);
+        timer.schedule(new CheckServer(), 2000,2000);
+    }
+
+    private void stopTimer() {
+        if(timer != null) {
+            timer.cancel();
+        }
     }
 
     /**

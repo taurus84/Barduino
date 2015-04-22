@@ -33,6 +33,7 @@ public class Fragment_Login extends Fragment {
         super.onActivityCreated(savedInstanceState);
         comm = (Communicator) getActivity();
         username = (EditText) getActivity().findViewById(R.id.etUsername_FragLogin);
+        username.setText(entity.getUsername());
         password = (EditText) getActivity().findViewById(R.id.etPassword_FragLogin);
         login = (Button) getActivity().findViewById(R.id.btnLogin_fragLogin);
         cancel = (Button) getActivity().findViewById(R.id.btnCancel_fragLogin);
