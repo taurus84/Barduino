@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 /**
@@ -46,7 +47,9 @@ public class TCPClient extends Thread {
     public void run() {
         try {
             //create a socket to make the connection with the server
-            Socket socket = new Socket(ipNumber, port);
+            //Socket socket = new Socket(ipNumber, port);
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(ipNumber, port), 5000);
 
             Log.i("Connected to ip: ", ipNumber);
 
@@ -94,7 +97,7 @@ public class TCPClient extends Thread {
     public boolean isConnected() {
         return connected;
     }
-    public boolean isConnectFailed() {
+    public boolean ConnectFailed() {
         return connectFailed;
     }
 }

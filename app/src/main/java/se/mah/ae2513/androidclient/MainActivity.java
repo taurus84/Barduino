@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -30,7 +31,8 @@ public class MainActivity extends Activity implements Communicator  {
     private Timer timer;
     private TextView tvLogin, tvUpdate, tvDisconnect;
     private boolean myDrink;
-    private final int SHORT = 1, LONG = 2;
+    private final int SHORT = 1, LONG = 2, NO_CONNECTION = 0, LOGGED_OUT = 1;
+    private Intent returnIntent;
 
 
     @Override
@@ -43,6 +45,7 @@ public class MainActivity extends Activity implements Communicator  {
         entity.setPortNbr(Integer.parseInt(getIntent().getStringExtra("port")));
         entity.setUsername(getIntent().getStringExtra("username"));
         entity.setPassword(getIntent().getStringExtra("password"));
+        returnIntent = getIntent();
     }
 
     @Override
@@ -51,11 +54,11 @@ public class MainActivity extends Activity implements Communicator  {
         connectToServer();
         //startTimer();
         while(!client.isConnected()) {
-            if(client.isConnectFailed()) {
+            if(client.ConnectFailed()) {
                 break;
             }
         }
-       if(client.isConnected() && !client.isConnectFailed()) {
+       if(client.isConnected() && !client.ConnectFailed()) {
            login();
        }
     }
@@ -105,6 +108,7 @@ public class MainActivity extends Activity implements Communicator  {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         closeConnection();
+                        setResult(LOGGED_OUT, returnIntent);
                         finish();
                     }
                 });
@@ -345,11 +349,13 @@ public class MainActivity extends Activity implements Communicator  {
     }
 
     /**
-     * Method to kill the activity when connection to server is lost.
+     * Method to finish the activity when connection to server is lost.
      */
     public void connectionDown() {
         if(timer != null)
             timer.cancel();
+        Intent returnIntent = getIntent();
+        setResult(NO_CONNECTION,returnIntent);
         finish();
     }
 

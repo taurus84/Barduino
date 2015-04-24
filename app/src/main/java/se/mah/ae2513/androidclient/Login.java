@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +24,7 @@ public class Login extends Activity {
     private TextView tvPassword;
     private TextView tvErrorMessage;
     private Button btnLogin;
+    private final int NO_CONNECTION = 0, LOGGED_OUT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +58,33 @@ public class Login extends Activity {
                 intent.putExtra("ipnumber", ip);
                 intent.putExtra("port", port);
                 if(ip.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Input ipnummer", Toast.LENGTH_LONG).show();
+                    makeToast("Input ipnummer");
                 } else if(port.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Input Portnummer", Toast.LENGTH_LONG).show();
+                    makeToast("Input Portnumber");
                 } else
-                    startActivity(intent);
+                    startActivityForResult(intent, 1);
             }
         });
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == LOGGED_OUT) {
+                makeToast("Logged out");
+            } else if (resultCode == NO_CONNECTION) {
+                //String result=data.getStringExtra("result");
+                //Log.i("Hej", "hej");
+                makeToast("No connection to server");
+            }
+        }
+    }
+
+    private void makeToast(String toastMessage) {
+        Toast toast = Toast.makeText(getApplicationContext(), toastMessage, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
+        toast.show();
     }
 
     @Override
