@@ -8,11 +8,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+
 
 /**
  * Created by John on 15-04-08.
@@ -23,6 +24,7 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
     private Entity entity = Entity.getInstance();
     private Button btnOrder;
     private Communicator comm;
+    private MainActivity mainActivity;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mainActivity = (MainActivity) getActivity();
         comm = (Communicator) getActivity();
         seekBar1 = (SeekBar) getActivity().findViewById(R.id.seekBar1);
         seekBar2 = (SeekBar) getActivity().findViewById(R.id.seekBar2);
@@ -97,10 +100,11 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
                     toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
                     toast.show();
                 } else {
+                    mainActivity.receiptWindow();
                     comm.sendMessage(message);
-                    Toast toast = Toast.makeText(getActivity(), "Sending grog", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
-                    toast.show();
+                    //Toast toast = Toast.makeText(getActivity(), "Sending grog", Toast.LENGTH_SHORT);
+                    //toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
+                    //toast.show();
                 }
 
             }
@@ -156,5 +160,4 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
             }
         }
 
-    }
-
+}
