@@ -115,29 +115,7 @@ public class MainActivity extends Activity implements Communicator  {
 
         builder.create().show();        // create and show the alert dialog
     }
-    public void receiptWindow() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Kvitto")
-                .setMessage(fm.findFragmentById(R.id.liquid1) + ": " + fm.findFragmentById(R.id.cl1))
-                .setMessage(fm.findFragmentById(R.id.liquid2) + ": " + fm.findFragmentById(R.id.cl2))
-                .setMessage(fm.findFragmentById(R.id.liquid3) + ": " + fm.findFragmentById(R.id.cl3))
-                .setMessage(fm.findFragmentById(R.id.liquid4) + ": " + fm.findFragmentById(R.id.cl4))
-                .setCancelable(true)
 
-                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                })
-                .setPositiveButton("Send grogg", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-        builder.create().show();
-    }
     private void setTvLogOut() {
         runOnUiThread(new Runnable() {
             @Override

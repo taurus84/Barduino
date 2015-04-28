@@ -1,6 +1,8 @@
 package se.mah.ae2513.androidclient;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -100,11 +102,11 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
                     toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
                     toast.show();
                 } else {
-                    mainActivity.receiptWindow();
+                    receiptWindow();
                     comm.sendMessage(message);
-                    //Toast toast = Toast.makeText(getActivity(), "Sending grog", Toast.LENGTH_SHORT);
-                    //toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
-                    //toast.show();
+                    Toast toast = Toast.makeText(getActivity(), "Sending grog", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
+                    toast.show();
                 }
 
             }
@@ -159,5 +161,27 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
                 btnOrder.setEnabled(false);
             }
         }
+    public void receiptWindow() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Kvitto")
+                .setMessage(entity.getLiquids(0) + ": " + )
+                .setMessage(entity.getLiquids(1) + ": " + )
+                .setMessage(entity.getLiquids(2) + ": " + )
+                .setMessage(entity.getLiquids(3) + ": " + )
+                .setCancelable(true)
 
+                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton("Send grogg", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.create().show();
+    }
 }
