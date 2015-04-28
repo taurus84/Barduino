@@ -27,6 +27,7 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
     private Button btnOrder;
     private Communicator comm;
     private MainActivity mainActivity;
+    private int totalPrice = 0;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -102,11 +103,7 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
                     toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
                     toast.show();
                 } else {
-                    receiptWindow();
-                    comm.sendMessage(message);
-                    Toast toast = Toast.makeText(getActivity(), "Sending grog", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
-                    toast.show();
+                    receiptWindow(sb1, sb2, sb3, sb4, message);
                 }
 
             }
@@ -161,25 +158,41 @@ public class Fragment_Mixer extends Fragment implements SeekBar.OnSeekBarChangeL
                 btnOrder.setEnabled(false);
             }
         }
-    public void receiptWindow() {
+    public void receiptWindow(int sb1,int sb2,int sb3,int sb4, final String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Kvitto")
-                .setMessage(entity.getLiquids(0) + ": " + )
-                .setMessage(entity.getLiquids(1) + ": " + )
-                .setMessage(entity.getLiquids(2) + ": " + )
-                .setMessage(entity.getLiquids(3) + ": " + )
+        String receiptStr = "";
+        if(sb1 != 0){
+            receiptStr += entity.getLiquids(0) + "\t" + sb1 + " cl\n";
+        }
+        if(sb2 != 0){
+            receiptStr += entity.getLiquids(1) + "\t" + sb2 + " cl\n";
+        }
+        if(sb3 != 0){
+            receiptStr += entity.getLiquids(2) + "\t" + sb3 + " cl\n";
+        }
+        if(sb4 != 0){
+            receiptStr += entity.getLiquids(3) + "\t" + sb4 + " cl\n";
+        }
+        receiptStr += "\nTotal Price: " + totalPrice +" kr";
+
+
+        builder.setTitle("Receipt")
+                .setMessage(receiptStr)
                 .setCancelable(true)
 
-                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        comm.sendMessage(message);
+                        Toast toast = Toast.makeText(getActivity(), "Sending grog", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
+                        toast.show();
+                    }
+                })
+                .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-                    }
-                })
-                .setPositiveButton("Send grogg", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
                     }
                 });
         builder.create().show();

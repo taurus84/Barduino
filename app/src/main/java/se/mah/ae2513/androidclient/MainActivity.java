@@ -100,16 +100,17 @@ public class MainActivity extends Activity implements Communicator  {
                 .setMessage("Are you sure you want to sign out?")
                 .setCancelable(true)
 
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                })
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         closeConnection();
                         setResult(LOGGED_OUT, returnIntent);
                         finish();
+
+                    }
+                })
+                .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
                     }
                 });
 
