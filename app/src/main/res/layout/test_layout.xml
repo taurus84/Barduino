@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="4"
+        android:layout_weight="3"
         android:background="#001199">
         <LinearLayout
             android:orientation="vertical"
@@ -24,35 +24,34 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:background="#445566">
+            android:background="@color/navyblue">
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
                 <TextView
+                    android:id="@+id/tvFluid1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="hej hej"/>
+                    android:text="Fluid 1"
+                    android:layout_above="@id/seek1"
+                    android:layout_marginLeft="@dimen/mixerMarginLeft"
+                    android:paddingBottom="5dp"/>
                 <TextView
+                    android:id="@+id/tvVolume1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="hej hej"/>
-                <LinearLayout
+                    android:paddingRight="@dimen/mixerTextMarginRight"
+                    android:text="5 cl"/>
+                <SeekBar
+                    android:id="@+id/seek1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_corner"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="50dp"
-                    android:layout_marginLeft="50dp">
-                    <SeekBar
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"/>
-
-                    </LinearLayout>
-
-
+                    android:background="@drawable/rounded_corner"
+                    android:layout_marginLeft="@dimen/mixerMarginLeft"
+                    android:layout_marginRight="@dimen/mixerMarginLeft"/>
                 </RelativeLayout>
 
         </LinearLayout>
@@ -62,35 +61,34 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:background="#667788">
+            android:background="@color/navyblue">
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
                 <TextView
+                    android:id="@+id/tvFluid2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="hej hej"/>
+                    android:text="Fluid2"
+                    android:layout_above="@id/seek2"
+                    android:layout_marginLeft="@dimen/mixerMarginLeft"
+                    android:paddingBottom="5dp"/>
                 <TextView
+                    android:id="@+id/tvVolume2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="hej hej"/>
-                <LinearLayout
+                    android:paddingRight="@dimen/mixerTextMarginRight"
+                    android:text="5 cl"/>
+                <SeekBar
+                    android:id="@+id/seek2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_corner"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="50dp"
-                    android:layout_marginLeft="50dp">
-                    <SeekBar
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"/>
-
-                </LinearLayout>
-
-
+                    android:background="@drawable/rounded_corner"
+                    android:layout_marginLeft="@dimen/mixerMarginLeft"
+                    android:layout_marginRight="@dimen/mixerMarginLeft"/>
             </RelativeLayout>
         </LinearLayout>
 
@@ -100,35 +98,34 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:background="#334455">
+            android:background="@color/navyblue">
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
                 <TextView
+                    android:id="@+id/tvFluid3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="hej hej"/>
+                    android:text="Fluid 3"
+                    android:layout_above="@id/seek3"
+                    android:layout_marginLeft="@dimen/mixerMarginLeft"
+                    android:paddingBottom="5dp"/>
                 <TextView
+                    android:id="@+id/tvVolume3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="hej hej"/>
-                <LinearLayout
+                    android:paddingRight="@dimen/mixerTextMarginRight"
+                    android:text="5 cl"/>
+                <SeekBar
+                    android:id="@+id/seek3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_corner"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="50dp"
-                    android:layout_marginLeft="50dp">
-                    <SeekBar
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"/>
-
-                </LinearLayout>
-
-
+                    android:background="@drawable/rounded_corner"
+                    android:layout_marginLeft="@dimen/mixerMarginLeft"
+                    android:layout_marginRight="@dimen/mixerMarginLeft"/>
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout
@@ -137,35 +134,34 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:background="#001122">
+            android:background="@color/navyblue">
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
                 <TextView
+                    android:id="@+id/tvFluid4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="hej hej"/>
+                    android:text="Fluid 4"
+                    android:layout_above="@id/seek4"
+                    android:layout_marginLeft="@dimen/mixerMarginLeft"
+                    android:paddingBottom="5dp"/>
                 <TextView
+                    android:id="@+id/tvVolume4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="hej hej"/>
-                <LinearLayout
+                    android:paddingRight="@dimen/mixerTextMarginRight"
+                    android:text="5 cl"/>
+                <SeekBar
+                    android:id="@+id/seek4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_corner"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="50dp"
-                    android:layout_marginLeft="50dp">
-                    <SeekBar
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"/>
-
-                </LinearLayout>
-
-
+                    android:background="@drawable/rounded_corner"
+                    android:layout_marginLeft="@dimen/mixerMarginLeft"
+                    android:layout_marginRight="@dimen/mixerMarginLeft"/>
             </RelativeLayout>
         </LinearLayout>
 
@@ -177,14 +173,28 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:background="#551199">
+        android:background="@color/navyblue">
     </LinearLayout>
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:background="#004477">
+        android:background="@color/navyblue">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ORDER"
+                android:layout_centerInParent="true"
+                android:background="#0000"/>
+
+
+
+            </RelativeLayout>
+
+
     </LinearLayout>
 </LinearLayout>

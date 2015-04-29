@@ -6,4 +6,5 @@
     <dimen name="textViewCL">20dp</dimen>
     <dimen name="semiHeaderDim">30dp</dimen>
     <dimen name="mixerMarginLeft">50dp</dimen>
+    <dimen name="mixerTextMarginRight">15dp</dimen>
 </resources>

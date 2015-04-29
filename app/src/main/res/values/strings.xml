@@ -19,6 +19,7 @@
     <color name="appBg">#24b2eb</color>
     <color name="headerColor">#000000</color>
     <color name="textColor">#00979C</color>
+    <color name="navyblue">#006699</color>
     <integer name="transparent">0x0000</integer>
     <integer name="appBg">0x24b2eb</integer>
 </resources>
