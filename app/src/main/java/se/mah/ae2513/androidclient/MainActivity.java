@@ -26,6 +26,7 @@ public class MainActivity extends Activity implements Communicator  {
     private FragmentManager fm;
     private FragmentTransaction transaction;
     private Fragment_Mixer fragMix;
+    private Fragment_Mixer2 fragMix2;
     private Fragment_Login fragLogin;
     private TCPClient client;
     private Timer timer;
@@ -180,9 +181,11 @@ public class MainActivity extends Activity implements Communicator  {
 
         fragMix = new Fragment_Mixer();
         fragLogin = new Fragment_Login();
+        fragMix2 = new Fragment_Mixer2();
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
-        transaction.add(R.id.fr_id, fragMix);
+        //transaction.add(R.id.fr_id, fragMix);
+        transaction.add(R.id.fr_id, fragMix2);
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -284,8 +287,8 @@ public class MainActivity extends Activity implements Communicator  {
                     makeToast("No new liquids", SHORT);
                 } else {
                     entity.setLiquids(liquids);
-                    if (fragMix.isVisible())
-                        fragMix.setTextLiquids();
+                    if (fragMix2.isVisible())
+                        fragMix2.setTextLiquids();
                     makeToast("Fluids updated!", SHORT);
                 }
 

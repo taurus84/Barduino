@@ -16,10 +16,14 @@
     <string name="username">User name</string>
     <string name="password">Password</string>
     <string name="logInOut">LOG IN</string>
-    <color name="appBg">#24b2eb</color>
+    <color name="appBg">#006699</color>
+    <color name="background_boxes">#E1E4E6</color>
     <color name="headerColor">#000000</color>
     <color name="textColor">#00979C</color>
     <color name="navyblue">#006699</color>
     <integer name="transparent">0x0000</integer>
     <integer name="appBg">0x24b2eb</integer>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

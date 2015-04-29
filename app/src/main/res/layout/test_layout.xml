@@ -10,6 +10,15 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
         android:background="#006699">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="BALANCE: 0 kr"
+            android:textSize="20dp"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:textStyle="bold"/>
+
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
@@ -28,30 +37,30 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/tvFluid1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Fluid 1"
-                    android:layout_above="@id/seek1"
-                    android:layout_marginLeft="@dimen/mixerMarginLeft"
-                    android:paddingBottom="5dp"/>
-                <TextView
-                    android:id="@+id/tvVolume1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:paddingRight="@dimen/mixerTextMarginRight"
-                    android:text="5 cl"/>
                 <SeekBar
-                    android:id="@+id/seek1"
+                    android:id="@+id/seek1t"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:background="@drawable/rounded_corner"
                     android:layout_marginLeft="@dimen/mixerMarginLeft"
                     android:layout_marginRight="@dimen/mixerMarginLeft"/>
+                <TextView
+                    android:id="@+id/tvFluid1t"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fluid 1"
+                    android:layout_above="@id/seek1t"
+                    android:layout_marginLeft="@dimen/mixerMarginLeft"
+                    android:paddingBottom="0dp"/>
+                <TextView
+                    android:id="@+id/tvVolume1t"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="@dimen/mixerTextMarginRight"
+                    android:text="5 cl"/>
                 </RelativeLayout>
 
         </LinearLayout>
@@ -65,30 +74,30 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/tvFluid2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Fluid2"
-                    android:layout_above="@id/seek2"
-                    android:layout_marginLeft="@dimen/mixerMarginLeft"
-                    android:paddingBottom="5dp"/>
-                <TextView
-                    android:id="@+id/tvVolume2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:paddingRight="@dimen/mixerTextMarginRight"
-                    android:text="5 cl"/>
                 <SeekBar
-                    android:id="@+id/seek2"
+                    android:id="@+id/seek2t"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:background="@drawable/rounded_corner"
                     android:layout_marginLeft="@dimen/mixerMarginLeft"
                     android:layout_marginRight="@dimen/mixerMarginLeft"/>
+                <TextView
+                    android:id="@+id/tvFluid2t"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fluid2"
+                    android:layout_above="@id/seek2t"
+                    android:layout_marginLeft="@dimen/mixerMarginLeft"
+                    android:paddingBottom="0dp"/>
+                <TextView
+                    android:id="@+id/tvVolume2t"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="@dimen/mixerTextMarginRight"
+                    android:text="5 cl"/>
             </RelativeLayout>
         </LinearLayout>
 
@@ -102,30 +111,30 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/tvFluid3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Fluid 3"
-                    android:layout_above="@id/seek3"
-                    android:layout_marginLeft="@dimen/mixerMarginLeft"
-                    android:paddingBottom="5dp"/>
-                <TextView
-                    android:id="@+id/tvVolume3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:paddingRight="@dimen/mixerTextMarginRight"
-                    android:text="5 cl"/>
                 <SeekBar
-                    android:id="@+id/seek3"
+                    android:id="@+id/seek3t"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:background="@drawable/rounded_corner"
                     android:layout_marginLeft="@dimen/mixerMarginLeft"
                     android:layout_marginRight="@dimen/mixerMarginLeft"/>
+                <TextView
+                    android:id="@+id/tvFluid3t"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fluid 3"
+                    android:layout_above="@id/seek3t"
+                    android:layout_marginLeft="@dimen/mixerMarginLeft"
+                    android:paddingBottom="0dp"/>
+                <TextView
+                    android:id="@+id/tvVolume3t"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="@dimen/mixerTextMarginRight"
+                    android:text="5 cl"/>
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout
@@ -138,30 +147,30 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/tvFluid4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Fluid 4"
-                    android:layout_above="@id/seek4"
-                    android:layout_marginLeft="@dimen/mixerMarginLeft"
-                    android:paddingBottom="5dp"/>
-                <TextView
-                    android:id="@+id/tvVolume4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:paddingRight="@dimen/mixerTextMarginRight"
-                    android:text="5 cl"/>
                 <SeekBar
-                    android:id="@+id/seek4"
+                    android:id="@+id/seek4t"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:background="@drawable/rounded_corner"
                     android:layout_marginLeft="@dimen/mixerMarginLeft"
                     android:layout_marginRight="@dimen/mixerMarginLeft"/>
+                <TextView
+                    android:id="@+id/tvFluid4t"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fluid 4"
+                    android:layout_above="@id/seek4t"
+                    android:layout_marginLeft="@dimen/mixerMarginLeft"
+                    android:paddingBottom="0dp"/>
+                <TextView
+                    android:id="@+id/tvVolume4t"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="@dimen/mixerTextMarginRight"
+                    android:text="5 cl"/>
             </RelativeLayout>
         </LinearLayout>
 
@@ -174,24 +183,36 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
         android:background="@color/navyblue">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Barduino state:"
+            android:padding="20dp"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:singleLine="true"
+            android:textStyle="bold"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:background="@color/navyblue">
+        android:background="@color/navyblue"
+        android:orientation="vertical">
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+
+            android:background="@drawable/rounded_order">
             <Button
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ORDER"
                 android:layout_centerInParent="true"
+                android:textSize="20dp"
+                android:textStyle="bold"
                 android:background="#0000"/>
-
-
 
             </RelativeLayout>
 

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBg">
+
+    <!-- Balance Area -->
+    <TextView
+        android:id="@+id/tvBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/imageCoin"
+        android:text="100"
+        android:textSize="@dimen/textSize_volume"
+        android:singleLine="true"
+        android:textStyle="bold"
+        android:padding="5dp"
+        android:layout_marginTop="5dp"/>
+    <ImageView
+        android:id="@+id/imageCoin"
+        android:layout_width="@dimen/coin_size"
+        android:layout_height="@dimen/coin_size"
+        android:background="@drawable/coin"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"/>
+
+    <!-- Fluid 1 Area -->
+    <TextView
+        android:id="@+id/tvFluid1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fluid 1"
+        android:layout_marginLeft="@dimen/mixerMarginLeft"
+        android:layout_below="@+id/tvBalance"
+        android:paddingTop="20dp"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/textSize_fluid"/>
+    <RelativeLayout
+        android:id="@+id/relative1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvFluid1">
+
+        <SeekBar
+            android:id="@+id/seek1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner"
+            android:layout_marginLeft="@dimen/mixerMarginLeft"
+            android:layout_marginRight="@dimen/mixerMarginRight"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:layout_centerVertical="true"
+            android:max="25"/>
+        <TextView
+            android:id="@+id/tvVolume1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/mixerTextMarginRight"
+            android:text="0 cl"
+            android:textSize="@dimen/textSize_volume"/>
+        </RelativeLayout>
+
+    <!-- Fluid 2 Area -->
+    <TextView
+        android:id="@+id/tvFluid2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fluid 2"
+        android:layout_marginLeft="@dimen/mixerMarginLeft"
+        android:layout_below="@+id/relative1"
+        android:paddingTop="10dp"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/textSize_fluid"/>
+    <RelativeLayout
+        android:id="@+id/relative2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvFluid2">
+
+        <SeekBar
+            android:id="@+id/seek2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner"
+            android:layout_marginLeft="@dimen/mixerMarginLeft"
+            android:layout_marginRight="@dimen/mixerMarginRight"
+            android:layout_centerVertical="true"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:max="25"/>
+        <TextView
+            android:id="@+id/tvVolume2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/mixerTextMarginRight"
+            android:textSize="@dimen/textSize_volume"
+            android:text="0 cl"/>
+    </RelativeLayout>
+
+    <!-- Fluid 3 Area -->
+    <TextView
+        android:id="@+id/tvFluid3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fluid 3"
+        android:layout_marginLeft="@dimen/mixerMarginLeft"
+        android:layout_below="@+id/relative2"
+        android:paddingTop="10dp"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/textSize_fluid"/>
+    <RelativeLayout
+        android:id="@+id/relative3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvFluid3">
+
+        <SeekBar
+            android:id="@+id/seek3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner"
+            android:layout_marginLeft="@dimen/mixerMarginLeft"
+            android:layout_marginRight="@dimen/mixerMarginRight"
+            android:layout_centerVertical="true"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:max="25"/>
+        <TextView
+            android:id="@+id/tvVolume3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/mixerTextMarginRight"
+            android:textSize="@dimen/textSize_volume"
+            android:text="0 cl"/>
+        </RelativeLayout>
+
+    <!-- Fluid 4 Area -->
+    <TextView
+        android:id="@+id/tvFluid4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fluid 4"
+        android:layout_marginLeft="@dimen/mixerMarginLeft"
+        android:layout_below="@+id/relative3"
+        android:paddingTop="10dp"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/textSize_fluid"/>
+
+    <RelativeLayout
+        android:id="@+id/relative4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvFluid4">
+
+        <SeekBar
+            android:id="@+id/seek4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner"
+            android:layout_marginLeft="@dimen/mixerMarginLeft"
+            android:layout_marginRight="@dimen/mixerMarginRight"
+            android:layout_centerVertical="true"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:max="25"/>
+        <TextView
+            android:id="@+id/tvVolume4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/mixerTextMarginRight"
+            android:textSize="@dimen/textSize_volume"
+            android:text="0 cl"/>
+        </RelativeLayout>
+
+    <!--  Total Area -->
+    <TextView
+        android:id="@+id/tvTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relative4"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/mixerMarginRight"
+        android:paddingRight="15dp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:textSize="@dimen/textSize_volume"
+        android:text="TOTAL:"/>
+    <TextView
+        android:id="@+id/tvTotalCl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/relative4"
+        android:layout_alignBottom="@id/tvTotal"
+        android:textSize="@dimen/textSize_volume"
+        android:text="0 cl"
+        android:layout_marginRight="@dimen/mixerTextMarginRight"/>
+
+    <!-- Order Area -->
+    <RelativeLayout
+        android:id="@+id/relativeOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/rounded_order">
+        <Button
+            android:id="@+id/btnMixerOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ORDER"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:background="#0000"/>
+
+
+        </RelativeLayout>
+
+
+
+
+
+
+
+</RelativeLayout>
