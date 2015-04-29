@@ -21,20 +21,6 @@
         </RelativeLayout>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/loglin3"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:id="@+id/logrel3"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent">
-
-        </RelativeLayout>
-    </LinearLayout>
-    <LinearLayout
         android:id="@+id/loglin2"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
@@ -50,7 +36,7 @@
                 android:id="@+id/View_login"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="#000000"
+                android:background="#4C4E4F"
                 android:layout_centerVertical="true">
             </View>
             <EditText
@@ -58,15 +44,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/View_login"
+                android:layout_centerVertical="true"
+                android:layout_alignParentTop="true"
                 android:hint="Username"
-                android:paddingLeft="15dp"/>
+                android:paddingLeft="15dp"
+                android:background="#00000000"/>
             <EditText
                 android:id="@+id/etPassword_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/View_login"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
                 android:hint="Password"
-                android:paddingLeft="15dp"/>
+                android:paddingLeft="15dp"
+                android:background="#00000000"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/loglin3"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/logrel3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/costum_button">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Login to Barduino"
+                android:id="@+id/button_login"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:background="#0000"/>
         </RelativeLayout>
     </LinearLayout>
     <LinearLayout
@@ -83,6 +101,8 @@
 
         </RelativeLayout>
     </LinearLayout>
+
+
     <LinearLayout
         android:id="@+id/loglin3"
         android:layout_width="fill_parent"
@@ -92,9 +112,19 @@
 
         <RelativeLayout
             android:id="@+id/logrel3"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent">
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/costum_button"
+            android:layout_gravity="center_horizontal"
+            >
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_centerInParent="true"
+                android:text="Register new account"
+                android:background="#0000"/>
         </RelativeLayout>
     </LinearLayout>
 
