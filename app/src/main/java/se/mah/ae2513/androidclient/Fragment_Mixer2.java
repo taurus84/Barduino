@@ -74,7 +74,6 @@ public class Fragment_Mixer2 extends Fragment implements SeekBar.OnSeekBarChange
         cl3.setText(valueSeekBar3 + " cl");
         cl4.setText(valueSeekBar4 + " cl");
         tvTotalVolume.setText(valueTotal + " cl");
-        seekBar1.setBackgroundColor(0xff0000);
 
 
 

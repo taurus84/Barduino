@@ -3,18 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
-    <item android:id="@+id/logInOut"
+    <item android:id="@+id/abLogIn"
         android:title="@string/logInOut"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />
-    <item android:id="@+id/mixer"
-        android:title="@string/mixer"
+    <item android:id="@+id/abUpdate"
+        android:title="UPDATE"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />
     <item android:id="@+id/testButton"
-        android:title="@string/testBtn"
+        android:title="TEST"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
 
 </menu>

@@ -8,33 +8,119 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    android:id="@+id/home_screen">
+    android:id="@+id/home_screen"
+    android:weightSum="100"
+    android:background="@color/appBg">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="75"
+        android:background="#006699"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/toptop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tvBalance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/coin"
+                android:text="100"
+                android:textSize="@dimen/textSize_volume"
+                android:singleLine="true"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"/>
+            <ImageView
+                android:id="@+id/coin"
+                android:layout_width="@dimen/coin_size"
+                android:layout_height="@dimen/coin_size"
+                android:background="@drawable/coin"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"/>
+            <ImageView
+                android:id="@+id/topCenter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/barduinologo"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="40dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"/>
+            <TextView
+                android:id="@+id/tvSignIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign in"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:paddingRight="10dp"
+                android:clickable="true"
+                android:layout_marginBottom="10dp"
+                android:textColor="#ffffff"/>
+            <TextView
+                android:layout_below="@+id/topCenter"
+                android:id="@+id/tvUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:clickable="true"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/tvDisconnect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Disconnect"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:paddingLeft="4dp"
+                android:clickable="true"
+                android:visibility="visible"
+                android:textColor="#ffffff"/>
+
+
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/fr_id"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="25"
+        android:background="#ffffff">
+
+        </FrameLayout>
+
+
+
+
+
+
+
+    <!-->
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:background="@layout/header_gradient"
-        android:orientation="horizontal"
+        android:background="@color/appBg"
         android:id="@+id/topLogo">
-
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/stop"
-            android:id="@+id/topLeftOff"
-            android:layout_alignParentLeft="true"
-            android:visibility="gone"
-            android:layout_gravity="right"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/barduino"
+            android:src="@drawable/barduinologo"
             android:id="@+id/topCenter"
             android:layout_centerHorizontal="true"
-            android:layout_gravity="center"/>
-
-
-
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -86,5 +172,5 @@
 
 
     </FrameLayout>
-
+<!-->
 </LinearLayout>

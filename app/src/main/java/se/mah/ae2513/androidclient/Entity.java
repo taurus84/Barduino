@@ -15,6 +15,9 @@ public class Entity {
     private String ipNbr, username, password;
     private String[] liquids = new String[4];
     private String buttonStatus = "Not connected";
+    private double balance;
+
+
 
     private Entity() {
     }
@@ -85,5 +88,13 @@ public class Entity {
 
     public synchronized void setPassword(String password) {
         this.password = password;
+    }
+
+    public synchronized double getBalance() {
+        return balance;
+    }
+
+    public synchronized void setBalance(double balance) {
+        this.balance = balance;
     }
 }

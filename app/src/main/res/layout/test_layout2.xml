@@ -4,27 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/appBg">
 
-    <!-- Balance Area -->
-    <TextView
-        android:id="@+id/tvBalance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/imageCoin"
-        android:text="100"
-        android:textSize="@dimen/textSize_volume"
-        android:singleLine="true"
-        android:textStyle="bold"
-        android:padding="5dp"
-        android:layout_marginTop="5dp"/>
-    <ImageView
-        android:id="@+id/imageCoin"
-        android:layout_width="@dimen/coin_size"
-        android:layout_height="@dimen/coin_size"
-        android:background="@drawable/coin"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"/>
 
     <!-- Fluid 1 Area -->
     <TextView
@@ -50,8 +29,6 @@
             android:background="@drawable/rounded_corner"
             android:layout_marginLeft="@dimen/mixerMarginLeft"
             android:layout_marginRight="@dimen/mixerMarginRight"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:layout_centerVertical="true"
@@ -227,7 +204,8 @@
             android:text="ORDER"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:background="#0000"/>
+            android:background="#0000"
+            android:padding="30dp"/>
 
 
         </RelativeLayout>

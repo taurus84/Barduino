@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,11 +45,13 @@ public class MainActivity extends Activity implements Communicator  {
         setContentView(R.layout.main_window);
         createFragments();
         initializeComponents();
+       /*
         entity.setIpNbr(getIntent().getStringExtra("ipnumber"));
         entity.setPortNbr(Integer.parseInt(getIntent().getStringExtra("port")));
         entity.setUsername(getIntent().getStringExtra("username"));
         entity.setPassword(getIntent().getStringExtra("password"));
         returnIntent = getIntent();
+
     }
 
     @Override
@@ -64,7 +67,9 @@ public class MainActivity extends Activity implements Communicator  {
        if(client.isConnected() && !client.ConnectFailed()) {
            login();
        }
+       */
     }
+
 
     private void initializeComponents() {
         tvLogin = (TextView) findViewById(R.id.tvSignIn);
@@ -165,7 +170,7 @@ public class MainActivity extends Activity implements Communicator  {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -174,7 +179,12 @@ public class MainActivity extends Activity implements Communicator  {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        //int id = item.getItemId();
+        int id = item.getItemId();
+        if(id == R.id.abLogIn) {
+            fragmentLogin();
+        } else if(id == R.id.abUpdate) {
+
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -202,7 +212,7 @@ public class MainActivity extends Activity implements Communicator  {
     private void fragmentLogin() {
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
-        transaction.replace(R.id.fr_id, fragLogin);
+        transaction.replace(R.id.fr_id, fragLogin2);
         transaction.addToBackStack(null);
         transaction.commit();
     }
