@@ -158,6 +158,9 @@ public class MainActivity extends Activity implements Communicator  {
                         ":" + entity.getPassword();
         sendMessage(message);
     }
+    private void register(String username, String password) {
+        String message = "REGISTER " + username + ":" + password;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
