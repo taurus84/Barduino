@@ -28,6 +28,8 @@ public class MainActivity extends Activity implements Communicator  {
     private Fragment_Mixer fragMix;
     private Fragment_Mixer2 fragMix2;
     private Fragment_Login fragLogin;
+    private Fragment_Login2 fragLogin2;
+    private Fragment_Register fragReg;
     private TCPClient client;
     private Timer timer;
     private TextView tvLogin, tvUpdate, tvDisconnect;
@@ -181,7 +183,9 @@ public class MainActivity extends Activity implements Communicator  {
 
         fragMix = new Fragment_Mixer();
         fragLogin = new Fragment_Login();
+        fragLogin2 = new Fragment_Login2();
         fragMix2 = new Fragment_Mixer2();
+        fragReg = new Fragment_Register();
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
         //transaction.add(R.id.fr_id, fragMix);
@@ -196,6 +200,13 @@ public class MainActivity extends Activity implements Communicator  {
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
         transaction.replace(R.id.fr_id, fragLogin);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+    public void fragmentRegister() {
+        fm = getFragmentManager();
+        transaction = fm.beginTransaction();
+        transaction.replace(R.id.fr_id,fragReg );
         transaction.addToBackStack(null);
         transaction.commit();
     }
