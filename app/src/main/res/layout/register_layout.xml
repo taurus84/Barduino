@@ -89,7 +89,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
         <RelativeLayout
-            android:id="@+id/rel4reg"
+            android:id="@+id/rel5reg"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_login">

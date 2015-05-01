@@ -2,6 +2,7 @@ package se.mah.ae2513.androidclient;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -27,6 +28,8 @@ public class Fragment_Login2 extends Fragment {
         View v = inflater.inflate(R.layout.test_login, container, false);
         return v;
     }
+
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -59,17 +62,28 @@ public class Fragment_Login2 extends Fragment {
                 getActivity().getFragmentManager().popBackStack();
             }
         });
-       // register.setOnClickListener(new View.OnClickListener(){
-         //   @Override
-           // public void onClick(View v) {
-             //   switch (v.getId()){
-               //     case R.id.btnRegister:
-                 //      getActivity().getFragmentManager().beginTransaction().replace(getActivity().findViewById(R.id.fr_id),)
-                   // break;
 
-                //}
-            //}
-        //});
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(".Register");
+                startActivityForResult(intent, 2);
+            }
+        });
 
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2) {
+            if (resultCode == 0) {
+                //extract aktivity result. Contains username and password
+                String[] userData = data.getStringArrayExtra("USER");
+                comm.sendMessage(userData[0]);
+
+                //makeToast("Logged out");
+            }
+        }
+    }
 }

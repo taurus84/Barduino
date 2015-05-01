@@ -93,14 +93,12 @@
 
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/loglin3"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/logrel3"
             android:layout_width="fill_parent"
             android:layout_height="match_parent">
 
