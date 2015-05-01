@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_login">
             <EditText
-                android:id="@+id/etUsername_Login"
+                android:id="@+id/etUsername_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -69,7 +69,7 @@
             android:background="@drawable/rounded_login">
 
             <EditText
-                android:id="@+id/etUsername_Login"
+                android:id="@+id/etPassword_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -95,7 +95,7 @@
             android:background="@drawable/rounded_login">
 
             <EditText
-                android:id="@+id/etUsername_Login"
+                android:id="@+id/etPassword_register_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
