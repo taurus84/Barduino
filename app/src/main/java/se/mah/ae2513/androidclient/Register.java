@@ -18,7 +18,7 @@ public class Register extends Activity {
     private EditText etPassword_Register,etPassword_Register_2,et_Username_Register;
     private Button btnSubmit,btnCancel;
     private Entity entity = Entity.getInstance();
-    private final int USER_CREATED = 0;
+    private final int USER_CREATED = 0,CANCEL = 1;
     private InputMethodManager imm;
 
 
@@ -44,9 +44,9 @@ public class Register extends Activity {
                 if(etPassword_Register.getText().toString().equals(etPassword_Register_2.getText().toString())) {
 
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                    String[] userData = {etPassword_Register.getText().toString(),etPassword_Register_2.getText().toString()};
+                    String[] userData = {et_Username_Register.getText().toString(),":",etPassword_Register.getText().toString()};
                     Intent returnIntent = getIntent();
-                    returnIntent.putExtra("USER", userData);
+                    returnIntent.putExtra("USER ", userData);
                     setResult(USER_CREATED, returnIntent);
                     finish();
                 } else {
@@ -54,9 +54,16 @@ public class Register extends Activity {
                 }
             }
         });
-
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               setResult(CANCEL);
+                finish();
+            }
+        });
 
     }
+
 
     private void incorrectInput() {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
@@ -69,8 +76,7 @@ public class Register extends Activity {
                 dialog.cancel();
             }
         });
-
-
+        alertDialog.show();
     }
 
 }

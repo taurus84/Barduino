@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,10 +80,16 @@ public class Fragment_Login2 extends Fragment {
         if (requestCode == 2) {
             if (resultCode == 0) {
                 //extract aktivity result. Contains username and password
-                String[] userData = data.getStringArrayExtra("USER");
-                comm.sendMessage(userData[0]);
+                String[] userData = data.getStringArrayExtra("USER ");
+                String message = "REGISTER " + userData[0] + userData[1] + userData[2];
+                comm.sendMessage(message);
+                Log.i("ddd",message);
+
 
                 //makeToast("Logged out");
+            }
+            if(resultCode == 1){
+                //for cancelbutton in Register
             }
         }
     }
