@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -34,8 +35,9 @@ public class Register extends Activity {
     private void setComponents() {
         et_Username_Register = (EditText) findViewById(R.id.etUsername_register);
         etPassword_Register = (EditText) findViewById(R.id.etPassword_register);
+        etPassword_Register.setTransformationMethod(new PasswordTransformationMethod());
         etPassword_Register_2 = (EditText) findViewById(R.id.etPassword_register_2);
-
+        etPassword_Register_2.setTransformationMethod(new PasswordTransformationMethod());
         btnCancel = (Button) findViewById(R.id.btnCancel);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {

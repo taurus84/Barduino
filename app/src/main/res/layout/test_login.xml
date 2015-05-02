@@ -56,6 +56,8 @@
                 android:layout_below="@+id/View_login"
                 android:layout_alignParentBottom="true"
                 android:layout_centerVertical="true"
+                android:password="true"
+                android:inputType="textPassword"
                 android:hint="Password"
                 android:paddingLeft="15dp"
                 android:background="#00000000"/>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,7 @@ public class Fragment_Login2 extends Fragment {
         username = (EditText) getActivity().findViewById(R.id.etUsername_Login);
         username.setText(entity.getUsername());
         password = (EditText) getActivity().findViewById(R.id.etPassword_Login);
+        password.setTransformationMethod(new PasswordTransformationMethod());
         login = (Button) getActivity().findViewById(R.id.btn_Login);
         register = (Button) getActivity().findViewById(R.id.btnRegister);
         cancel = (Button) getActivity().findViewById(R.id.btnCancel_Login);
