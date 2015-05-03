@@ -19,7 +19,7 @@ public class Register extends Activity {
     private EditText etPassword_Register,etPassword_Register_2,et_Username_Register;
     private Button btnSubmit,btnCancel;
     private Entity entity = Entity.getInstance();
-    private final int USER_CREATED = 0,CANCEL = 1;
+    private final int USER_CREATED = 1,CANCEL = 0;
     private InputMethodManager imm;
 
 
@@ -49,7 +49,8 @@ public class Register extends Activity {
                     String[] userData = {et_Username_Register.getText().toString(),":",etPassword_Register.getText().toString()};
                     Intent returnIntent = getIntent();
                     returnIntent.putExtra("USER ", userData);
-                    setResult(USER_CREATED, returnIntent);
+                    //setResult(USER_CREATED, returnIntent);
+                    setResult(RESULT_OK, returnIntent);
                     finish();
                 } else {
                    incorrectInput();
@@ -59,7 +60,7 @@ public class Register extends Activity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               setResult(CANCEL);
+               setResult(RESULT_CANCELED);
                 finish();
             }
         });

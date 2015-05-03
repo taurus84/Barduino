@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Created by John on 15-04-30.
@@ -80,7 +81,7 @@ public class Fragment_Login2 extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2) {
-            if (resultCode == 0) {
+            if (resultCode == 1) {
                 //extract aktivity result. Contains username and password
                 String[] userData = data.getStringArrayExtra("USER ");
                 String message = "REGISTER " + userData[0] + userData[1] + userData[2];
@@ -90,8 +91,9 @@ public class Fragment_Login2 extends Fragment {
 
                 //makeToast("Logged out");
             }
-            if(resultCode == 1){
+            else if(resultCode == 0){
                 //for cancelbutton in Register
+                Toast.makeText(getActivity(), "Back pressed", Toast.LENGTH_LONG).show();
             }
         }
     }
