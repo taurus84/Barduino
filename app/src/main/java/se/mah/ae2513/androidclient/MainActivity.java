@@ -273,6 +273,8 @@ public class MainActivity extends Activity implements Communicator  {
                 entity.setButtonStatus("Not logged in");
                 makeToast("Wrong username or password", LONG);
             } else if(login.equals("OK")) {
+                Double balance = Double.parseDouble(message.split(" ")[2]);
+                entity.setBalance(balance);
                 entity.setButtonStatus("Loggin in...");
                 updateFluidsFromServer();
                 makeToast("Login successful", SHORT);
