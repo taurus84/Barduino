@@ -11,7 +11,7 @@
         android:title="UPDATE"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />
-    <item android:id="@+id/testButton"
+    <item android:id="@+id/abTest"
         android:title="TEST"
         android:orderInCategory="100"
         app:showAsAction="always" />

@@ -28,7 +28,6 @@ public class MainActivity extends Activity implements Communicator  {
     private Entity entity = Entity.getInstance();
     private FragmentManager fm;
     private FragmentTransaction transaction;
-    private Fragment_Mixer fragMix;
     private Fragment_Mixer2 fragMix2;
     private Fragment_Login fragLogin;
     private Fragment_Login2 fragLogin2;
@@ -186,6 +185,8 @@ public class MainActivity extends Activity implements Communicator  {
             fragmentLogin();
         } else if(id == R.id.abUpdate) {
 
+        } else if(id == R.id.abTest) {
+            fragMix2.setTextLiquids();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -196,7 +197,6 @@ public class MainActivity extends Activity implements Communicator  {
      */
     private void createFragments() {
 
-        fragMix = new Fragment_Mixer();
         fragLogin = new Fragment_Login();
         fragLogin2 = new Fragment_Login2();
         fragMix2 = new Fragment_Mixer2();
@@ -229,7 +229,7 @@ public class MainActivity extends Activity implements Communicator  {
     private void fragmentMixer() {
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
-        transaction.replace(R.id.fr_id, fragMix);
+        //transaction.replace(R.id.fr_id, fragMix);
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -296,7 +296,7 @@ public class MainActivity extends Activity implements Communicator  {
 
             showOrderButton(false);
         } else if(message.contains("INGREDIENTS")) {
-            if(fragMix.isVisible()) {
+            if(fragMix2.isVisible()) {
                 showOrderButton(true);
             }
             setLiquids(message);
@@ -311,21 +311,16 @@ public class MainActivity extends Activity implements Communicator  {
             @Override
             public void run() {
                 ArrayList<String> liquids = new ArrayList<String>();
-                ArrayList<Integer> price = new ArrayList<Integer>();
+                ArrayList<Double> price = new ArrayList<Double>();
                 for(int i = 0; i < string.length(); i++) {
                     liquids.add(string.split(":")[1].split(",")[i].split("$")[0]);
-                    price.add(Integer.parseInt(string.split(":")[1].split(",")[i].split("$")[1]));
+                    price.add(Double.parseDouble(string.split(":")[1].split(",")[i].split("$")[1]));
                 }
-                
-                String liquids = string.split(":")[1].split(",")[0].split("$")[0];
-                if(checkLiquidsSameSame(liquids)) {
-                    makeToast("No new liquids", SHORT);
-                } else {
-                    entity.setLiquids(liquids);
-                    if (fragMix2.isVisible())
-                        fragMix2.setTextLiquids();
-                    makeToast("Fluids updated!", SHORT);
-                }
+                entity.setLiquids(liquids);
+                entity.setLiquidPrices(price);
+
+                if (fragMix2.isVisible())
+                    fragMix2.setTextLiquids();
 
             }
         });
@@ -344,8 +339,8 @@ public class MainActivity extends Activity implements Communicator  {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(fragMix.isVisible())
-                    fragMix.showButton(show);
+                if(fragMix2.isVisible());
+                    //fragMix2.showButton(show);
             }
         });
     }
@@ -410,8 +405,8 @@ public class MainActivity extends Activity implements Communicator  {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(fragMix.isVisible()) {
-                    fragMix.setButtonText(entity.getButtonStatus());
+                if(fragMix2.isVisible()) {
+                   // fragMix2.setButtonText(entity.getButtonStatus());
                 }
             }
         });
@@ -435,14 +430,5 @@ public class MainActivity extends Activity implements Communicator  {
         });
     }
 
-    private void setTextOnButtonWithString(final String string) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if(fragMix.isVisible()) {
-                    fragMix.setButtonText(string);
-                }
-            }
-        });
-    }
+
 }

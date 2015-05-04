@@ -13,7 +13,10 @@ public class Entity {
     private static Entity entity = new Entity();
     private int portNbr;
     private String ipNbr, username, password;
-    private String[] liquids = new String[4];
+    private ArrayList<String> liquids;
+
+    private ArrayList<Double> liquidPrices;
+   // private String[] liquids = new String[4];
     private String buttonStatus = "Not connected";
     private double balance;
 
@@ -27,11 +30,11 @@ public class Entity {
         return entity;
     }
 
-    public synchronized String getLiquids(int i) {
-        return liquids[i];
+    public synchronized ArrayList<String> getLiquids(int i) {
+        return liquids;
     }
 
-    public synchronized void setLiquids(String[] ingredients) {
+    public synchronized void setLiquids(ArrayList<String> liquids) {
 /*        StringTokenizer st = new StringTokenizer(ingredients,":");
         String waste = st.nextToken();
         String allIngredients = st.nextToken();
@@ -40,22 +43,28 @@ public class Entity {
         liquids[1] = st2.nextToken();
         liquids[2] = st2.nextToken();
         liquids[3] = st2.nextToken();
-*/
+
         liquids[0] = ingredients[0];
         liquids[1] = ingredients[1];
         liquids[2] = ingredients[2];
         liquids[3] = ingredients[3];
-
+*/
+        this.liquids = liquids;
     }
+
+    public ArrayList<Double> getLiquidPrices() {
+        return liquidPrices;
+    }
+
+    public void setLiquidPrices(ArrayList<Double> liquidPrices) {
+        this.liquidPrices = liquidPrices;
+    }
+
     public synchronized void setButtonStatus(String status) {
         this.buttonStatus = status;
     }
     public synchronized String getButtonStatus() {
         return buttonStatus;
-    }
-
-    public synchronized void setLiquidSpecific(String liquid, int i) {
-        liquids[i] = liquid;
     }
 
     public synchronized int getPortNbr() {
