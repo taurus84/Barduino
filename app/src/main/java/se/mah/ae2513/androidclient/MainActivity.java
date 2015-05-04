@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -306,7 +308,14 @@ public class MainActivity extends Activity implements Communicator  {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                String[] liquids = string.split(":")[1].split(",");
+                ArrayList<String> liquids = new ArrayList<String>();
+                ArrayList<Integer> price = new ArrayList<Integer>();
+                for(int i = 0; i < string.length(); i++) {
+                    liquids.add(string.split(":")[1].split(",")[i].split("$")[0]);
+                    price.add(Integer.parseInt(string.split(":")[1].split(",")[i].split("$")[1]));
+                }
+                
+                String liquids = string.split(":")[1].split(",")[0].split("$")[0];
                 if(checkLiquidsSameSame(liquids)) {
                     makeToast("No new liquids", SHORT);
                 } else {
