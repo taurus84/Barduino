@@ -37,9 +37,6 @@ public class Fragment_Mixer2 extends Fragment implements SeekBar.OnSeekBarChange
 
         View v = inflater.inflate(R.layout.test_layout2, container, false);
 
-
-
-
         return v;
 
     }
