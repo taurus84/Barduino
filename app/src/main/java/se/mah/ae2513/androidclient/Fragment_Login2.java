@@ -81,10 +81,11 @@ public class Fragment_Login2 extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2) {
-            if (resultCode == 1) {
+            if (resultCode == -1) {
                 //extract aktivity result. Contains username and password
                 String[] userData = data.getStringArrayExtra("USER ");
-                String message = "REGISTER " + userData[0] + userData[1] + userData[2];
+                
+                String message = "REGISTER " + userData[0] + ":" + userData[1];
                 comm.sendMessage(message);
                 Log.i("ddd",message);
 

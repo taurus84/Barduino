@@ -46,7 +46,7 @@ public class Register extends Activity {
                 if(etPassword_Register.getText().toString().equals(etPassword_Register_2.getText().toString())) {
 
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                    String[] userData = {et_Username_Register.getText().toString(),":",etPassword_Register.getText().toString()};
+                    String[] userData = {et_Username_Register.getText().toString(),etPassword_Register.getText().toString()};
                     Intent returnIntent = getIntent();
                     returnIntent.putExtra("USER ", userData);
                     //setResult(USER_CREATED, returnIntent);
