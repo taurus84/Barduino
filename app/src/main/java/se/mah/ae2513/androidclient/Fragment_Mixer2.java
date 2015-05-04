@@ -43,6 +43,7 @@ public class Fragment_Mixer2 extends Fragment implements SeekBar.OnSeekBarChange
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        tvTotalVolume = (TextView) getActivity().findViewById(R.id.tvTotal);
         l = getActivity().getLayoutInflater();
         fluidBox = (RelativeLayout)getActivity().findViewById(R.id.fluidBox);
 /*
@@ -139,7 +140,7 @@ public class Fragment_Mixer2 extends Fragment implements SeekBar.OnSeekBarChange
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 //changing text when sliding on the seekbar
                 tvVol.setText(seekBar.getProgress() + " cl");
-                //changeTotalVolume();
+                changeTotalVolume();
                 //tinging seekbar background
                 seekBar.getBackground().setAlpha(255 - seekBar.getProgress() * 10);
                 //seekBar.getBackground().setColorFilter(new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.ADD));
@@ -159,5 +160,12 @@ public class Fragment_Mixer2 extends Fragment implements SeekBar.OnSeekBarChange
         fluidBox.addView(v, loRules);
 
 
+    }
+    private void changeTotalVolume() {
+        int totalVolume = 0;
+        for(int i = 0; i < seekBars.size(); i++) {
+            totalVolume += seekBars.get(i).getProgress();
+        }
+        tvTotalVolume.setText(totalVolume + " cl");
     }
 }

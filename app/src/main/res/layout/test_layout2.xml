@@ -2,32 +2,55 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appBg">
+    android:background="@color/appBg"
+    android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="25"
-        android:id="@+id/scroller">
+        android:layout_weight="10">
 
-        <RelativeLayout
-            android:id="@+id/fluidBox"
+        <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="25"
-            android:background="#565656">
+            android:id="@+id/scroller">
+
+            <RelativeLayout
+                android:id="@+id/fluidBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#565656">
 
 
-        </RelativeLayout>
+            </RelativeLayout>
         </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="David Tran"
+            android:background="#ff0000"
+            android:gravity="right"
+
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btnMixerOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ORDER"
+            android:textStyle="bold"
+            android:layout_weight="1"/>
 
 
 
-
-
-
-
-
-
+    </LinearLayout>
 
 </LinearLayout>

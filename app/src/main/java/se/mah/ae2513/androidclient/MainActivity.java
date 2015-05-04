@@ -34,7 +34,7 @@ public class MainActivity extends Activity implements Communicator  {
     private Fragment_Register fragReg;
     private TCPClient client;
     private Timer timer;
-    private TextView tvLogin, tvUpdate, tvDisconnect;
+    private TextView tvLogin, tvUpdate, tvDisconnect, tvBalance;
     private boolean myDrink;
     private final int SHORT = 1, LONG = 2, NO_CONNECTION = 0, LOGGED_OUT = 1;
     private Intent returnIntent;
@@ -76,6 +76,7 @@ public class MainActivity extends Activity implements Communicator  {
         tvLogin = (TextView) findViewById(R.id.tvSignIn);
         tvUpdate = (TextView) findViewById(R.id.tvUpdate);
         tvDisconnect = (TextView) findViewById(R.id.tvDisconnect);
+        tvBalance = (TextView) findViewById(R.id.tvBalance);
 
         tvDisconnect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,7 +156,8 @@ public class MainActivity extends Activity implements Communicator  {
             client.sendMessage("STOP");
             setTvLogIn();
         }
-        client = new TCPClient(entity.getIpNbr(),entity.getPortNbr(), this);
+        //client = new TCPClient(entity.getIpNbr(),entity.getPortNbr(), this);
+
         client.start();
     }
 
@@ -187,8 +189,15 @@ public class MainActivity extends Activity implements Communicator  {
 
         } else if(id == R.id.abTest) {
             fragMix2.setTextLiquids();
+        } else if(id == R.id.abTestUDP) {
+            connectUDP();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void connectUDP() {
+        UDP udp = new UDP();
+        udp.start();
     }
 
 
@@ -274,6 +283,7 @@ public class MainActivity extends Activity implements Communicator  {
                 makeToast("Wrong username or password", LONG);
             } else if(login.equals("OK")) {
                 Double balance = Double.parseDouble(message.split(" ")[2]);
+                tvBalance.setText(Double.toString(balance));
                 entity.setBalance(balance);
                 entity.setButtonStatus("Loggin in...");
                 updateFluidsFromServer();

@@ -6,13 +6,17 @@
     <item android:id="@+id/abLogIn"
         android:title="@string/logInOut"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item android:id="@+id/abUpdate"
         android:title="UPDATE"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item android:id="@+id/abTest"
         android:title="TEST"
+        android:orderInCategory="100"
+        app:showAsAction="always" />
+    <item android:id="@+id/abTestUDP"
+        android:title="TEST UDP"
         android:orderInCategory="100"
         app:showAsAction="always" />
 
