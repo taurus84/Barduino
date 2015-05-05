@@ -21,6 +21,7 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,7 +29,7 @@ import java.util.TimerTask;
  * The class creates a connection to a server where user chooses
  * ip-address and port number of the server.
  */
-public class MainActivity extends Activity implements Communicator  {
+public class MainActivity extends Activity implements Communicator, View.OnClickListener {
 
     private Entity entity = Entity.getInstance();
     private FragmentManager fm;
@@ -43,6 +44,9 @@ public class MainActivity extends Activity implements Communicator  {
     private boolean myDrink;
     private final int SHORT = 1, LONG = 2, NO_CONNECTION = 0, LOGGED_OUT = 1;
     private Intent returnIntent;
+    private static final String TAG_UPDATE = "update";
+    private static final String TAG_LOGOUT = "logout";
+    private static final String TAG_3 = "tag3";
 
 
 
@@ -52,7 +56,7 @@ public class MainActivity extends Activity implements Communicator  {
         setContentView(R.layout.main_window);
         createFragments();
         initializeComponents();
-
+        /*
         entity.setIpNbr(getIntent().getStringExtra("ipnumber"));
         entity.setPortNbr(Integer.parseInt(getIntent().getStringExtra("port")));
         entity.setUsername(getIntent().getStringExtra("username"));
@@ -75,9 +79,19 @@ public class MainActivity extends Activity implements Communicator  {
            login();
        }
 
+*/
 
         ImageView icon = new ImageView(this); // Create an icon
         icon.setImageResource(R.drawable.bar);
+        com.getbase.floatingactionbutton.FloatingActionButton actionB = new com.getbase.floatingactionbutton.FloatingActionButton(this);
+        actionB.setImageResource(R.drawable.update);
+
+        //actionB.build();
+
+
+
+
+
 
         FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
                 .setPosition(FloatingActionButton.POSITION_TOP_LEFT)
@@ -86,15 +100,22 @@ public class MainActivity extends Activity implements Communicator  {
         ImageView icon1 = new ImageView(this);
         icon1.setImageResource(R.drawable.bar);
         ImageView icon2 = new ImageView(this);
-        icon1.setImageResource(R.drawable.bar);
+        icon2.setImageResource(R.drawable.update);
         ImageView icon3 = new ImageView(this);
-        icon1.setImageResource(R.drawable.bar);
+        icon3.setImageResource(R.drawable.bar);
 
         SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
 
         SubActionButton button1 = itemBuilder.setContentView(icon1).build();
         SubActionButton button2 = itemBuilder.setContentView(icon2).build();
         SubActionButton button3 = itemBuilder.setContentView(icon3).build();
+        button1.setTag(TAG_3);
+        button2.setTag(TAG_UPDATE);
+        button3.setTag(TAG_LOGOUT);
+
+        button1.setOnClickListener(this);
+        button2.setOnClickListener(this);
+        button3.setOnClickListener(this);
 
         FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
                 .addSubActionView(button1)
@@ -361,7 +382,7 @@ public class MainActivity extends Activity implements Communicator  {
             public void run() {
                 ArrayList<String> liquids = new ArrayList<String>();
                 ArrayList<Double> price = new ArrayList<Double>();
-                for(int i = 0; i < string.length(); i++) {
+                for (int i = 0; i < string.length(); i++) {
                     liquids.add(string.split(":")[1].split(",")[i].split("$")[0]);
                     price.add(Double.parseDouble(string.split(":")[1].split(",")[i].split("$")[1]));
                 }
@@ -404,7 +425,9 @@ public class MainActivity extends Activity implements Communicator  {
     //implemented method for interface Communication
     @Override
     public void doSomething() {
-        tvBalance.setText("10000000");
+        Random rand = new Random();
+
+        tvBalance.setText(Integer.toString(rand.nextInt(Integer.MAX_VALUE)));
     }
 
     //implemented method for interface Communication
@@ -424,7 +447,7 @@ public class MainActivity extends Activity implements Communicator  {
     private void startTimer() {
         stopTimer();
         timer = new Timer();
-        timer.schedule(new CheckServer(), 2000,2000);
+        timer.schedule(new CheckServer(), 2000, 2000);
     }
 
     private void stopTimer() {
@@ -442,6 +465,17 @@ public class MainActivity extends Activity implements Communicator  {
         Intent returnIntent = getIntent();
         setResult(NO_CONNECTION,returnIntent);
         finish();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getTag().equals(TAG_UPDATE)) {
+            fragMix2.setTextLiquids();
+        } else if(v.getTag().equals(TAG_LOGOUT)) {
+            makeToast("Logged out", SHORT);
+        } else if(v.getTag().equals(TAG_3)) {
+            doSomething();
+        }
     }
 
     private class CheckServer extends TimerTask {
