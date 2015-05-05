@@ -7,7 +7,6 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -81,7 +80,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
 
 */
 
-        ImageView icon = new ImageView(this); // Create an icon
+       ImageView icon = new ImageView(this); // Create an icon
         icon.setImageResource(R.drawable.bar);
         com.getbase.floatingactionbutton.FloatingActionButton actionB = new com.getbase.floatingactionbutton.FloatingActionButton(this);
         actionB.setImageResource(R.drawable.update);
@@ -362,7 +361,10 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         } else if(message.contains("GROGOK")) {
             //setTextOnButtonWithString("Wait..");
             myDrink = !myDrink;
+            Double balance = Double.parseDouble(message.split(" ")[1]);
+            entity.setBalance(balance);
             entity.setButtonStatus("Wait...");
+
 
             showOrderButton(false);
         } else if(message.contains("INGREDIENTS")) {
