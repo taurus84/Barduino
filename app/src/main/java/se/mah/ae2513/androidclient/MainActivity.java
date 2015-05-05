@@ -12,8 +12,13 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -40,13 +45,14 @@ public class MainActivity extends Activity implements Communicator  {
     private Intent returnIntent;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_window);
         createFragments();
         initializeComponents();
-       /*
+
         entity.setIpNbr(getIntent().getStringExtra("ipnumber"));
         entity.setPortNbr(Integer.parseInt(getIntent().getStringExtra("port")));
         entity.setUsername(getIntent().getStringExtra("username"));
@@ -68,7 +74,37 @@ public class MainActivity extends Activity implements Communicator  {
        if(client.isConnected() && !client.ConnectFailed()) {
            login();
        }
-       */
+
+
+        ImageView icon = new ImageView(this); // Create an icon
+        icon.setImageResource(R.drawable.bar);
+
+        FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
+                .setPosition(FloatingActionButton.POSITION_TOP_LEFT)
+                .setContentView(icon)
+                .build();
+        ImageView icon1 = new ImageView(this);
+        icon1.setImageResource(R.drawable.bar);
+        ImageView icon2 = new ImageView(this);
+        icon1.setImageResource(R.drawable.bar);
+        ImageView icon3 = new ImageView(this);
+        icon1.setImageResource(R.drawable.bar);
+
+        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
+
+        SubActionButton button1 = itemBuilder.setContentView(icon1).build();
+        SubActionButton button2 = itemBuilder.setContentView(icon2).build();
+        SubActionButton button3 = itemBuilder.setContentView(icon3).build();
+
+        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
+                .addSubActionView(button1)
+                .addSubActionView(button2)
+                .addSubActionView(button3)
+                .setStartAngle(0)
+                .setEndAngle(90)
+                .attachTo(actionButton)
+                .build();
+
     }
 
 
@@ -77,6 +113,12 @@ public class MainActivity extends Activity implements Communicator  {
         tvUpdate = (TextView) findViewById(R.id.tvUpdate);
         tvDisconnect = (TextView) findViewById(R.id.tvDisconnect);
         tvBalance = (TextView) findViewById(R.id.tvBalance);
+        tvBalance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //connectUDP();
+            }
+        });
 
         tvDisconnect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +130,7 @@ public class MainActivity extends Activity implements Communicator  {
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(tvLogin.getText().equals("Sign in")) {
+                if (tvLogin.getText().equals("Sign in")) {
                     fragmentLogin();
                 } else {
                     confirmSignOut();
@@ -156,7 +198,7 @@ public class MainActivity extends Activity implements Communicator  {
             client.sendMessage("STOP");
             setTvLogIn();
         }
-        //client = new TCPClient(entity.getIpNbr(),entity.getPortNbr(), this);
+        client = new TCPClient(entity.getIpNbr(),entity.getPortNbr(), this);
 
         client.start();
     }
@@ -190,15 +232,12 @@ public class MainActivity extends Activity implements Communicator  {
         } else if(id == R.id.abTest) {
             fragMix2.setTextLiquids();
         } else if(id == R.id.abTestUDP) {
-            connectUDP();
+            //connectUDP();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void connectUDP() {
-        UDP udp = new UDP();
-        udp.start();
-    }
+
 
 
     /*
@@ -365,6 +404,7 @@ public class MainActivity extends Activity implements Communicator  {
     //implemented method for interface Communication
     @Override
     public void doSomething() {
+        tvBalance.setText("10000000");
     }
 
     //implemented method for interface Communication

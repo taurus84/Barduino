@@ -9,26 +9,40 @@ import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
+import java.util.TimerTask;
 
 /**
  * Created by David Tran on 15-05-04.
  */
-public class UDP extends Thread {
+public class UDP extends TimerTask {
+
+    private MainActivity mainActivity;
+    private Login logger;
+    private Entity entity;
+    private int portNbr = 28785;
+
+    public UDP(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
+    }
+
+    public UDP (Login logger) {
+        this.logger = logger;
+    }
 
     public UDP() {
 
     }
 
     public void run() {
+        boolean bool = true;
         // Find the server using UDP broadcast
         try {
             // Open a random port to send the package
             DatagramSocket c = new DatagramSocket();
             c.setBroadcast(true);
 
-            byte[] sendData = "DISCOVER_FUIFSERVER_REQUEST".getBytes();
+            byte[] sendData = "BARDUINO".getBytes();
 
-            while (true) {
 
                 // Broadcast the message over all the network interfaces
                 Enumeration interfaces = NetworkInterface
@@ -54,7 +68,7 @@ public class UDP extends Thread {
                         // Send the broadcast package!
                         try {
                             DatagramPacket sendPacket = new DatagramPacket(
-                                    sendData, sendData.length, broadcast, 28785);
+                                    sendData, sendData.length, broadcast, portNbr);
                             c.send(sendPacket);
                             c.setSoTimeout(5000);
 
@@ -75,25 +89,34 @@ public class UDP extends Thread {
                     c.receive(receivePacket);
                     // We have a response
                     Log.i("RESPONSE from server: ", receivePacket.getAddress().getHostAddress());
+                    //String serverIpNbr = receivePacket.getAddress().getHostAddress();
 
                     // Check if the message is correct
                     String message = new String(receivePacket.getData()).trim();
-                    if (message.equals("DISCOVER_FUIFSERVER_RESPONSE")) {
+                    if (message.equals("HELLO_CLIENT")) {
                         // DO SOMETHING WITH THE SERVER'S IP (for example, store
                         // it in your controller)
                         // Controller_Base.setServerIp(receivePacket.getAddress());
-                        Log.i("CONNECTED", "TO SERVER>>>>");
+                        Log.i("<<<<<CONNECTED", "TO SERVER>>>>");
+                        //mainActivity.doSomething();
+                        //entity.setIpNbr(serverIpNbr);
+                        //entity.setPortNbr(portNbr);
+                        logger.setIP(receivePacket.getAddress().getHostAddress(), portNbr);
+                        this.cancel();
+
                     }
                 } catch (Exception e) {
 
                 }
 
-            }
+
             // Close the port!
+            c.close();
 
         } catch (IOException ex) {
             // Logger.getLogger(LoginWindow.class.getName()).log(Level.SEVERE,
             // null, ex);
+
         }
     }
 }

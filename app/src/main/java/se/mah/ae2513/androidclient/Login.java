@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Timer;
+
 /**
  * Created by David on 2015-04-17.
  */
@@ -25,47 +27,56 @@ public class Login extends Activity {
     private TextView tvErrorMessage;
     private Button btnLogin;
     private final int NO_CONNECTION = 0, LOGGED_OUT = 1;
+    private Timer udpTimer;
+    private String serverIP, serverPort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        connectUDP();
+        setContentView(R.layout.test_login);
 
         setComponents();
     }
 
     private void setComponents() {
-        etUsername = (EditText) findViewById(R.id.etUsername);
-        etPassword = (EditText) findViewById(R.id.etPassword);
-        etIP = (EditText) findViewById(R.id.etIP);
-        etPort = (EditText) findViewById(R.id.etPort);
+        etUsername = (EditText) findViewById(R.id.etUsername_Login);
+        etPassword = (EditText) findViewById(R.id.etPassword_Login);
+        //etIP = (EditText) findViewById(R.id.etIP);
+        //etPort = (EditText) findViewById(R.id.etPort);
         //tvErrorMessage = (TextView) findViewById(R.id.tvErrorMessage);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnLogin = (Button) findViewById(R.id.btn_Login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(".MainActivity");
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-                if(!username.isEmpty()) {
+                if (!username.isEmpty()) {
                     intent.putExtra("username", username);
                 }
-                if(!password.isEmpty()) {
+                if (!password.isEmpty()) {
                     intent.putExtra("password", password);
                 }
-                String ip = etIP.getText().toString();
-                String port = etPort.getText().toString();
-                intent.putExtra("ipnumber", ip);
-                intent.putExtra("port", port);
-                if(ip.isEmpty()) {
-                    makeToast("Input ipnummer");
-                } else if(port.isEmpty()) {
-                    makeToast("Input Portnumber");
-                } else
-                    startActivityForResult(intent, 1);
+                startActivityForResult(intent, 1);
+
+                intent.putExtra("ipnumber", serverIP);
+                intent.putExtra("port", serverPort);
+                startActivityForResult(intent, 1);
+
             }
         });
 
+    }
+
+    public void connectUDP() {
+        udpTimer = new Timer();
+        udpTimer.scheduleAtFixedRate(new UDP(this), 0, 2000);
+    }
+
+    public void stopUDPTimer() {
+        udpTimer.cancel();
+        udpTimer.purge();
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -98,10 +109,8 @@ public class Login extends Activity {
     }
 
 
-
-
-
-
-
-
+    public void setIP(String serverIP, int portNbr) {
+        this.serverIP = serverIP;
+        this.serverPort = Integer.toString(portNbr);
+    }
 }
