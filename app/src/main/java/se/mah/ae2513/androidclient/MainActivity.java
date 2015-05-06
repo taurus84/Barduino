@@ -33,6 +33,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
     private Entity entity = Entity.getInstance();
     private FragmentManager fm;
     private FragmentTransaction transaction;
+    private FloatingActionMenu actionMenu;
     private Fragment_Mixer2 fragMix2;
     private Fragment_Login fragLogin;
     private Fragment_Login2 fragLogin2;
@@ -41,11 +42,12 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
     private Timer timer;
     private TextView tvLogin, tvUpdate, tvDisconnect, tvBalance;
     private boolean myDrink;
-    private final int SHORT = 1, LONG = 2, NO_CONNECTION = 0, LOGGED_OUT = 1;
+    private final int SHORT = 1, LONG = 2, NO_CONNECTION = 0, LOGGED_OUT = 1, LOGIN_BAD = 2, RE_LOGIN = 3;
     private Intent returnIntent;
     private static final String TAG_UPDATE = "update";
     private static final String TAG_LOGOUT = "logout";
     private static final String TAG_3 = "tag3";
+    private int serverPortNbr = 4444;
 
 
 
@@ -55,9 +57,9 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         setContentView(R.layout.main_window);
         createFragments();
         initializeComponents();
-        /*
+
         entity.setIpNbr(getIntent().getStringExtra("ipnumber"));
-        entity.setPortNbr(Integer.parseInt(getIntent().getStringExtra("port")));
+        entity.setPortNbr(serverPortNbr);
         entity.setUsername(getIntent().getStringExtra("username"));
         entity.setPassword(getIntent().getStringExtra("password"));
         returnIntent = getIntent();
@@ -68,7 +70,6 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
     protected void onStart() {
         super.onStart();
         connectToServer();
-        //startTimer();
         while(!client.isConnected()) {
             if(client.ConnectFailed()) {
                 break;
@@ -77,68 +78,13 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
        if(client.isConnected() && !client.ConnectFailed()) {
            login();
        }
-
-*/
-
-       ImageView icon = new ImageView(this); // Create an icon
-        icon.setImageResource(R.drawable.bar);
-        com.getbase.floatingactionbutton.FloatingActionButton actionB = new com.getbase.floatingactionbutton.FloatingActionButton(this);
-        actionB.setImageResource(R.drawable.update);
-
-        //actionB.build();
-
-
-
-
-
-
-        FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
-                .setPosition(FloatingActionButton.POSITION_TOP_LEFT)
-                .setContentView(icon)
-                .build();
-        ImageView icon1 = new ImageView(this);
-        icon1.setImageResource(R.drawable.bar);
-        ImageView icon2 = new ImageView(this);
-        icon2.setImageResource(R.drawable.update);
-        ImageView icon3 = new ImageView(this);
-        icon3.setImageResource(R.drawable.bar);
-
-        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
-
-        SubActionButton button1 = itemBuilder.setContentView(icon1).build();
-        SubActionButton button2 = itemBuilder.setContentView(icon2).build();
-        SubActionButton button3 = itemBuilder.setContentView(icon3).build();
-        button1.setTag(TAG_3);
-        button2.setTag(TAG_UPDATE);
-        button3.setTag(TAG_LOGOUT);
-
-        button1.setOnClickListener(this);
-        button2.setOnClickListener(this);
-        button3.setOnClickListener(this);
-
-        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
-                .addSubActionView(button1)
-                .addSubActionView(button2)
-                .addSubActionView(button3)
-                .setStartAngle(0)
-                .setEndAngle(90)
-                .attachTo(actionButton)
-                .build();
-
     }
-
 
     private void initializeComponents() {
         tvLogin = (TextView) findViewById(R.id.tvSignIn);
         tvUpdate = (TextView) findViewById(R.id.tvUpdate);
         tvDisconnect = (TextView) findViewById(R.id.tvDisconnect);
         tvBalance = (TextView) findViewById(R.id.tvBalance);
-        tvBalance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //connectUDP();
-            }
-        });
 
         tvDisconnect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,23 +93,42 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
             }
         });
 
-        tvLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tvLogin.getText().equals("Sign in")) {
-                    fragmentLogin();
-                } else {
-                    confirmSignOut();
-                }
-            }
-        });
-        tvUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateFluidsFromServer();
+        ImageView icon = new ImageView(this); // Create an icon
+        icon.setImageResource(R.drawable.coin);
+        FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
+                .setBackgroundDrawable(R.drawable.coin)
+                .setPosition(FloatingActionButton.POSITION_TOP_RIGHT)
+                        //.setContentView(icon)
+                .build();
+        ImageView icon1 = new ImageView(this);
+        icon1.setImageResource(R.drawable.bar);
+        ImageView icon2 = new ImageView(this);
+        icon2.setImageResource(R.drawable.sync);
+        ImageView icon3 = new ImageView(this);
+        icon3.setImageResource(R.drawable.bar);
 
-            }
-        });
+        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
+
+     //   SubActionButton button1 = itemBuilder.setContentView(icon1).build();
+        SubActionButton button2 = itemBuilder.setContentView(icon2).build();
+        SubActionButton button3 = itemBuilder.setContentView(icon3).build();
+     //   button1.setTag(TAG_3);
+        button2.setTag(TAG_UPDATE);
+        button3.setTag(TAG_LOGOUT);
+
+     //   button1.setOnClickListener(this);
+        button2.setOnClickListener(this);
+        button3.setOnClickListener(this);
+
+        actionMenu = new FloatingActionMenu.Builder(this)
+         //       .addSubActionView(button1)
+                .addSubActionView(button2)
+                .addSubActionView(button3)
+                .setStartAngle(90)
+                .setEndAngle(135)
+                .attachTo(actionButton)
+                .build();
+
     }
 
     private void confirmSignOut() {
@@ -171,13 +136,9 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         builder.setTitle("Sign out!")
                 .setMessage("Are you sure you want to sign out?")
                 .setCancelable(true)
-
                 .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        closeConnection();
-                        setResult(LOGGED_OUT, returnIntent);
-                        finish();
-
+                        signOut();
                     }
                 })
                 .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
@@ -189,26 +150,10 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         builder.create().show();        // create and show the alert dialog
     }
 
-    private void setTvLogOut() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                tvLogin.setText("Sign out");
-                tvDisconnect.setVisibility(View.GONE);
-                tvUpdate.setVisibility(View.VISIBLE);
-            }
-        });
-    }
-
-    private void setTvLogIn() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                tvLogin.setText("Sign in");
-                tvUpdate.setVisibility(View.GONE);
-                tvDisconnect.setVisibility(View.VISIBLE);
-            }
-        });
+    private void signOut() {
+        closeConnection();
+        setResult(LOGGED_OUT, returnIntent);
+        finish();
     }
 
     public void connectToServer() {
@@ -250,7 +195,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         } else if(id == R.id.abUpdate) {
 
         } else if(id == R.id.abTest) {
-            fragMix2.setTextLiquids();
+            fragMix2.setLiquids();
         } else if(id == R.id.abTestUDP) {
             //connectUDP();
         }
@@ -273,7 +218,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         transaction = fm.beginTransaction();
         //transaction.add(R.id.fr_id, fragMix);
         transaction.add(R.id.fr_id, fragMix2);
-        transaction.addToBackStack(null);
+        //transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -289,7 +234,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
     public void fragmentRegister() {
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
-        transaction.replace(R.id.fr_id,fragReg );
+        transaction.replace(R.id.fr_id, fragReg);
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -338,16 +283,17 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         } else if(message.split(" ")[0].equals("LOGIN")) {
             String login = message.split(" ")[1];
             if(login.equals("BAD")) {
-                entity.setButtonStatus("Not logged in");
-                makeToast("Wrong username or password", LONG);
+                //end activity, out to login screen
+                setResult(LOGIN_BAD, returnIntent);
+                finish();
             } else if(login.equals("OK")) {
-                Double balance = Double.parseDouble(message.split(" ")[2]);
-                tvBalance.setText(Double.toString(balance));
-                entity.setBalance(balance);
-                entity.setButtonStatus("Loggin in...");
+                final String balance = message.split(" ")[2];
+                updateBalance();
+                entity.setBalance(Integer.parseInt(message.split(" ")[2]));
+                //entity.setButtonStatus("Loggin in...");
                 updateFluidsFromServer();
-                makeToast("Login successful", SHORT);
-                setTvLogOut();
+                //makeToast("Login successful", SHORT);
+                //setTvLogOut();
                 startTimer();
             }
         } else if(message.contains("AVAILABLE")) {
@@ -361,8 +307,9 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         } else if(message.contains("GROGOK")) {
             //setTextOnButtonWithString("Wait..");
             myDrink = !myDrink;
-            Double balance = Double.parseDouble(message.split(" ")[1]);
+            int balance = Integer.parseInt(message.split(" ")[1]);
             entity.setBalance(balance);
+            updateBalance();
             entity.setButtonStatus("Wait...");
 
 
@@ -383,28 +330,24 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
             @Override
             public void run() {
                 ArrayList<String> liquids = new ArrayList<String>();
-                ArrayList<Double> price = new ArrayList<Double>();
-                for (int i = 0; i < string.length(); i++) {
-                    liquids.add(string.split(":")[1].split(",")[i].split("$")[0]);
-                    price.add(Double.parseDouble(string.split(":")[1].split(",")[i].split("$")[1]));
+                ArrayList<Integer> price = new ArrayList<Integer>();
+
+                String str = string.split(":")[1];
+                String[] liquidList = str.split(",");
+                //rätta till size från liquids!!
+                for (int i = 0; i < liquidList.length; i++) {
+                    liquids.add(liquidList[i].split("<cost>")[0]);
+                    price.add(Integer.parseInt(liquidList[i].split("<cost>")[1]));
+
                 }
                 entity.setLiquids(liquids);
                 entity.setLiquidPrices(price);
 
                 if (fragMix2.isVisible())
-                    fragMix2.setTextLiquids();
+                    fragMix2.setLiquids();
 
             }
         });
-    }
-    private boolean checkLiquidsSameSame(String[] liquids) {
-        if(liquids[0].equals(entity.getLiquids(0)) &&
-                liquids[1].equals(entity.getLiquids(1)) &&
-                liquids[2].equals(entity.getLiquids(2)) &&
-                liquids[3].equals(entity.getLiquids(3))) {
-            return true;
-        }
-        return false;
     }
 
     private void showOrderButton(final boolean show) {
@@ -464,19 +407,27 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
     public void connectionDown() {
         if(timer != null)
             timer.cancel();
-        Intent returnIntent = getIntent();
         setResult(NO_CONNECTION,returnIntent);
         finish();
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        signOut();
+    }
+
+    @Override
     public void onClick(View v) {
         if(v.getTag().equals(TAG_UPDATE)) {
-            fragMix2.setTextLiquids();
+            closeConnection();
+            setResult(RE_LOGIN, returnIntent);
+            finish();
         } else if(v.getTag().equals(TAG_LOGOUT)) {
-            makeToast("Logged out", SHORT);
+            confirmSignOut();
         } else if(v.getTag().equals(TAG_3)) {
-            doSomething();
+            //unused
+
         }
     }
 
@@ -491,9 +442,40 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(fragMix2.isVisible()) {
-                   // fragMix2.setButtonText(entity.getButtonStatus());
+                if (fragMix2.isVisible()) {
+                    fragMix2.setButtonText(entity.getButtonStatus());
                 }
+            }
+        });
+    }
+
+    private void setTvLogOut() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tvLogin.setText("Sign out");
+                tvDisconnect.setVisibility(View.GONE);
+                tvUpdate.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void setTvLogIn() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tvLogin.setText("Sign in");
+                tvUpdate.setVisibility(View.GONE);
+                tvDisconnect.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void updateBalance() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tvBalance.setText(entity.getBalance() + "");
             }
         });
     }

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -21,6 +22,8 @@ public class Register extends Activity {
     private Entity entity = Entity.getInstance();
     private final int USER_CREATED = 1,CANCEL = 0;
     private InputMethodManager imm;
+    private TCPRegister client;
+    private int serverPortNbr = 4444;
 
 
     @Override
@@ -43,8 +46,11 @@ public class Register extends Activity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(etPassword_Register.getText().toString().equals(etPassword_Register_2.getText().toString())) {
-
+                String password1 = etPassword_Register.getText().toString();
+                String password2 = etPassword_Register_2.getText().toString();
+                String username =  et_Username_Register.getText().toString();
+                if(password1.equals(password2)) {
+                    connectToserver(username, password1);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                     String[] userData = {et_Username_Register.getText().toString(),etPassword_Register.getText().toString()};
                     Intent returnIntent = getIntent();
@@ -60,7 +66,7 @@ public class Register extends Activity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               setResult(RESULT_CANCELED);
+                setResult(RESULT_CANCELED);
                 finish();
             }
         });
@@ -82,4 +88,26 @@ public class Register extends Activity {
         alertDialog.show();
     }
 
+    private void connectToserver(String username, String password) {
+        client = new TCPRegister(entity.getIpNbr(), serverPortNbr, this);
+        client.start();
+        while(!client.isConnected()) {
+            if(client.ConnectFailed()) {
+                break;
+            }
+        }
+        if(client.isConnected() && !client.ConnectFailed()) {
+            String message = "REGISTER " + username + ":" + password;
+            client.sendMessage(message);
+            Log.i("Skickat till server:", message);
+        }
+    }
+
+    public void msgFromServer(String serverMessage) {
+        if(serverMessage.equals("REGISTER OK")) {
+            finish();
+        } else {
+            //meddela felet
+        }
+    }
 }

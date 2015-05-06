@@ -2,7 +2,9 @@ package se.mah.ae2513.androidclient;
 
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 /**
  * Created by David Tran on 15-04-29.
  */
-public class Fragment_Mixer2 extends Fragment implements SeekBar.OnSeekBarChangeListener {
+public class Fragment_Mixer2 extends Fragment {
 
-    private SeekBar seekBar1, seekBar2, seekBar3, seekBar4;
-    private TextView cl1,cl2,cl3,cl4,liquid1,liquid2,liquid3,liquid4, tvTotalVolume;
+    private TextView tvTotalVolume;
     private Entity entity = Entity.getInstance();
     private Button btnOrder;
     private Communicator comm;
@@ -42,74 +44,83 @@ public class Fragment_Mixer2 extends Fragment implements SeekBar.OnSeekBarChange
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
+        comm = (Communicator) getActivity();
         super.onActivityCreated(savedInstanceState);
         tvTotalVolume = (TextView) getActivity().findViewById(R.id.tvTotal);
         l = getActivity().getLayoutInflater();
         fluidBox = (RelativeLayout)getActivity().findViewById(R.id.fluidBox);
-/*
-        comm = (Communicator) getActivity();
-        seekBar1 = (SeekBar) getActivity().findViewById(R.id.seek1);
-        seekBar2 = (SeekBar) getActivity().findViewById(R.id.seek2);
-        seekBar3 = (SeekBar) getActivity().findViewById(R.id.seek3);
-        seekBar4 = (SeekBar) getActivity().findViewById(R.id.seek4);
+        btnOrder = (Button) getActivity().findViewById(R.id.btnOrder);
+        btnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                orderDrink();
 
-        cl1 = (TextView) getActivity().findViewById(R.id.tvVolume1);
-        cl2 = (TextView) getActivity().findViewById(R.id.tvVolume2);
-        cl3 = (TextView) getActivity().findViewById(R.id.tvVolume3);
-        cl4 = (TextView) getActivity().findViewById(R.id.tvVolume4);
-        tvTotalVolume = (TextView) getActivity().findViewById(R.id.tvTotalCl);
+            }
+        });
 
-        liquid1 = (TextView) getActivity().findViewById(R.id.tvFluid1);
-        liquid2 = (TextView) getActivity().findViewById(R.id.tvFluid2);
-        liquid3 = (TextView) getActivity().findViewById(R.id.tvFluid3);
-        liquid4 = (TextView) getActivity().findViewById(R.id.tvFluid4);
-        liquid1.setText(entity.getLiquids(0));
-        liquid2.setText(entity.getLiquids(1));
-        liquid3.setText(entity.getLiquids(2));
-        liquid4.setText(entity.getLiquids(3));
-
-        seekBar1.setOnSeekBarChangeListener(this);
-        seekBar2.setOnSeekBarChangeListener(this);
-        seekBar3.setOnSeekBarChangeListener(this);
-        seekBar4.setOnSeekBarChangeListener(this);
-
-        */
-
-    }
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-/*
-        valueSeekBar1 = seekBar1.getProgress();
-        valueSeekBar2 = seekBar2.getProgress();
-        valueSeekBar3 = seekBar3.getProgress();
-        valueSeekBar4 = seekBar4.getProgress();
-        valueTotal = valueSeekBar1 + valueSeekBar2 + valueSeekBar3 + valueSeekBar4;
-
-        cl1.setText(valueSeekBar1 + " cl");
-        cl2.setText(valueSeekBar2 + " cl");
-        cl3.setText(valueSeekBar3 + " cl");
-        cl4.setText(valueSeekBar4 + " cl");
-        tvTotalVolume.setText(valueTotal + " cl");
-*/
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
 
     }
 
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
+    private void orderDrink() {
+        int totalVolume = 0;
+        if(orderPrice() <= entity.getBalance()) {
+            String message = "GROG ";
+            for(int i = 0; i < seekBars.size(); i++) {
+                int seekBarValue = seekBars.get(i).getProgress();
+                totalVolume += seekBarValue;
+                if(seekBarValue < 10) {
+                    message += "0" + seekBarValue + " ";
+                } else {
+                    message += seekBarValue + " ";
+                }
+            }
+
+            if(totalVolume == 0) {
+                Toast toast = Toast.makeText(getActivity(), "Maybe you want something in your glass?", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
+                toast.show();
+            } else {
+                comm.sendMessage(message);
+                Toast toast = Toast.makeText(getActivity(), "Sending grog", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
+                toast.show();
+            }
+        } else {
+            Toast toast = Toast.makeText(getActivity(), "Unsufficent fonds", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
+            toast.show();
+        }
+
+
+
+    }
+
+    private void checkOrderOK () {
+
+    }
+
+    private int orderPrice() {
+        int total = 0;
+        for(int i = 0; i < seekBars.size(); i++) {
+            int seekBarValue = seekBars.get(i).getProgress();
+            if(seekBarValue != 0) {
+                total += seekBarValue * entity.getLiquidPrices().get(i);
+            }
+        }
+        return total;
+    }
+
+
+    public void setLiquids() {
+        int nbrOfFluids = entity.getLiquids().size();
+        for(int i = 0; i < nbrOfFluids; i++) {
+            setTextLiquids(entity.getLiquids().get(i), entity.getLiquidPrices().get(i));
+        }
 
     }
 
 
-    public void setTextLiquids() {
-       /* liquid1.setText(entity.getLiquids(0));
-        liquid2.setText(entity.getLiquids(1));
-        liquid3.setText(entity.getLiquids(2));
-        liquid4.setText(entity.getLiquids(3));
-        */
+    public void setTextLiquids(String liquid, Integer price) {
 
         View v = l.inflate(R.layout.fluid_item, fluidBox, false);
 
@@ -154,7 +165,7 @@ public class Fragment_Mixer2 extends Fragment implements SeekBar.OnSeekBarChange
             }
         });
         tvVol.setText(0 + " cl");
-        tvFluid.setText("Fluid: " + v.getId());
+        tvFluid.setText("Fluid: " + liquid + "\tPrice: " + price + "kr/cl");
 
         //add the view v to the container(parent) with the params defined in loRules
         fluidBox.addView(v, loRules);
@@ -166,6 +177,24 @@ public class Fragment_Mixer2 extends Fragment implements SeekBar.OnSeekBarChange
         for(int i = 0; i < seekBars.size(); i++) {
             totalVolume += seekBars.get(i).getProgress();
         }
-        tvTotalVolume.setText(totalVolume + " cl");
+        tvTotalVolume.setText("Drink price: " + orderPrice() + "\t\t" + totalVolume + " cl");
     }
+
+    public void setButtonText(String text) {
+        btnOrder.setText(text);
+        if(text.equals("Order Drink")) {
+            btnOrder.setBackgroundColor(Color.LTGRAY);
+        } else {
+            btnOrder.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+    }
+    public void showButton(boolean show) {
+        if(show) {
+            btnOrder.setEnabled(true);
+        } else {
+            btnOrder.setEnabled(false);
+        }
+    }
+
 }

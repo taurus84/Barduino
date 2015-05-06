@@ -27,13 +27,14 @@
                 android:id="@+id/tvBalance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/coin"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="80dp"
                 android:text="100"
-                android:textSize="@dimen/textSize_volume"
+                android:textSize="40sp"
                 android:singleLine="true"
                 android:textStyle="bold"
                 android:padding="5dp"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="10dp"/>
             <ImageView
                 android:id="@+id/coin"
                 android:layout_width="@dimen/coin_size"
@@ -42,7 +43,8 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"/>
+                android:layout_alignParentTop="true"
+                android:visibility="gone"/>
             <ImageView
                 android:id="@+id/topCenter"
                 android:layout_width="match_parent"
@@ -50,8 +52,8 @@
                 android:background="@drawable/barduinologo"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="40dp"
-                android:layout_marginLeft="60dp"
-                android:layout_marginRight="60dp"/>
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"/>
             <TextView
                 android:id="@+id/tvSignIn"
                 android:layout_width="wrap_content"
@@ -62,7 +64,8 @@
                 android:paddingRight="10dp"
                 android:clickable="true"
                 android:layout_marginBottom="10dp"
-                android:textColor="#ffffff"/>
+                android:textColor="#ffffff"
+                android:visibility="gone"/>
             <TextView
                 android:layout_below="@+id/topCenter"
                 android:id="@+id/tvUpdate"
@@ -83,7 +86,7 @@
                 android:layout_marginBottom="10dp"
                 android:paddingLeft="4dp"
                 android:clickable="true"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:textColor="#ffffff"/>
 
 

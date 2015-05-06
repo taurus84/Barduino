@@ -35,14 +35,16 @@
             android:id="@+id/tvTotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="David Tran"
+            android:text="0 cl"
+            android:textSize="30sp"
+            android:textStyle="bold"
             android:background="#ff0000"
             android:gravity="right"
 
             android:layout_weight="1"/>
 
         <Button
-            android:id="@+id/btnMixerOrder"
+            android:id="@+id/btnOrder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ORDER"

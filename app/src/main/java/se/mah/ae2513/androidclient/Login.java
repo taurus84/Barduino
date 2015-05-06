@@ -1,6 +1,7 @@
 package se.mah.ae2513.androidclient;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -9,6 +10,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,10 +27,11 @@ public class Login extends Activity {
     private TextView tvUsername;
     private TextView tvPassword;
     private TextView tvErrorMessage;
-    private Button btnLogin;
-    private final int NO_CONNECTION = 0, LOGGED_OUT = 1;
+    private Button btnLogin, btnRegister;
+    private final int NO_CONNECTION = 0, LOGGED_OUT = 1, LOGIN_BAD = 2, RE_LOGIN = 3;
     private Timer udpTimer;
     private String serverIP, serverPort;
+    private Entity entity = Entity.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,21 +52,17 @@ public class Login extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(".MainActivity");
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
-                if (!username.isEmpty()) {
-                    intent.putExtra("username", username);
-                }
-                if (!password.isEmpty()) {
-                    intent.putExtra("password", password);
-                }
-                startActivityForResult(intent, 1);
+                login();
 
-                intent.putExtra("ipnumber", serverIP);
-                intent.putExtra("port", serverPort);
-                startActivityForResult(intent, 1);
-
+            }
+        });
+        btnRegister = (Button) findViewById(R.id.btnRegister);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(".Register");
+                //startActivityForResult(intent, 2);
+                startActivity(intent);
             }
         });
 
@@ -78,6 +77,24 @@ public class Login extends Activity {
         udpTimer.cancel();
         udpTimer.purge();
     }
+
+    private void login() {
+        Intent intent = new Intent(".MainActivity");
+        String username = etUsername.getText().toString();
+        String password = etPassword.getText().toString();
+        if (!username.isEmpty()) {
+            intent.putExtra("username", username);
+        }
+        if (!password.isEmpty()) {
+            intent.putExtra("password", password);
+        }
+
+        intent.putExtra("ipnumber", serverIP);
+        intent.putExtra("port", serverPort);
+        startActivityForResult(intent, 1);
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -88,8 +105,30 @@ public class Login extends Activity {
                 //String result=data.getStringExtra("result");
                 //Log.i("Hej", "hej");
                 makeToast("No connection to server");
+            } else if (resultCode == LOGIN_BAD) {
+                makeToast("Wrong username or password");
+            } else if(resultCode == RE_LOGIN) {
+                login();
+            }
+        } /*
+        else if(requestCode == 2) {
+            if (resultCode == -1) {
+                //extract aktivity result. Contains username and password
+                String[] userData = data.getStringArrayExtra("USER ");
+
+                String message = "REGISTER " + userData[0] + ":" + userData[1];
+                comm.sendMessage(message);
+                Log.i("ddd",message);
+
+
+                //makeToast("Logged out");
+            }
+            else if(resultCode == 0){
+                //for cancelbutton in Register
+                Toast.makeText(getActivity(), "Back pressed", Toast.LENGTH_LONG).show();
             }
         }
+        */
     }
 
     private void makeToast(String toastMessage) {
@@ -112,5 +151,7 @@ public class Login extends Activity {
     public void setIP(String serverIP, int portNbr) {
         this.serverIP = serverIP;
         this.serverPort = Integer.toString(portNbr);
+        entity.setIpNbr(serverIP);
+
     }
 }

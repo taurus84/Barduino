@@ -12,7 +12,7 @@
         android:text="Fluid 1"
         android:layout_marginLeft="40dp"
         android:paddingTop="20dp"
-        android:textColor="#ff0000"
+        android:textColor="#ffffff"
         android:textSize="20sp"/>
     <RelativeLayout
         android:id="@+id/relative1"

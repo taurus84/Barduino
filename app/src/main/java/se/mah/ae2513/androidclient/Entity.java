@@ -15,10 +15,11 @@ public class Entity {
     private String ipNbr, username, password;
     private ArrayList<String> liquids;
 
-    private ArrayList<Double> liquidPrices;
+    private ArrayList<Integer> liquidPrices;
    // private String[] liquids = new String[4];
     private String buttonStatus = "Not connected";
-    private double balance;
+    private int balance = 0;
+//    private int nbrOfFluids = getLiquids().size();
 
 
 
@@ -30,7 +31,7 @@ public class Entity {
         return entity;
     }
 
-    public synchronized ArrayList<String> getLiquids(int i) {
+    public synchronized ArrayList<String> getLiquids() {
         return liquids;
     }
 
@@ -52,11 +53,12 @@ public class Entity {
         this.liquids = liquids;
     }
 
-    public ArrayList<Double> getLiquidPrices() {
+
+    public synchronized ArrayList<Integer> getLiquidPrices() {
         return liquidPrices;
     }
 
-    public void setLiquidPrices(ArrayList<Double> liquidPrices) {
+    public synchronized void setLiquidPrices(ArrayList<Integer> liquidPrices) {
         this.liquidPrices = liquidPrices;
     }
 
@@ -99,11 +101,11 @@ public class Entity {
         this.password = password;
     }
 
-    public synchronized double getBalance() {
+    public synchronized int getBalance() {
         return balance;
     }
 
-    public synchronized void setBalance(double balance) {
+    public synchronized void setBalance(int balance) {
         this.balance = balance;
     }
 }
