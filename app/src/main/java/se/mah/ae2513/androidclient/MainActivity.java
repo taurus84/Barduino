@@ -57,7 +57,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         setContentView(R.layout.main_window);
         createFragments();
         initializeComponents();
-
+/*
         entity.setIpNbr(getIntent().getStringExtra("ipnumber"));
         entity.setPortNbr(serverPortNbr);
         entity.setUsername(getIntent().getStringExtra("username"));
@@ -78,7 +78,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
        if(client.isConnected() && !client.ConnectFailed()) {
            login();
        }
-    }
+*/    }
 
     private void initializeComponents() {
         tvLogin = (TextView) findViewById(R.id.tvSignIn);
@@ -95,7 +95,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
 
         ImageView icon = new ImageView(this); // Create an icon
         icon.setImageResource(R.drawable.coin);
-        FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
+        FloatingActionButtonNew actionButton = new FloatingActionButtonNew.Builder(this)
                 .setBackgroundDrawable(R.drawable.coin)
                 .setPosition(FloatingActionButton.POSITION_TOP_RIGHT)
                         //.setContentView(icon)
