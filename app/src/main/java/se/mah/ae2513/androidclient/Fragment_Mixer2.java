@@ -1,7 +1,9 @@
 package se.mah.ae2513.androidclient;
 
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -80,19 +82,11 @@ public class Fragment_Mixer2 extends Fragment {
                 toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
                 toast.show();
             } else {
-                comm.sendMessage(message);
-                Toast toast = Toast.makeText(getActivity(), "Sending grog", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
-                toast.show();
+                receiptWindow(message);
             }
         } else {
-            Toast toast = Toast.makeText(getActivity(), "Unsufficent fonds", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
-            toast.show();
+            alertDialog("Sorry!", "Unsufficient fonds", "OK", 0);
         }
-
-
-
     }
 
     private void checkOrderOK () {
@@ -154,8 +148,6 @@ public class Fragment_Mixer2 extends Fragment {
                 changeTotalVolume();
                 //tinging seekbar background
                 seekBar.getBackground().setAlpha(255 - seekBar.getProgress() * 10);
-                //seekBar.getBackground().setColorFilter(new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.ADD));
-                //seekBar.getBackground().setColorFilter(new PorterDuffColorFilter(16777215/seekBar.getProgress(), PorterDuff.Mode.DARKEN));
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -196,5 +188,82 @@ public class Fragment_Mixer2 extends Fragment {
             btnOrder.setEnabled(false);
         }
     }
+
+    private void sendGrog(String message) {
+        comm.sendMessage(message);
+    }
+
+
+
+    public void receiptWindow(final String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        String receiptStr = "";
+        for(int i = 0; i < seekBars.size(); i++) {
+            int seekBarValue = seekBars.get(i).getProgress();
+            if(seekBarValue != 0) {
+                receiptStr += entity.getLiquids().get(i) + "\t" + seekBarValue + " cl\n";
+            }
+        }
+        receiptStr += "\nTotal Price: " + orderPrice() +" kr";
+
+        builder.setTitle("Receipt")
+                .setMessage(receiptStr)
+                .setCancelable(true)
+
+                .setNegativeButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        sendGrog(message);
+
+                        Toast toast = Toast.makeText(getActivity(), "Sending grog", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
+                        toast.show();
+                    }
+                })
+                .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        builder.create().show();
+    }
+
+    private void alertDialog(String title, String message, String textButton, final int option) {
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+
+        // Setting Dialog Title
+        alertDialog.setTitle(title);
+
+        // Setting Dialog Message
+        alertDialog.setMessage(message);
+
+        // Setting Icon to Dialog
+        //alertDialog.setIcon(R.drawable.tick);
+
+        // Setting OK Button
+        alertDialog.setButton(textButton, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to execute after dialog closed
+                doOnAlertDialogOk(option);
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
+    }
+
+    private void doOnAlertDialogOk(int option) {
+        switch (option) {
+            case 0:
+                break;
+            case 1:
+                Toast toast = Toast.makeText(getActivity(), "You clicked ok", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast.show();
+
+        }
+    }
+
 
 }

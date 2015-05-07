@@ -46,6 +46,68 @@
 
 
     <!-->
+    <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/relativeFluid"
+    android:background="@color/appBg">
+
+    <TextView
+        android:id="@+id/testFluid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fluid 1"
+        android:layout_marginLeft="40dp"
+        android:paddingTop="20dp"
+        android:textColor="#ffffff"
+        android:textSize="20sp"/>
+    <RelativeLayout
+        android:id="@+id/relative1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/testFluid">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="@dimen/mixerMarginRight"
+            android:background="@drawable/rounded_corner_linear">
+            <SeekBar
+                android:id="@+id/testSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:max="25"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/testVolume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/mixerTextMarginRight"
+            android:text="0 cl"
+            android:textSize="@dimen/textSize_volume"/>
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
 
     <SeekBar
         android:id="@+id/testSeek"

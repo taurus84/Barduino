@@ -19,7 +19,7 @@ public class UDP extends TimerTask {
     private MainActivity mainActivity;
     private Login logger;
     private Entity entity;
-    private int portNbr = 28785;
+    private int UDPportNbr = 28785;
 
     public UDP(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
@@ -68,7 +68,7 @@ public class UDP extends TimerTask {
                         // Send the broadcast package!
                         try {
                             DatagramPacket sendPacket = new DatagramPacket(
-                                    sendData, sendData.length, broadcast, portNbr);
+                                    sendData, sendData.length, broadcast, UDPportNbr);
                             c.send(sendPacket);
                             c.setSoTimeout(5000);
 
@@ -101,7 +101,8 @@ public class UDP extends TimerTask {
                         //mainActivity.doSomething();
                         //entity.setIpNbr(serverIpNbr);
                         //entity.setPortNbr(portNbr);
-                        logger.setIP(receivePacket.getAddress().getHostAddress(), portNbr);
+                        //logger.setIP(receivePacket.getAddress().getHostAddress(), portNbr);
+                        Entity.getInstance().setIpNbr(receivePacket.getAddress().getHostAddress());
                         this.cancel();
 
                     }

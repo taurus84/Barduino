@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
 public class Entity {
 
     private static Entity entity = new Entity();
-    private int portNbr;
+    private int portNbr = 4444;
     private String ipNbr, username, password;
     private ArrayList<String> liquids;
 

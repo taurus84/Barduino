@@ -1,5 +1,6 @@
 package se.mah.ae2513.androidclient;
 
+import android.system.ErrnoException;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -11,6 +12,8 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 
 /**
  * Created by David on 2015-04-02.
@@ -80,14 +83,30 @@ public class TCPClient extends Thread {
                 out.close();
                 socket.close();
                 Log.i("Meddelande: ", "Socket closed");
-            } catch (Exception e) {
-                Log.e("TCP", "S: Error", e);
+            }   //was before Exception e, may find more Exceptions on the road
+                catch (SocketTimeoutException e) {
+                    Log.i("ERROR", "Timeout");
+                    connectFailed = true;
+                    connected = false;
+                    mainActivity.connectionDown();
+            } catch (SocketException e) {
+                Log.i("ERROR", "Socket");
+                connectFailed = true;
+                connected = false;
+                mainActivity.connectionDown();
+            } catch (NullPointerException e) {
+                Log.i("ERROR", "Nullpointer");
                 connectFailed = true;
                 connected = false;
                 mainActivity.connectionDown();
             }
         } catch (IOException e) {
-            Log.e("TCP", "C: Error", e);
+            Log.i("ERROR", "IOException");
+            connectFailed = true;
+            connected = false;
+            mainActivity.connectionDown();
+        } catch (IllegalArgumentException e) {
+            Log.i("ERROR", "Socket");
             connectFailed = true;
             connected = false;
             mainActivity.connectionDown();

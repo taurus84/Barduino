@@ -34,7 +34,7 @@ public class Login extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //connectUDP();
+        connectUDP();
         setContentView(R.layout.test_login);
 
         setComponents();
@@ -80,6 +80,24 @@ public class Login extends Activity {
         Intent intent = new Intent(".MainActivity");
         String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
+        if(username.isEmpty() || password.isEmpty()) {
+
+        }
+
+        if(username.contains(",")
+                ||username.contains(" ")
+                ||username.contains(":")){
+            incorrectFormat();
+        } else if (password.contains(",")
+                ||password.contains(" ")
+                ||username.contains(":")){
+            incorrectFormat();
+        } else {
+            entity.setUsername(username);
+            entity.setPassword(password);
+            String message = "LOGIN " + entity.getUsername() +
+                    ":" + entity.getPassword();
+        }
         if (!username.isEmpty()) {
             intent.putExtra("username", username);
         }
@@ -91,21 +109,7 @@ public class Login extends Activity {
         startActivityForResult(intent, 1);
 
 
-        if(username.contains(",")
-                ||username.contains(" ")
-                ||username.contains(":")){
-            incorrectFormat();
-        } else if (password.contains(",")
-                ||password.contains(" ")
-                ||username.contains(":")){
-            incorrectFormat();
-        }
-        else {
-            entity.setUsername(username);
-            entity.setPassword(password);
-            String message = "LOGIN " + entity.getUsername() +
-                    ":" + entity.getPassword();
-        }
+
 
     }
 
@@ -129,7 +133,7 @@ public class Login extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == LOGGED_OUT) {
-                makeToast("Logged out");
+                makeToast("Signed out");
             } else if (resultCode == NO_CONNECTION) {
                 //String result=data.getStringExtra("result");
                 //Log.i("Hej", "hej");

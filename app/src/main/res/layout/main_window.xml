@@ -30,22 +30,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="50dp"
                 android:layout_marginTop="0dp"
-                android:text="100"
+                android:text="--"
                 android:textSize="40sp"
                 android:singleLine="true"
                 android:textStyle="bold"
-                android:padding="5dp"
-                />
-            <ImageView
-                android:id="@+id/coin"
-                android:layout_width="@dimen/coin_size"
-                android:layout_height="@dimen/coin_size"
-                android:background="@drawable/coin"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:visibility="gone"/>
+                android:padding="5dp" />
             <ImageView
                 android:id="@+id/topCenter"
                 android:layout_width="match_parent"
@@ -67,31 +56,6 @@
                 android:layout_marginBottom="10dp"
                 android:textColor="#ffffff"
                 android:visibility="gone"/>
-            <TextView
-                android:layout_below="@+id/topCenter"
-                android:id="@+id/tvUpdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Update"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentBottom="true"
-                android:clickable="true"
-                android:visibility="gone"/>
-            <TextView
-                android:id="@+id/tvDisconnect"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Disconnect"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="10dp"
-                android:paddingLeft="4dp"
-                android:clickable="true"
-                android:visibility="gone"
-                android:textColor="#ffffff"/>
-
-
-
 
         </RelativeLayout>
 
