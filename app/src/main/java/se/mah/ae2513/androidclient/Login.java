@@ -1,16 +1,14 @@
 package se.mah.ae2513.androidclient;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -88,11 +86,40 @@ public class Login extends Activity {
         if (!password.isEmpty()) {
             intent.putExtra("password", password);
         }
-
         intent.putExtra("ipnumber", serverIP);
         intent.putExtra("port", serverPort);
         startActivityForResult(intent, 1);
 
+
+        if(username.contains(",")
+                ||username.contains(" ")){
+            incorrectFormat();
+        } else if (password.contains(",")
+                ||password.contains(" ")){
+            incorrectFormat();
+        }
+        else {
+            entity.setUsername(username);
+            entity.setPassword(password);
+            String message = "LOGIN " + entity.getUsername() +
+                    ":" + entity.getPassword();
+        }
+
+    }
+
+
+    private void incorrectFormat() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Incorrect format");
+        builder.setMessage("You can't use blankspace,comma,colon or dot");
+        builder.setCancelable(false);
+        builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+
+            }
+        });
     }
 
     @Override
