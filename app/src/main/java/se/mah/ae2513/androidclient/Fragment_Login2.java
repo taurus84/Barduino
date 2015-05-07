@@ -1,7 +1,9 @@
 package se.mah.ae2513.androidclient;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -51,12 +53,24 @@ public class Fragment_Login2 extends Fragment {
             public void onClick(View v) {
                 final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-                entity.setUsername(username.getText().toString());
-                entity.setPassword(password.getText().toString());
-                String message = "LOGIN " + entity.getUsername() +
-                        ":" + entity.getPassword();
-                comm.sendMessage(message);
-                getActivity().getFragmentManager().popBackStack();
+                String input = username.getText().toString();
+                String passInput = password.getText().toString();
+                if(input.contains(",")
+                        ||input.contains(" ")){
+                    incorrectFormat();
+                } else if (passInput.contains(",")
+                        ||passInput.contains(" ")){
+                    incorrectFormat();
+                }
+                else {
+                    entity.setUsername(username.getText().toString());
+                    entity.setPassword(password.getText().toString());
+                    String message = "LOGIN " + entity.getUsername() +
+                            ":" + entity.getPassword();
+                    comm.sendMessage(message);
+                    getActivity().getFragmentManager().popBackStack();
+                }
+
             }
 
         });
@@ -98,4 +112,19 @@ public class Fragment_Login2 extends Fragment {
             }
         }
     }
+    private void incorrectFormat() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Incorrect format");
+        builder.setMessage("You can't use blankspace,comma,colon or dot");
+                builder.setCancelable(false);
+        builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+
+
+        });
+    }
 }
+

@@ -46,6 +46,7 @@
                 android:layout_above="@+id/View_login"
                 android:layout_centerVertical="true"
                 android:layout_alignParentTop="true"
+                android:singleLine="true"
                 android:hint="Username"
                 android:paddingLeft="15dp"
                 android:background="#00000000"/>
@@ -56,6 +57,7 @@
                 android:layout_below="@+id/View_login"
                 android:layout_alignParentBottom="true"
                 android:layout_centerVertical="true"
+                android:singleLine="true"
                 android:password="true"
                 android:inputType="textPassword"
                 android:hint="Password"
