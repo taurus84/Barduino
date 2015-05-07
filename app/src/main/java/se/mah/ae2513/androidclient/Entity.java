@@ -17,7 +17,7 @@ public class Entity {
 
     private ArrayList<Integer> liquidPrices;
    // private String[] liquids = new String[4];
-    private String buttonStatus = "Not connected";
+    private String status = "Not connected";
     private int balance = 0;
 //    private int nbrOfFluids = getLiquids().size();
 
@@ -62,11 +62,11 @@ public class Entity {
         this.liquidPrices = liquidPrices;
     }
 
-    public synchronized void setButtonStatus(String status) {
-        this.buttonStatus = status;
+    public synchronized void setStatus(String status) {
+        this.status = status;
     }
-    public synchronized String getButtonStatus() {
-        return buttonStatus;
+    public synchronized String getStatus() {
+        return status;
     }
 
     public synchronized int getPortNbr() {

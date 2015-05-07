@@ -11,57 +11,20 @@
         android:layout_height="wrap_content"
         android:text="Fluid 1"
         android:layout_marginLeft="40dp"
-        android:paddingTop="20dp"
+        android:paddingTop="@dimen/fluid_box_padding_top"
         android:textColor="#ffffff"
-        android:textSize="20sp"/>
-    <RelativeLayout
-        android:id="@+id/relative1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/testFluid">
-
-        <SeekBar
-            android:id="@+id/testSeek"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_corner"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="@dimen/mixerMarginRight"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:layout_centerVertical="true"
-            android:max="25"/>
-        <TextView
-            android:id="@+id/testVolume"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:paddingRight="@dimen/mixerTextMarginRight"
-            android:text="0 cl"
-            android:textSize="@dimen/textSize_volume"/>
-    </RelativeLayout>
-
-
-
-
-    <!-->
-    <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/relativeFluid"
-    android:background="@color/appBg">
-
+        android:textSize="@dimen/fluid_text_size"/>
     <TextView
-        android:id="@+id/testFluid"
+        android:id="@+id/tvPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fluid 1"
-        android:layout_marginLeft="40dp"
-        android:paddingTop="20dp"
+        android:layout_alignBottom="@+id/testFluid"
+        android:text="Price: 0kr"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/price_margin_right"
         android:textColor="#ffffff"
-        android:textSize="20sp"/>
+        android:textSize="@dimen/fluid_text_size"
+        />
     <RelativeLayout
         android:id="@+id/relative1"
         android:layout_width="match_parent"
@@ -72,16 +35,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="@dimen/fluid_box_margin_left"
             android:layout_marginRight="@dimen/mixerMarginRight"
             android:background="@drawable/rounded_corner_linear">
             <SeekBar
                 android:id="@+id/testSeek"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/rounded_corner"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
+                android:paddingLeft="@dimen/seekbar_padding"
+                android:paddingRight="@dimen/seekbar_padding"
+                android:paddingTop="@dimen/seekbar_padding_top_bottom"
+                android:paddingBottom="@dimen/seekbar_padding_top_bottom"
                 android:max="25"/>
 
 
@@ -98,10 +63,57 @@
             android:textSize="@dimen/textSize_volume"/>
     </RelativeLayout>
 
+    <!-->
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeFluid"
+        android:background="@color/appBg">
+
+        <TextView
+            android:id="@+id/testFluid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fluid 1"
+            android:layout_marginLeft="40dp"
+            android:paddingTop="20dp"
+            android:textColor="#ffffff"
+            android:textSize="20sp"/>
+        <RelativeLayout
+            android:id="@+id/relative1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/testFluid">
+
+            <SeekBar
+                android:id="@+id/testSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="@dimen/mixerMarginRight"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:layout_centerVertical="true"
+                android:max="25"/>
+            <TextView
+                android:id="@+id/testVolume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="@dimen/mixerTextMarginRight"
+                android:text="0 cl"
+                android:textSize="@dimen/textSize_volume"/>
+        </RelativeLayout>
 
 
+    <!-->
 
 
+<!-->
 
 
 

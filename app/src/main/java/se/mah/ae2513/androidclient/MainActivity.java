@@ -34,7 +34,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
     private FragmentManager fm;
     private FragmentTransaction transaction;
     private FloatingActionMenu actionMenu;
-    private Fragment_Mixer2 fragMix2;
+    private Fragment_Main fragmentMain;
     private Fragment_Login2 fragLogin2;
     private Fragment_Register fragReg;
     private TCPClient client;
@@ -43,6 +43,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
     private boolean myDrink;
     private final int SHORT = 1, LONG = 2, NO_CONNECTION = 0,
             LOGGED_OUT = 1, LOGIN_BAD = 2, RE_LOGIN = 3, NO_ACTION = 0, UPDATE_BALANCE = 1;
+    private final boolean ORDER_BUTTON_GONE = false, ORDER_BUTTON_VISIBLE = true;
     private Intent returnIntent;
     private static final String TAG_UPDATE = "update";
     private static final String TAG_LOGOUT = "logout";
@@ -95,7 +96,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         ImageView icon2 = new ImageView(this);
         icon2.setImageResource(R.drawable.sync);
         ImageView icon3 = new ImageView(this);
-        icon3.setImageResource(R.drawable.bar);
+        icon3.setImageResource(R.drawable.logout);
 
         SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
 
@@ -184,7 +185,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         } else if(id == R.id.abUpdate) {
 
         } else if(id == R.id.abTest) {
-            fragMix2.setLiquids();
+            fragmentMain.setLiquids();
         } else if(id == R.id.abTestUDP) {
             //connectUDP();
         }
@@ -200,12 +201,12 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
     private void createFragments() {
 
         fragLogin2 = new Fragment_Login2();
-        fragMix2 = new Fragment_Mixer2();
+        fragmentMain = new Fragment_Main();
         fragReg = new Fragment_Register();
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
         //transaction.add(R.id.fr_id, fragMix);
-        transaction.add(R.id.fr_id, fragMix2);
+        transaction.add(R.id.fr_id, fragmentMain);
         //transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -253,20 +254,20 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         if(message.split(" ")[0].equals("ERROR")) {
             String errorType = message.split(" ")[1];
             if(errorType.equals("NOCONNECTION")) {
-                entity.setButtonStatus("No Arduino");
-                showOrderButton(false);
+                entity.setStatus("No Arduino");
+                showOrderButton(ORDER_BUTTON_GONE);
             } else if(errorType.equals("BUSY")) {
                 if(myDrink) {
-                    entity.setButtonStatus("Barduino is making your drink");
+                    entity.setStatus("Barduino is making your drink");
                 } else {
-                    entity.setButtonStatus("Barduino is busy with another drink");
+                    entity.setStatus("Barduino is busy with another drink");
                 }
 
-                showOrderButton(false);
+                showOrderButton(ORDER_BUTTON_GONE);
             } else if(errorType.equals("NOLOGIN")) {
-                entity.setButtonStatus("Not logged in");
+                entity.setStatus("Not logged in");
                 stopTimer();
-                showOrderButton(false);
+                showOrderButton(ORDER_BUTTON_GONE);
             } else if(errorType.equals("BLOCKED")) {
                 alertDialog("Message from Barduino", "You have been blocked", "OK", 0);
             }
@@ -277,23 +278,21 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
                 setResult(LOGIN_BAD, returnIntent);
                 finish();
             } else if(login.equals("OK")) {
-                final String balance = message.split(" ")[2];
                 updateBalance();
                 entity.setBalance(Integer.parseInt(message.split(" ")[2]));
-                entity.setButtonStatus("Initializing...");
+                entity.setStatus("Initializing...");
                 updateFluidsFromServer();
                 startTimer();
             }
         } else if(message.contains("AVAILABLE")) {
             if(myDrink) {
-                entity.setButtonStatus("Finished!");
+                entity.setStatus("Finished!");
                 myDrink = !myDrink;
-                alertDialog("Your grog is finished!:", "New balance: " +
+                alertDialog("Your grog is done!", "New balance: " +
                         entity.getBalance() + "kr", "OK", UPDATE_BALANCE);
 
             } else {
-                entity.setButtonStatus("Order Drink");
-                showOrderButton(true);
+                showOrderButton(ORDER_BUTTON_VISIBLE);
             }
         } else if(message.contains("GROGOK")) {
             //setTextOnButtonWithString("Wait..");
@@ -301,19 +300,19 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
             int balance = Integer.parseInt(message.split(" ")[1]);
             entity.setBalance(balance);
             //updateBalance();
-            entity.setButtonStatus("Wait...");
+            entity.setStatus("Wait...");
 
 
             showOrderButton(false);
         } else if(message.contains("INGREDIENTS")) {
-            if(fragMix2.isVisible()) {
-                showOrderButton(true);
+            if(fragmentMain.isVisible()) {
+                //showOrderButton(ORDER_BUTTON_VISIBLE);
             }
             setLiquids(message);
             //makeToast("Fluids updated", SHORT);
 
         }
-        setTextOnButton();
+        setTextOnStatus();
     }
 
     private void setLiquids(final String string) {
@@ -323,19 +322,25 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
                 ArrayList<String> liquids = new ArrayList<String>();
                 ArrayList<Integer> price = new ArrayList<Integer>();
 
-                String str = string.split(":")[1];
-                String[] liquidList = str.split(",");
-                //rätta till size från liquids!!
-                for (int i = 0; i < liquidList.length; i++) {
-                    liquids.add(liquidList[i].split("<cost>")[0]);
-                    price.add(Integer.parseInt(liquidList[i].split("<cost>")[1]));
+                String str = null;
+                try {
+                    str = string.split(":")[1];
+                    String[] liquidList = str.split(",");
+                    //rätta till size från liquids!!
+                    for (int i = 0; i < liquidList.length; i++) {
+                        liquids.add(liquidList[i].split("<cost>")[0]);
+                        price.add(Integer.parseInt(liquidList[i].split("<cost>")[1]));
 
+                    }
+                    entity.setLiquids(liquids);
+                    entity.setLiquidPrices(price);
+
+                    if (fragmentMain.isVisible())
+                        fragmentMain.setLiquids();
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    alertDialog("Error", "Barduino has no available fluids", "OK", 0);
                 }
-                entity.setLiquids(liquids);
-                entity.setLiquidPrices(price);
 
-                if (fragMix2.isVisible())
-                    fragMix2.setLiquids();
             }
         });
     }
@@ -344,8 +349,8 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(fragMix2.isVisible());
-                    fragMix2.showButton(show);
+                if(fragmentMain.isVisible());
+                    fragmentMain.showOrderButton(show);
             }
         });
     }
@@ -428,12 +433,12 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         }
     }
 
-    private void setTextOnButton() {
+    private void setTextOnStatus() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (fragMix2.isVisible()) {
-                    fragMix2.setButtonText(entity.getButtonStatus());
+                if (fragmentMain.isVisible()) {
+                    fragmentMain.setStatusText(entity.getStatus());
                 }
             }
         });

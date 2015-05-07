@@ -15,7 +15,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="75"
+        android:layout_weight="80"
         android:background="#006699"
         android:orientation="horizontal">
 
@@ -28,10 +28,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="50dp"
+                android:layout_marginRight="@dimen/margin_right_balance"
                 android:layout_marginTop="0dp"
                 android:text="--"
-                android:textSize="40sp"
+                android:textSize="@dimen/textsize_balance"
                 android:singleLine="true"
                 android:textStyle="bold"
                 android:padding="5dp" />
@@ -41,21 +41,9 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/barduinologo"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="40dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"/>
-            <TextView
-                android:id="@+id/tvSignIn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sign in"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:paddingRight="10dp"
-                android:clickable="true"
                 android:layout_marginBottom="10dp"
-                android:textColor="#ffffff"
-                android:visibility="gone"/>
+                android:layout_marginLeft="@dimen/app_margin_left"
+                android:layout_marginRight="@dimen/app_margin_right"/>
 
         </RelativeLayout>
 
@@ -64,7 +52,7 @@
         android:id="@+id/fr_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="25"
+        android:layout_weight="20"
         android:background="#ffffff">
 
         </FrameLayout>

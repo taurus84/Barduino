@@ -5,12 +5,12 @@
 
     <!-- view background color -->
     <solid
-        android:color="@color/background_boxes" >
+        android:color="#ff0000" >
     </solid>
 
     <!-- view border color and width -->
     <stroke
-        android:width="0dp"
+        android:width="5dp"
         android:color="#FF000000">
     </stroke>
 

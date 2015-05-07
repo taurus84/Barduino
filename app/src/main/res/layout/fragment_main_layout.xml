@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBg"
+    android:orientation="vertical">
+
+
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/scroller"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:id="@+id/fluidBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#565656">
+
+
+            </RelativeLayout>
+        </ScrollView>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvTotalPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Drink price: 0kr"
+                android:textSize="@dimen/textsize_totals_bottom"
+                android:textStyle="bold"
+                android:background="@color/appBg"
+                android:gravity="center|left"
+                android:paddingLeft="10dp"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/tvTotal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0 cl"
+                android:textSize="@dimen/textsize_totals_bottom"
+                android:textStyle="bold"
+                android:background="@color/appBg"
+                android:gravity="center|end"
+                android:paddingRight="10dp"
+                android:layout_weight="1"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center">
+            <Button
+                android:id="@+id/btnOrder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ORDER"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                android:background="@drawable/rounded_order"
+                android:paddingRight="@dimen/order_button_side_padding"
+                android:paddingLeft="@dimen/order_button_side_padding"
+                android:paddingBottom="@dimen/order_button_updown_padding"
+                android:paddingTop="@dimen/order_button_updown_padding"
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/order_button_margin_bottom"/>
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Initializing..."
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                android:visibility="visible"
+                android:textColor="#99FF66"
+                android:textSize="@dimen/textsize_status"/>
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

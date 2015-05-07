@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -22,13 +21,12 @@ import java.util.ArrayList;
 /**
  * Created by David Tran on 15-04-29.
  */
-public class Fragment_Mixer2 extends Fragment {
+public class Fragment_Main extends Fragment {
 
-    private TextView tvTotalVolume;
+    private TextView tvTotalVolume, tvTotalPrice, tvStatus;
     private Entity entity = Entity.getInstance();
     private Button btnOrder;
     private Communicator comm;
-    private int valueSeekBar1, valueSeekBar2, valueSeekBar3, valueSeekBar4, valueTotal;
     private LayoutInflater l;
     private RelativeLayout fluidBox;
     private int idTracker = 100;
@@ -39,7 +37,7 @@ public class Fragment_Mixer2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.test_layout2, container, false);
+        View v = inflater.inflate(R.layout.fragment_main_layout, container, false);
 
         return v;
 
@@ -49,8 +47,10 @@ public class Fragment_Mixer2 extends Fragment {
         comm = (Communicator) getActivity();
         super.onActivityCreated(savedInstanceState);
         tvTotalVolume = (TextView) getActivity().findViewById(R.id.tvTotal);
+        tvTotalPrice = (TextView) getActivity().findViewById(R.id.tvTotalPrice);
         l = getActivity().getLayoutInflater();
         fluidBox = (RelativeLayout)getActivity().findViewById(R.id.fluidBox);
+        tvStatus = (TextView)getActivity().findViewById(R.id.status);
         btnOrder = (Button) getActivity().findViewById(R.id.btnOrder);
         btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +114,7 @@ public class Fragment_Mixer2 extends Fragment {
     }
 
 
-    public void setTextLiquids(String liquid, Integer price) {
+    public void setTextLiquids(String liquid, int price) {
 
         View v = l.inflate(R.layout.fluid_item, fluidBox, false);
 
@@ -137,6 +137,7 @@ public class Fragment_Mixer2 extends Fragment {
         //find Views (children) in the inflated ViewGrup so we can manipulate them
         final TextView tvVol = (TextView) v.findViewById(R.id.testVolume);
         TextView tvFluid = (TextView) v.findViewById(R.id.testFluid);
+        TextView tvPrice = (TextView) v.findViewById(R.id.tvPrice);
         SeekBar seekX = (SeekBar) v.findViewById(R.id.testSeek);
         seekBars.add(seekX);
         //seekbar listener
@@ -157,7 +158,8 @@ public class Fragment_Mixer2 extends Fragment {
             }
         });
         tvVol.setText(0 + " cl");
-        tvFluid.setText("Fluid: " + liquid + "\tPrice: " + price + "kr/cl");
+        tvFluid.setText("Fluid: " + liquid);
+        tvPrice.setText(price + " kr/cl");
 
         //add the view v to the container(parent) with the params defined in loRules
         fluidBox.addView(v, loRules);
@@ -169,23 +171,21 @@ public class Fragment_Mixer2 extends Fragment {
         for(int i = 0; i < seekBars.size(); i++) {
             totalVolume += seekBars.get(i).getProgress();
         }
-        tvTotalVolume.setText("Drink price: " + orderPrice() + "\t\t" + totalVolume + " cl");
+        tvTotalVolume.setText(totalVolume + " cl");
+        tvTotalPrice.setText("Drink price: " + orderPrice() + "kr");
     }
 
-    public void setButtonText(String text) {
-        btnOrder.setText(text);
-        if(text.equals("Order Drink")) {
-            btnOrder.setBackgroundColor(Color.LTGRAY);
-        } else {
-            btnOrder.setBackgroundColor(Color.TRANSPARENT);
-        }
+    public void setStatusText(String text) {
+        tvStatus.setText(text);
 
     }
-    public void showButton(boolean show) {
+    public void showOrderButton(boolean show) {
         if(show) {
-            btnOrder.setEnabled(true);
+            tvStatus.setVisibility(View.GONE);
+            btnOrder.setVisibility(View.VISIBLE);
         } else {
-            btnOrder.setEnabled(false);
+            btnOrder.setVisibility(View.GONE);
+            tvStatus.setVisibility(View.VISIBLE);
         }
     }
 
@@ -201,7 +201,7 @@ public class Fragment_Mixer2 extends Fragment {
         for(int i = 0; i < seekBars.size(); i++) {
             int seekBarValue = seekBars.get(i).getProgress();
             if(seekBarValue != 0) {
-                receiptStr += entity.getLiquids().get(i) + "\t" + seekBarValue + " cl\n";
+                receiptStr += entity.getLiquids().get(i) + "\t\t" + seekBarValue + " cl\n";
             }
         }
         receiptStr += "\nTotal Price: " + orderPrice() +" kr";
