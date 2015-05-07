@@ -92,10 +92,12 @@ public class Login extends Activity {
 
 
         if(username.contains(",")
-                ||username.contains(" ")){
+                ||username.contains(" ")
+                ||username.contains(":")){
             incorrectFormat();
         } else if (password.contains(",")
-                ||password.contains(" ")){
+                ||password.contains(" ")
+                ||username.contains(":")){
             incorrectFormat();
         }
         else {
