@@ -22,7 +22,7 @@ public class Register extends Activity {
     private EditText etPassword_Register,etPassword_Register_2,et_Username_Register;
     private Button btnSubmit,btnCancel;
     private Entity entity = Entity.getInstance();
-    private final int USER_CREATED = 1,CANCEL = 0;
+    private final int USER_CREATED = 1,CANCEL = 0, REGISTRATION_OK = 1;
     private InputMethodManager imm;
     private TCPRegister client;
     private int serverPortNbr = 4444;
@@ -52,7 +52,7 @@ public class Register extends Activity {
             public void onClick(View v) {
                 String password1 = etPassword_Register.getText().toString();
                 String password2 = etPassword_Register_2.getText().toString();
-                String username =  et_Username_Register.getText().toString();
+                String username =  et_Username_Register.getText().toString().toLowerCase();
                 if(checkValidUsernameAndPassword(username, password1, password2)) {
                     connectToserver(username, password1);
                 }
@@ -140,12 +140,14 @@ public class Register extends Activity {
 
     public void msgFromServer(String serverMessage) {
         if(serverMessage.equals("REGISTER OK")) {
-            alertDialog("", "Your registration was successful!", "Press here to return to login screen", 1);
+            //Success registration
+            alertDialog("", "Your registration was successful!", "Press here to return to login screen", REGISTRATION_OK);
             //setResult(RESULT_OK, returnIntent);
             //finish();
         } else if(serverMessage.equals("REGISTER BAD")) {
             alertDialog("Error!", "You are already registered!", "OK", 0);
         }
+        client.sendMessage("STOP");
     }
 
     private void alertDialog(final String title, final String message, final String textButton, final int option) {
@@ -181,11 +183,11 @@ public class Register extends Activity {
         switch (option) {
             case NO_ACTION:
                 break;
-            case 1:
+            case REGISTRATION_OK:
                 imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+                returnIntent.putExtra("username", et_Username_Register.getText().toString());
+                setResult(REGISTRATION_OK, returnIntent);
                 finish();
-
-
         }
     }
 }

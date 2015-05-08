@@ -26,7 +26,8 @@ public class Login extends Activity {
     private TextView tvPassword;
     private TextView tvErrorMessage;
     private Button btnLogin, btnRegister;
-    private final int NO_CONNECTION = 0, LOGGED_OUT = 1, LOGIN_BAD = 2, RE_LOGIN = 3;
+    private final int NO_CONNECTION = 0, LOGGED_OUT = 1, LOGIN_BAD = 2, RE_LOGIN = 3, SOCKET_TCP_ERROR = 4,
+            REGISTRATION_OK = 1;
     private Timer udpTimer;
     private String serverIP, serverPort;
     private Entity entity = Entity.getInstance();
@@ -34,18 +35,14 @@ public class Login extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        connectUDP();
+        //connectUDP();
         setContentView(R.layout.test_login);
-
         setComponents();
     }
 
     private void setComponents() {
         etUsername = (EditText) findViewById(R.id.etUsername_Login);
         etPassword = (EditText) findViewById(R.id.etPassword_Login);
-        //etIP = (EditText) findViewById(R.id.etIP);
-        //etPort = (EditText) findViewById(R.id.etPort);
-        //tvErrorMessage = (TextView) findViewById(R.id.tvErrorMessage);
         btnLogin = (Button) findViewById(R.id.btn_Login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +57,7 @@ public class Login extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(".Register");
                 //startActivityForResult(intent, 2);
-                startActivity(intent);
+                startActivityForResult(intent, 2);
             }
         });
 
@@ -78,39 +75,14 @@ public class Login extends Activity {
 
     private void login() {
         Intent intent = new Intent(".MainActivity");
-        String username = etUsername.getText().toString();
+        String username = etUsername.getText().toString().toLowerCase();
         String password = etPassword.getText().toString();
-        if(username.isEmpty() || password.isEmpty()) {
 
-        }
-
-        if(username.contains(",")
-                ||username.contains(" ")
-                ||username.contains(":")){
-            incorrectFormat();
-        } else if (password.contains(",")
-                ||password.contains(" ")
-                ||username.contains(":")){
-            incorrectFormat();
-        } else {
-            entity.setUsername(username);
-            entity.setPassword(password);
-            String message = "LOGIN " + entity.getUsername() +
-                    ":" + entity.getPassword();
-        }
-        if (!username.isEmpty()) {
+        if(checkValidUsernameAndPassword(username, password)) {
             intent.putExtra("username", username);
-        }
-        if (!password.isEmpty()) {
             intent.putExtra("password", password);
+            startActivityForResult(intent, 1);
         }
-        intent.putExtra("ipnumber", serverIP);
-        intent.putExtra("port", serverPort);
-        startActivityForResult(intent, 1);
-
-
-
-
     }
 
 
@@ -142,26 +114,38 @@ public class Login extends Activity {
                 makeToast("Wrong username or password");
             } else if(resultCode == RE_LOGIN) {
                 login();
-            }
-        } /*
-        else if(requestCode == 2) {
-            if (resultCode == -1) {
-                //extract aktivity result. Contains username and password
-                String[] userData = data.getStringArrayExtra("USER ");
-
-                String message = "REGISTER " + userData[0] + ":" + userData[1];
-                comm.sendMessage(message);
-                Log.i("ddd",message);
-
-
-                //makeToast("Logged out");
-            }
-            else if(resultCode == 0){
-                //for cancelbutton in Register
-                Toast.makeText(getActivity(), "Back pressed", Toast.LENGTH_LONG).show();
+            } else if(resultCode == SOCKET_TCP_ERROR) {
+                login();
             }
         }
-        */
+        else if(requestCode == 2) {
+            if (resultCode == 1) {
+                //extract aktivity result. Contains username and password
+                String username = data.getStringExtra("username");
+                etUsername.setText(username);
+            }
+        }
+
+    }
+
+    private boolean checkValidUsernameAndPassword(String username, String password) {
+        if(username.isEmpty() || password.isEmpty()) {
+            makeToast("You forgot to fill in all boxes!");
+            return false;
+        } else if(username.contains(",")
+                ||username.contains(" ")
+                ||username.contains(":")) {
+            makeToast("Invalid characters in Username field!");
+            return false;
+        } else if(password.contains(",")
+                ||password.contains(" ")
+                ||password.contains(":")) {
+            makeToast("Invalid characters in Password field!");
+            return false;
+        } else {
+            return true;
+        }
+
     }
 
     private void makeToast(String toastMessage) {
@@ -185,6 +169,9 @@ public class Login extends Activity {
         this.serverIP = serverIP;
         this.serverPort = Integer.toString(portNbr);
         entity.setIpNbr(serverIP);
+    }
 
+    public void serverHostNotFound() {
+        Toast.makeText(getApplicationContext(), "Server host not found", Toast.LENGTH_SHORT).show();
     }
 }

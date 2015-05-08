@@ -42,13 +42,12 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
     private TextView tvBalance;
     private boolean myDrink;
     private final int SHORT = 1, LONG = 2, NO_CONNECTION = 0,
-            LOGGED_OUT = 1, LOGIN_BAD = 2, RE_LOGIN = 3, NO_ACTION = 0, UPDATE_BALANCE = 1;
+            LOGGED_OUT = 1, LOGIN_BAD = 2, RE_LOGIN = 3, SOCKET_TCP_ERROR = 4, NO_ACTION = 0, UPDATE_BALANCE = 1;
     private final boolean ORDER_BUTTON_GONE = false, ORDER_BUTTON_VISIBLE = true;
     private Intent returnIntent;
     private static final String TAG_UPDATE = "update";
     private static final String TAG_LOGOUT = "logout";
     private static final String TAG_3 = "tag3";
-    private int serverPortNbr = 4444;
 
 
 
@@ -58,13 +57,9 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         setContentView(R.layout.main_window);
         createFragments();
         initializeComponents();
-
-        //entity.setIpNbr(getIntent().getStringExtra("ipnumber"));
-        //entity.setPortNbr(serverPortNbr);
         entity.setUsername(getIntent().getStringExtra("username"));
         entity.setPassword(getIntent().getStringExtra("password"));
         returnIntent = getIntent();
-
     }
 
     @Override
@@ -79,6 +74,11 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
        if(client.isConnected() && !client.ConnectFailed()) {
            login();
        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void initializeComponents() {
@@ -163,9 +163,6 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
                         ":" + entity.getPassword();
         sendMessage(message);
     }
-    private void register(String username, String password) {
-        String message = "REGISTER " + username + ":" + password;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -179,16 +176,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if(id == R.id.abLogIn) {
-            fragmentLogin();
-        } else if(id == R.id.abUpdate) {
-
-        } else if(id == R.id.abTest) {
-            fragmentMain.setLiquids();
-        } else if(id == R.id.abTestUDP) {
-            //connectUDP();
-        }
+        //int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
 
@@ -287,7 +275,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         } else if(message.contains("AVAILABLE")) {
             if(myDrink) {
                 entity.setStatus("Finished!");
-                myDrink = !myDrink;
+                myDrink = false;
                 alertDialog("Your grog is done!", "New balance: " +
                         entity.getBalance() + "kr", "OK", UPDATE_BALANCE);
 
@@ -296,7 +284,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
             }
         } else if(message.contains("GROGOK")) {
             //setTextOnButtonWithString("Wait..");
-            myDrink = !myDrink;
+            myDrink = true;
             int balance = Integer.parseInt(message.split(" ")[1]);
             entity.setBalance(balance);
             //updateBalance();
@@ -365,9 +353,6 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
     //implemented method for interface Communication
     @Override
     public void doSomething() {
-        Random rand = new Random();
-
-        tvBalance.setText(Integer.toString(rand.nextInt(Integer.MAX_VALUE)));
     }
 
     //implemented method for interface Communication
@@ -403,6 +388,13 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         if(timer != null)
             timer.cancel();
         setResult(NO_CONNECTION, returnIntent);
+        finish();
+    }
+
+    public void connectionDownSOCKET() {
+        if(timer != null)
+            timer.cancel();
+        setResult(SOCKET_TCP_ERROR, returnIntent);
         finish();
     }
 

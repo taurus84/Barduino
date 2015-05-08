@@ -8,6 +8,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
+import java.net.SocketTimeoutException;
 import java.util.Enumeration;
 import java.util.TimerTask;
 
@@ -106,8 +107,8 @@ public class UDP extends TimerTask {
                         this.cancel();
 
                     }
-                } catch (Exception e) {
-
+                } catch (SocketTimeoutException e) {
+                    logger.serverHostNotFound();
                 }
 
 

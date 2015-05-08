@@ -93,7 +93,7 @@ public class TCPClient extends Thread {
                 Log.i("ERROR", "Socket");
                 connectFailed = true;
                 connected = false;
-                mainActivity.connectionDown();
+                mainActivity.connectionDownSOCKET();
             } catch (NullPointerException e) {
                 Log.i("ERROR", "Nullpointer");
                 connectFailed = true;
