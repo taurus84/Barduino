@@ -14,6 +14,7 @@ import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketTimeoutException;
 import java.util.Enumeration;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Created by David Tran on 15-05-08.
@@ -27,7 +28,7 @@ public class Splash extends Activity {
         Thread pausTimer = new Thread() {
             public void run() {
                 try {
-                    sleep(1000);
+                    sleep(5000);
                 } catch (Exception e) {
 
                 } finally {
@@ -130,8 +131,8 @@ public class Splash extends Activity {
                             hostIPNumber = receivePacket.getAddress().getHostAddress();
 
                         }
-                    } catch (Exception e) {
-
+                    } catch (SocketTimeoutException e) {
+                        Log.e("ERROR", ">>>Exception<<<");
                     }
 
 
@@ -141,6 +142,7 @@ public class Splash extends Activity {
                 } catch (IOException ex) {
                     // Logger.getLogger(LoginWindow.class.getName()).log(Level.SEVERE,
                     // null, ex);
+                    Log.e("ERROR", ">>>IOEXCEPTION<<<");
 
                 }
 

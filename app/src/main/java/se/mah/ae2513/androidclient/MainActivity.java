@@ -34,6 +34,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
     private FragmentManager fm;
     private FragmentTransaction transaction;
     private FloatingActionMenu actionMenu;
+    private FloatingActionButtonNew actionButton;
     private Fragment_Main fragmentMain;
     private Fragment_Login2 fragLogin2;
     private Fragment_Register fragReg;
@@ -60,25 +61,27 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         entity.setUsername(getIntent().getStringExtra("username"));
         entity.setPassword(getIntent().getStringExtra("password"));
         returnIntent = getIntent();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         connectToServer();
         while(!client.isConnected()) {
             if(client.ConnectFailed()) {
                 break;
             }
         }
-       if(client.isConnected() && !client.ConnectFailed()) {
-           login();
-       }
+        if(client.isConnected() && !client.ConnectFailed()) {
+            login();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        makeToast("Resumed", SHORT);
     }
 
     private void initializeComponents() {
@@ -86,7 +89,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
 
         ImageView icon = new ImageView(this); // Create an icon
         icon.setImageResource(R.drawable.coin);
-        FloatingActionButtonNew actionButton = new FloatingActionButtonNew.Builder(this)
+        actionButton = new FloatingActionButtonNew.Builder(this)
                 .setBackgroundDrawable(R.drawable.coin)
                 .setPosition(FloatingActionButton.POSITION_TOP_RIGHT)
                         //.setContentView(icon)
@@ -110,6 +113,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
      //   button1.setOnClickListener(this);
         button2.setOnClickListener(this);
         button3.setOnClickListener(this);
+
 
         actionMenu = new FloatingActionMenu.Builder(this)
          //       .addSubActionView(button1)
@@ -273,9 +277,11 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
                 startTimer();
             }
         } else if(message.contains("AVAILABLE")) {
-            if(myDrink) {
+            if (myDrink) {
                 entity.setStatus("Finished!");
                 myDrink = false;
+                //enable refresh and log out
+                actionButton.setClickable(true);
                 alertDialog("Your grog is done!", "New balance: " +
                         entity.getBalance() + "kr", "OK", UPDATE_BALANCE);
 
@@ -285,6 +291,8 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         } else if(message.contains("GROGOK")) {
             //setTextOnButtonWithString("Wait..");
             myDrink = true;
+            //avoid logging out or refresh while barduino's working on this clients drink
+            actionButton.setClickable(false);
             int balance = Integer.parseInt(message.split(" ")[1]);
             entity.setBalance(balance);
             //updateBalance();
