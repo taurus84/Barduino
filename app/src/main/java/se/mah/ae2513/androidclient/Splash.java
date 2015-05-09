@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -20,15 +21,21 @@ import java.util.concurrent.TimeoutException;
  * Created by David Tran on 15-05-08.
  */
 public class Splash extends Activity {
+
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_splash);
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
 
         Thread pausTimer = new Thread() {
             public void run() {
                 try {
-                    sleep(5000);
+                    for(int i = 0; i < 100; i++) {
+                        sleep(50);
+                        progressBar.setProgress(i);
+                    }
                 } catch (Exception e) {
 
                 } finally {

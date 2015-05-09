@@ -2,13 +2,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appBg">
+    android:background="@color/appBg"
+    android:paddingRight="50dp"
+    android:paddingLeft="50dp">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:max="100"
+        android:indeterminate="false"
+        android:layout_marginBottom="100dp"
+        android:progress="0"
+        android:layout_alignRight="@+id/barduinoLogo"
+        android:layout_alignLeft="@+id/barduinoLogo"/>
+
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:src="@drawable/barduino"
-        android:background="@color/appBg"/>
+        android:layout_alignBottom="@+id/progressBar"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/barduinoLogo" />
 
 </RelativeLayout>
