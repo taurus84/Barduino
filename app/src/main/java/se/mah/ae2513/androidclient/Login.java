@@ -36,7 +36,7 @@ public class Login extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //connectUDP();
-        setContentView(R.layout.test_login);
+        setContentView(R.layout.login_layout);
         setComponents();
     }
 

@@ -30,7 +30,7 @@ public class Fragment_Login2 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.test_login, container, false);
+        View v = inflater.inflate(R.layout.login_layout, container, false);
         return v;
     }
 
@@ -46,7 +46,6 @@ public class Fragment_Login2 extends Fragment {
         password.setTransformationMethod(new PasswordTransformationMethod());
         login = (Button) getActivity().findViewById(R.id.btn_Login);
         register = (Button) getActivity().findViewById(R.id.btnRegister);
-        cancel = (Button) getActivity().findViewById(R.id.btnCancel_Login);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
