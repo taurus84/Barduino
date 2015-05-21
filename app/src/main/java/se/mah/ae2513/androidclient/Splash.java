@@ -26,6 +26,7 @@ public class Splash extends Activity {
     private MediaPlayer barduinoStartSound;
 
     private ProgressBar progressBar;
+    private GetHostIP aSyncTask;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +45,13 @@ public class Splash extends Activity {
                 } catch (Exception e) {
 
                 } finally {
-                    new GetHostIP().execute();
+                    aSyncTask = new GetHostIP();
+                    aSyncTask.execute();
                 }
             }
         };
         pausTimer.start();
+
 
 
     }
@@ -71,7 +74,9 @@ public class Splash extends Activity {
         protected Void doInBackground(Void... arg0) {
 
             while(hostIPNumber.equals("")) {
-
+                if(isCancelled()) {
+                    break;
+                }
 
                 try {
                     // Open a random port to send the package
@@ -179,6 +184,8 @@ public class Splash extends Activity {
     protected void onPause() {
         super.onPause();
         //barduinoStartSound.release();
+        Log.d("David", "onPause is called");
+        aSyncTask.cancel(true);
         finish();
     }
 }
