@@ -281,10 +281,10 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
                 loginOK = false;
                 finish();
             } else if(login.equals("OK")) {
-                updateBalance();
                 entity.setBalance(Integer.parseInt(message.split(" ")[2]));
                 entity.setStatus("Initializing...");
                 loginOK = true;
+                updateBalance();
                 updateFluidsFromServer();
                 startTimer();
             }

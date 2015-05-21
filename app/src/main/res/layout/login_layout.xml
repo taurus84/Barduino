@@ -95,7 +95,7 @@
                     android:id="@+id/btn_Login"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="10dp"
+                    android:padding="0dp"
                     android:text="Login to Barduino"
                     android:textColor="@color/textColor"
                     android:background="#0000"

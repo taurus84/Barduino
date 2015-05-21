@@ -145,8 +145,8 @@ public class Login extends Activity {
 
     private void adminChoice() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Hello Admin")
-                .setMessage("Admin screen or login to Bardiono?")
+        builder.setTitle("Hello Admin!")
+                .setMessage("Admin screen or proceed to Barduino?")
                 .setCancelable(true)
                 .setNegativeButton("Admin screen", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
