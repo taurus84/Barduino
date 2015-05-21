@@ -5,35 +5,46 @@
     android:background="@color/appBg"
     android:orientation="vertical">
 
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/scroller"
+        android:layout_weight="3">
 
-
-        <ScrollView
+        <RelativeLayout
+            android:id="@+id/fluidBox"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/scroller"
-            android:layout_weight="1">
-
-            <RelativeLayout
-                android:id="@+id/fluidBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#565656">
-
-
+            android:layout_height="wrap_content"
+            android:background="#565656">
             </RelativeLayout>
-        </ScrollView>
-
-
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="7"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="9"
+            android:layout_weight="2"
+            android:background="@color/appBg">
+            <TextView
+                android:id="@+id/tvVolumeOverMax"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                android:paddingRight="10dp"
+                android:textColor="@color/logoColor"
+                android:visibility="gone"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -66,7 +77,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_weight="1"
             android:gravity="center">
             <Button
                 android:id="@+id/btnOrder"
@@ -90,7 +101,7 @@
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:visibility="visible"
-                android:textColor="#99FF66"
+                android:textColor="@color/statusColor"
                 android:textSize="@dimen/textsize_status"/>
         </LinearLayout>
 

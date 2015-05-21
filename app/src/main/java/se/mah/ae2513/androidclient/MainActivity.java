@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,9 +42,10 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
     private TCPClient client;
     private Timer timer;
     private TextView tvBalance;
-    private boolean myDrink;
+    private boolean myDrink, loginOK;
     private final int SHORT = 1, LONG = 2, NO_CONNECTION = 0,
-            LOGGED_OUT = 1, LOGIN_BAD = 2, RE_LOGIN = 3, SOCKET_TCP_ERROR = 4, NO_ACTION = 0, UPDATE_BALANCE = 1;
+            LOGGED_OUT = 1, LOGIN_BAD = 2, RE_LOGIN = 3, SOCKET_TCP_ERROR = 4,
+            NO_ACTION = 0, UPDATE_BALANCE = 1, UPDATE = 2;
     private final boolean ORDER_BUTTON_GONE = false, ORDER_BUTTON_VISIBLE = true;
     private Intent returnIntent;
     private static final String TAG_UPDATE = "update";
@@ -76,12 +78,18 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
     protected void onStart() {
         super.onStart();
 
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        makeToast("Resumed", SHORT);
+        if(loginOK) {
+            startTimer();
+            Log.d("Bar", "Timer running again");
+        }
+
+
     }
 
     private void initializeComponents() {
@@ -212,7 +220,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         transaction.addToBackStack(null);
         transaction.commit();
     }
-    public void fragmentRegister() {
+    private void fragmentRegister() {
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
         transaction.replace(R.id.fr_id, fragReg);
@@ -261,18 +269,22 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
                 stopTimer();
                 showOrderButton(ORDER_BUTTON_GONE);
             } else if(errorType.equals("BLOCKED")) {
-                alertDialog("Message from Barduino", "You have been blocked", "OK", 0);
+                alertDialog("Message from Barduino", "You have been blocked", "OK", NO_ACTION);
+            } else if(errorType.contains("INSUFFICIENT")) {
+                alertDialog("Insufficient funds", "Barduinos prices have changed\nFluid prices will be updated", "OK", UPDATE);
             }
         } else if(message.split(" ")[0].equals("LOGIN")) {
             String login = message.split(" ")[1];
             if(login.equals("BAD")) {
                 //end activity, out to login screen
                 setResult(LOGIN_BAD, returnIntent);
+                loginOK = false;
                 finish();
             } else if(login.equals("OK")) {
                 updateBalance();
                 entity.setBalance(Integer.parseInt(message.split(" ")[2]));
                 entity.setStatus("Initializing...");
+                loginOK = true;
                 updateFluidsFromServer();
                 startTimer();
             }
@@ -296,7 +308,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
             int balance = Integer.parseInt(message.split(" ")[1]);
             entity.setBalance(balance);
             //updateBalance();
-            entity.setStatus("Wait...");
+            entity.setStatus("Sending grog...");
 
 
             showOrderButton(false);
@@ -415,9 +427,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
     @Override
     public void onClick(View v) {
         if(v.getTag().equals(TAG_UPDATE)) {
-            closeConnection();
-            setResult(RE_LOGIN, returnIntent);
-            finish();
+            update();
         } else if(v.getTag().equals(TAG_LOGOUT)) {
             confirmSignOut();
         } else if(v.getTag().equals(TAG_3)) {
@@ -506,9 +516,32 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
                 break;
             case UPDATE_BALANCE:
                 updateBalance();
+                break;
+            case UPDATE:
+                update();
+                break;
 
         }
     }
 
+    private void update() {
+        closeConnection();
+        setResult(RE_LOGIN, returnIntent);
+        finish();
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(timer != null) {
+            timer.cancel();
+            Log.d("Bar", "Timer stopped");
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("Bar", "onStop is called");
+    }
 }

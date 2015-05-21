@@ -15,13 +15,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="80"
-        android:background="#006699"
+        android:layout_weight="75"
+        android:background="@color/appBg"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/toptop"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent">
             <TextView
                 android:id="@+id/tvBalance"
@@ -37,11 +37,11 @@
                 android:padding="5dp" />
             <ImageView
                 android:id="@+id/topCenter"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@drawable/barduinologo"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
+                android:background="@drawable/barduino_red"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"
                 android:layout_marginLeft="@dimen/app_margin_left"
                 android:layout_marginRight="@dimen/app_margin_right"/>
 
@@ -52,7 +52,7 @@
         android:id="@+id/fr_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="20"
+        android:layout_weight="25"
         android:background="#ffffff">
 
         </FrameLayout>

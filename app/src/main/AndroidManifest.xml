@@ -53,6 +53,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".Admin"
+            android:label="Admin"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name=".Admin" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

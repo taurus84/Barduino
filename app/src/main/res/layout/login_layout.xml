@@ -2,9 +2,148 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp"
+    android:padding="0dp"
     android:orientation="vertical"
-    android:background="@color/navyblue">
+    android:background="@color/appBg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="75"
+        android:background="@color/appBg">
+
+        <ImageView
+            android:id="@+id/topCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/barduino_red"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            android:layout_marginLeft="@dimen/app_margin_left"
+            android:layout_marginRight="@dimen/app_margin_right"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="25"
+        android:background="@color/appBg"
+        android:orientation="vertical"
+        android:layout_margin="30dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:id="@+id/logrel2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_login">
+                    <View
+                        android:id="@+id/View_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#4C4E4F"
+                        android:layout_centerVertical="true">
+                    </View>
+                    <EditText
+                        android:id="@+id/etUsername_Login"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/View_login"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentTop="true"
+                        android:singleLine="true"
+                        android:hint="Username"
+                        android:paddingLeft="15dp"
+                        android:background="#00000000"/>
+                    <EditText
+                        android:id="@+id/etPassword_Login"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/View_login"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerVertical="true"
+                        android:singleLine="true"
+                        android:password="true"
+                        android:inputType="textPassword"
+                        android:hint="Password"
+                        android:paddingLeft="15dp"
+                        android:background="#00000000"/>
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@drawable/rounded_login">
+
+                <Button
+                    android:id="@+id/btn_Login"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    android:text="Login to Barduino"
+                    android:textColor="@color/textColor"
+                    android:background="#0000"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="@color/appBg"
+            android:gravity="center">
+
+
+            <RelativeLayout
+                android:id="@+id/logrel3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/costum_button_john">
+                <Button
+                    android:id="@+id/btnRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Register new account"
+                    android:textColor="@color/textColor"
+                    android:background="#0000"/>
+            </RelativeLayout>
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+    </LinearLayout>
+    <!-->
 
     <LinearLayout
         android:id="@+id/loglin1"
@@ -128,3 +267,4 @@
     </LinearLayout>
 
 </LinearLayout>
+<!-->

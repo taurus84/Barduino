@@ -12,7 +12,7 @@
         android:text="Fluid 1"
         android:layout_marginLeft="40dp"
         android:paddingTop="@dimen/fluid_box_padding_top"
-        android:textColor="#ffffff"
+        android:textColor="@color/fluidColor"
         android:textSize="@dimen/fluid_text_size"/>
     <TextView
         android:id="@+id/tvPrice"
@@ -22,7 +22,7 @@
         android:text="Price: 0kr"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/price_margin_right"
-        android:textColor="#ffffff"
+        android:textColor="@color/fluidColor"
         android:textSize="@dimen/fluid_text_size"
         />
     <RelativeLayout
@@ -60,7 +60,8 @@
             android:layout_centerVertical="true"
             android:paddingRight="@dimen/mixerTextMarginRight"
             android:text="0 cl"
-            android:textSize="@dimen/textSize_volume"/>
+            android:textSize="@dimen/textSize_volume"
+            android:textColor="@color/volumeColor"/>
     </RelativeLayout>
 
     <!-->

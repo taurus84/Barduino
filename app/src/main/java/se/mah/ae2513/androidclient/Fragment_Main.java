@@ -23,7 +23,7 @@ import java.util.ArrayList;
  */
 public class Fragment_Main extends Fragment {
 
-    private TextView tvTotalVolume, tvTotalPrice, tvStatus;
+    private TextView tvTotalVolume, tvTotalPrice, tvStatus, tvVolumeError;
     private Entity entity = Entity.getInstance();
     private Button btnOrder;
     private Communicator comm;
@@ -48,6 +48,7 @@ public class Fragment_Main extends Fragment {
         super.onActivityCreated(savedInstanceState);
         tvTotalVolume = (TextView) getActivity().findViewById(R.id.tvTotal);
         tvTotalPrice = (TextView) getActivity().findViewById(R.id.tvTotalPrice);
+        tvVolumeError = (TextView) getActivity().findViewById(R.id.tvVolumeOverMax);
         l = getActivity().getLayoutInflater();
         fluidBox = (RelativeLayout)getActivity().findViewById(R.id.fluidBox);
         tvStatus = (TextView)getActivity().findViewById(R.id.status);
@@ -81,11 +82,14 @@ public class Fragment_Main extends Fragment {
                 Toast toast = Toast.makeText(getActivity(), "Maybe you want something in your glass?", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
                 toast.show();
+            } else if(totalVolume > entity.getMaxVolume()) {
+                alertDialog("ERROR!\n Your drink is too big", "Maximum volume allowed is " + entity.getMaxVolume() + "cl\n\n" +
+                                "Please go back and change your order.", "OK", 0);
             } else {
                 receiptWindow(message);
             }
         } else {
-            alertDialog("Sorry!", "Unsufficient fonds", "OK", 0);
+            alertDialog("Sorry!", "Unsufficient funds", "OK", 0);
         }
     }
 
@@ -158,7 +162,7 @@ public class Fragment_Main extends Fragment {
             }
         });
         tvVol.setText(0 + " cl");
-        tvFluid.setText("Fluid: " + liquid);
+        tvFluid.setText("" + liquid);
         tvPrice.setText(price + " kr/cl");
 
         //add the view v to the container(parent) with the params defined in loRules
@@ -168,8 +172,19 @@ public class Fragment_Main extends Fragment {
     }
     private void changeTotalVolume() {
         int totalVolume = 0;
+        int maxVolume = entity.getMaxVolume();
         for(int i = 0; i < seekBars.size(); i++) {
             totalVolume += seekBars.get(i).getProgress();
+        }
+        if(totalVolume > maxVolume) {
+            //tvTotalVolume.setTextColor(0xffb20000);
+            tvTotalVolume.setTextColor(getResources().getColor(R.color.logoColor));
+            tvVolumeError.setText("Your drink is too big! Maximum size is " + maxVolume + "cl");
+            tvVolumeError.setVisibility(View.VISIBLE);
+        } else {
+            //tvTotalVolume.setTextColor(0xff424242);
+            tvTotalVolume.setTextColor(getResources().getColor(R.color.textColor));
+            tvVolumeError.setVisibility(View.GONE);
         }
         tvTotalVolume.setText(totalVolume + " cl");
         tvTotalPrice.setText("Drink price: " + orderPrice() + "kr");
@@ -191,6 +206,8 @@ public class Fragment_Main extends Fragment {
 
     private void sendGrog(String message) {
         comm.sendMessage(message);
+        setStatusText("Please wait...");
+        showOrderButton(false);
     }
 
 
@@ -214,10 +231,6 @@ public class Fragment_Main extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         sendGrog(message);
-
-                        Toast toast = Toast.makeText(getActivity(), "Sending grog", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
-                        toast.show();
                     }
                 })
                 .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
@@ -240,6 +253,8 @@ public class Fragment_Main extends Fragment {
 
         // Setting Icon to Dialog
         //alertDialog.setIcon(R.drawable.tick);
+
+        alertDialog.setCancelable(false);
 
         // Setting OK Button
         alertDialog.setButton(textButton, new DialogInterface.OnClickListener() {

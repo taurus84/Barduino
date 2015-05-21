@@ -47,7 +47,7 @@ public class Login extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login();
+                preLogin();
 
             }
         });
@@ -73,31 +73,26 @@ public class Login extends Activity {
         udpTimer.purge();
     }
 
+    private void preLogin() {
+        if(etUsername.getText().toString().toLowerCase().equals("admin") &&
+                etPassword.getText().toString().toLowerCase().equals("barduino")) {
+            adminChoice();
+            //Intent intent = new Intent(".Admin");
+            //startActivity(intent);
+        } else {
+            login();
+        }
+    }
+
     private void login() {
         Intent intent = new Intent(".MainActivity");
         String username = etUsername.getText().toString().toLowerCase();
         String password = etPassword.getText().toString();
-
         if(checkValidUsernameAndPassword(username, password)) {
             intent.putExtra("username", username);
             intent.putExtra("password", password);
             startActivityForResult(intent, 1);
         }
-    }
-
-
-    private void incorrectFormat() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Incorrect format");
-        builder.setMessage("You can't use blankspace,comma,colon or dot");
-        builder.setCancelable(false);
-        builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-
-            }
-        });
     }
 
     @Override
@@ -146,6 +141,26 @@ public class Login extends Activity {
             return true;
         }
 
+    }
+
+    private void adminChoice() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Hello Admin")
+                .setMessage("Admin screen or login to Bardiono?")
+                .setCancelable(true)
+                .setNegativeButton("Admin screen", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(".Admin");
+                        startActivity(intent);
+                    }
+                })
+                .setPositiveButton("Barduino", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        login();
+                    }
+                });
+
+        builder.create().show();        // create and show the alert dialog
     }
 
     private void makeToast(String toastMessage) {

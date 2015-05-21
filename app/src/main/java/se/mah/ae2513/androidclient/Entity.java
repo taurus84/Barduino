@@ -18,7 +18,7 @@ public class Entity {
     private ArrayList<Integer> liquidPrices;
    // private String[] liquids = new String[4];
     private String status = "Not connected";
-    private int balance = 0;
+    private int balance = 0, maxVolume = 25;
 //    private int nbrOfFluids = getLiquids().size();
 
 
@@ -29,6 +29,14 @@ public class Entity {
 
     public static Entity getInstance() {
         return entity;
+    }
+
+    public synchronized int getMaxVolume() {
+        return maxVolume;
+    }
+
+    public synchronized void setMaxVolume(int volume) {
+        this.maxVolume = volume;
     }
 
     public synchronized ArrayList<String> getLiquids() {

@@ -13,7 +13,7 @@
     <dimen name="textsize_balance">40dp</dimen>
     <dimen name="action_button_size">40dp</dimen>
     <dimen name="margin_right_balance">50dp</dimen>
-    <dimen name="seekbar_radius">20dp</dimen>
+    <dimen name="seekbar_radius">10dp</dimen>
     <dimen name="textsize_totals_bottom">30sp</dimen>
     <dimen name="textsize_status">25sp</dimen>
     <dimen name="order_button_side_padding">30dp</dimen>

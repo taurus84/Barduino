@@ -2,6 +2,7 @@ package se.mah.ae2513.androidclient;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,11 +23,15 @@ import java.util.concurrent.TimeoutException;
  */
 public class Splash extends Activity {
 
+    private MediaPlayer barduinoStartSound;
+
     private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_splash);
+        //barduinoStartSound = MediaPlayer.create(Splash.this, R.raw.italiano);
+        //barduinoStartSound.start();
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
 
         Thread pausTimer = new Thread() {
@@ -150,10 +155,7 @@ public class Splash extends Activity {
                     // Logger.getLogger(LoginWindow.class.getName()).log(Level.SEVERE,
                     // null, ex);
                     Log.e("ERROR", ">>>IOEXCEPTION<<<");
-
                 }
-
-
             }
             return null;
         }
@@ -168,7 +170,7 @@ public class Splash extends Activity {
             startActivity(i);
 
             // close this activity
-            finish();
+
         }
 
     }
@@ -176,5 +178,7 @@ public class Splash extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        //barduinoStartSound.release();
+        finish();
     }
 }
