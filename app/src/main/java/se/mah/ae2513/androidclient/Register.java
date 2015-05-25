@@ -42,9 +42,7 @@ public class Register extends Activity {
     private void setComponents() {
         et_Username_Register = (EditText) findViewById(R.id.etUsername_register);
         etPassword_Register = (EditText) findViewById(R.id.etPassword_register);
-        //etPassword_Register.setTransformationMethod(new PasswordTransformationMethod());
         etPassword_Register_2 = (EditText) findViewById(R.id.etPassword_register_2);
-        //etPassword_Register_2.setTransformationMethod(new PasswordTransformationMethod());
         btnCancel = (Button) findViewById(R.id.btnCancel);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -56,20 +54,6 @@ public class Register extends Activity {
                 if(checkValidUsernameAndPassword(username, password1, password2)) {
                     connectToserver(username, password1);
                 }
-
-                /*if(password1.equals(password2)) {
-
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                    String[] userData = {et_Username_Register.getText().toString(),etPassword_Register.getText().toString()};
-                    Intent returnIntent = getIntent();
-                    returnIntent.putExtra("USER ", userData);
-                    //setResult(USER_CREATED, returnIntent);
-                    setResult(RESULT_OK, returnIntent);
-                    finish();
-                } else {
-                   incorrectInput();
-
-                }*/
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {

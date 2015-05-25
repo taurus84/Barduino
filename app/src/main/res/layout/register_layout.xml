@@ -4,18 +4,26 @@
     android:layout_height="match_parent"
     android:padding="35dp"
     android:orientation="vertical"
-    android:background="@color/logoColor">
+    android:background="@color/appBg">
 
     <LinearLayout
         android:id="@+id/lin1reg"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="5"
         android:orientation="vertical">
         <RelativeLayout
             android:id="@+id/rel1reg"
             android:layout_width="fill_parent"
             android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/barduino_red"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"/>
+
 
             </RelativeLayout>
         </LinearLayout>
@@ -23,12 +31,23 @@
         android:id="@+id/lin2reg"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="5"
         android:orientation="vertical">
         <RelativeLayout
             android:id="@+id/rel2reg"
             android:layout_width="fill_parent"
             android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="REGISTER"
+                android:textColor="@color/logoColor"
+                android:gravity="center_horizontal|center_vertical"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                />
+
 
         </RelativeLayout>
     </LinearLayout>
@@ -36,7 +55,7 @@
         android:id="@+id/lin3reg"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="5"
         android:orientation="vertical">
         <RelativeLayout
             android:id="@+id/rel3reg"
@@ -61,7 +80,7 @@
         android:id="@+id/lin4reg"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="5"
         android:orientation="vertical">
         <RelativeLayout
             android:id="@+id/rel4reg"
@@ -90,7 +109,7 @@
         android:id="@+id/lin5reg"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="5"
         android:orientation="vertical">
         <RelativeLayout
             android:id="@+id/rel5reg"
@@ -117,13 +136,12 @@
         android:id="@+id/lin6reg"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="5"
         android:orientation="horizontal">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_login"
-            android:layout_weight="1"
             android:layout_marginTop="10dp">
             <Button
                 android:id="@+id/btnSubmit"
@@ -148,7 +166,7 @@
         android:id="@+id/lin7reg"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="5"
         android:orientation="vertical">
         <RelativeLayout
             android:id="@+id/rel7reg"
@@ -161,7 +179,7 @@
         android:id="@+id/lin8reg"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="5"
         android:orientation="vertical">
         <RelativeLayout
             android:id="@+id/rel8reg"
@@ -174,7 +192,7 @@
         android:id="@+id/lin9reg"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="5"
         android:orientation="vertical">
         <RelativeLayout
             android:id="@+id/rel9reg"

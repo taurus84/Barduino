@@ -185,7 +185,7 @@ public class Splash extends Activity {
         super.onPause();
         //barduinoStartSound.release();
         Log.d("David", "onPause is called");
-        aSyncTask.cancel(true);
+        //aSyncTask.cancel(true);
         finish();
     }
 }

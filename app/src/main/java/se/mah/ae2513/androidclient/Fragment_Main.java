@@ -227,16 +227,16 @@ public class Fragment_Main extends Fragment {
                 .setMessage(receiptStr)
                 .setCancelable(true)
 
-                .setNegativeButton("Confirm", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        sendGrog(message);
-                    }
-                })
-                .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
+                    }
+                })
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        sendGrog(message);
                     }
                 });
         builder.create().show();

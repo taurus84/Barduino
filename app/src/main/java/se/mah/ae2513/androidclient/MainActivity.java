@@ -37,7 +37,6 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
     private FloatingActionMenu actionMenu;
     private FloatingActionButtonNew actionButton;
     private Fragment_Main fragmentMain;
-    private Fragment_Login2 fragLogin2;
     private Fragment_Register fragReg;
     private TCPClient client;
     private Timer timer;
@@ -103,7 +102,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
                         //.setContentView(icon)
                 .build();
         ImageView icon1 = new ImageView(this);
-        icon1.setImageResource(R.drawable.bar);
+
         ImageView icon2 = new ImageView(this);
         icon2.setImageResource(R.drawable.sync);
         ImageView icon3 = new ImageView(this);
@@ -111,14 +110,13 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
 
         SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
 
-     //   SubActionButton button1 = itemBuilder.setContentView(icon1).build();
+
         SubActionButton button2 = itemBuilder.setContentView(icon2).build();
         SubActionButton button3 = itemBuilder.setContentView(icon3).build();
-     //   button1.setTag(TAG_3);
+
         button2.setTag(TAG_UPDATE);
         button3.setTag(TAG_LOGOUT);
 
-     //   button1.setOnClickListener(this);
         button2.setOnClickListener(this);
         button3.setOnClickListener(this);
 
@@ -139,14 +137,14 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         builder.setTitle("Sign out!")
                 .setMessage("Are you sure you want to sign out?")
                 .setCancelable(true)
-                .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        signOut();
-                    }
-                })
-                .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
+                    }
+                })
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        signOut();
                     }
                 });
 
@@ -200,7 +198,6 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
      */
     private void createFragments() {
 
-        fragLogin2 = new Fragment_Login2();
         fragmentMain = new Fragment_Main();
         fragReg = new Fragment_Register();
         fm = getFragmentManager();
@@ -213,13 +210,6 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
 
     /*<<<<<<<<<<fragments>>>>>>>>>>>>>>>>>>>>>>>*/
 
-    private void fragmentLogin() {
-        fm = getFragmentManager();
-        transaction = fm.beginTransaction();
-        transaction.replace(R.id.fr_id, fragLogin2);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
     private void fragmentRegister() {
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
@@ -246,7 +236,8 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
     /**
      * Method receives messages from server and setting the
      * serverstatus to entity. Depending on messages the button
-     * on fragment mixer will either active or inactive.
+     * on fragmentMain will either be shown or hidden.
+     * If hidden, a status string is showing
      * @param message
      */
     public void msgFromServer(String message) {
@@ -357,8 +348,8 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(fragmentMain.isVisible());
-                    fragmentMain.showOrderButton(show);
+                if (fragmentMain.isVisible()) ;
+                fragmentMain.showOrderButton(show);
             }
         });
     }
@@ -370,7 +361,10 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         }
     }
 
-    //implemented method for interface Communication
+    /*
+        Implemented method for interface Communication
+        For debuggin purpose
+     */
     @Override
     public void doSomething() {
     }
@@ -384,15 +378,32 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         }
     }
 
-    private void sendAvareqToServer() {
-
-        sendMessage("AVAREQ");
-    }
-
+    /*
+    Timer to check server status
+     */
     private void startTimer() {
         stopTimer();
         timer = new Timer();
+        //timer starts after 2000ms, and the run method is call every 2000ms
         timer.schedule(new CheckServer(), 2000, 2000);
+    }
+
+    /*
+    Inner class for the timer
+     */
+    private class CheckServer extends TimerTask {
+        @Override
+        public void run() {
+            sendAvareqToServer();
+        }
+    }
+
+    /*
+    Checking server status by sending text string AVAREQ.
+    Server will answer
+    */
+    private void sendAvareqToServer() {
+        sendMessage("AVAREQ");
     }
 
     private void stopTimer() {
@@ -424,24 +435,19 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         signOut();
     }
 
+    /**
+     * onClick method for Floating Action Button menu
+     * @param v the clicked button
+     */
     @Override
     public void onClick(View v) {
         if(v.getTag().equals(TAG_UPDATE)) {
             update();
         } else if(v.getTag().equals(TAG_LOGOUT)) {
             confirmSignOut();
-        } else if(v.getTag().equals(TAG_3)) {
-            //unused
-
         }
     }
 
-    private class CheckServer extends TimerTask {
-        @Override
-        public void run() {
-            sendAvareqToServer();
-        }
-    }
 
     private void setTextOnStatus() {
         runOnUiThread(new Runnable() {
