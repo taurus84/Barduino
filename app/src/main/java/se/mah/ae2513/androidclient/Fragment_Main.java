@@ -143,6 +143,7 @@ public class Fragment_Main extends Fragment {
         TextView tvFluid = (TextView) v.findViewById(R.id.testFluid);
         TextView tvPrice = (TextView) v.findViewById(R.id.tvPrice);
         SeekBar seekX = (SeekBar) v.findViewById(R.id.testSeek);
+        seekX.setMax(entity.getMaxVolumeSingleContainer());
         seekBars.add(seekX);
         //seekbar listener
         seekX.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

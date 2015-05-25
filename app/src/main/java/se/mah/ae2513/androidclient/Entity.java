@@ -18,8 +18,9 @@ public class Entity {
     private ArrayList<Integer> liquidPrices;
    // private String[] liquids = new String[4];
     private String status = "Not connected";
-    private int balance = 0, maxVolume = 25;
+    private int balance = 0, maxVolume = 20;
 //    private int nbrOfFluids = getLiquids().size();
+    private int maxVolumeSingleContainer = 20;
 
 
 
@@ -29,6 +30,14 @@ public class Entity {
 
     public static Entity getInstance() {
         return entity;
+    }
+
+    public synchronized int getMaxVolumeSingleContainer() {
+        return maxVolumeSingleContainer;
+    }
+
+    public synchronized void setMaxVolumeSingleContainer(int volume) {
+        this.maxVolumeSingleContainer = volume;
     }
 
     public synchronized int getMaxVolume() {
@@ -44,20 +53,6 @@ public class Entity {
     }
 
     public synchronized void setLiquids(ArrayList<String> liquids) {
-/*        StringTokenizer st = new StringTokenizer(ingredients,":");
-        String waste = st.nextToken();
-        String allIngredients = st.nextToken();
-        StringTokenizer st2 = new StringTokenizer(allIngredients,",");
-        liquids[0] = st2.nextToken();
-        liquids[1] = st2.nextToken();
-        liquids[2] = st2.nextToken();
-        liquids[3] = st2.nextToken();
-
-        liquids[0] = ingredients[0];
-        liquids[1] = ingredients[1];
-        liquids[2] = ingredients[2];
-        liquids[3] = ingredients[3];
-*/
         this.liquids = liquids;
     }
 
