@@ -156,12 +156,10 @@ public class Fragment_Main extends Fragment {
             totalVolume += seekBars.get(i).getProgress();
         }
         if(totalVolume > maxVolume) {
-            //tvTotalVolume.setTextColor(0xffb20000);
             tvTotalVolume.setTextColor(getResources().getColor(R.color.logoColor));
             tvVolumeError.setText("Your drink is too big! Maximum size is " + maxVolume + "cl");
             tvVolumeError.setVisibility(View.VISIBLE);
         } else {
-            //tvTotalVolume.setTextColor(0xff424242);
             tvTotalVolume.setTextColor(getResources().getColor(R.color.textColor));
             tvVolumeError.setVisibility(View.GONE);
         }

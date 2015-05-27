@@ -81,7 +81,6 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
 
     private void initializeComponents() {
         tvBalance = (TextView) findViewById(R.id.tvBalance);
-
         ImageView icon = new ImageView(this); // Create an icon
         icon.setImageResource(R.drawable.coin);
         actionButton = new FloatingActionButtonNew.Builder(this)
@@ -246,8 +245,6 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
             int balance = Integer.parseInt(message.split(" ")[1]);
             entity.setBalance(balance);
             entity.setStatus("Sending grog...");
-
-
             showOrderButton(false);
         } else if(message.contains("INGREDIENTS")) {
             if(fragmentMain.isVisible()) {
@@ -305,7 +302,6 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
             client.sendMessage(message);
         }
     }
-
     /*
     Timer to check server status
      */
@@ -315,7 +311,6 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         //timer starts after 2000ms, and the run method is call every 2000ms
         timer.schedule(new CheckServer(), 2000, 2000);
     }
-
     /*
     Inner class for the timer
      */
@@ -325,7 +320,6 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
             sendAvareqToServer();
         }
     }
-
     /*
     Checking server status by sending text string AVAREQ.
     Server will answer
@@ -339,7 +333,6 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
             timer.cancel();
         }
     }
-
     /**
      * Method to finish the activity when connection to server is lost.
      */
@@ -362,7 +355,6 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         super.onBackPressed();
         signOut();
     }
-
     /**
      * onClick method for Floating Action Button menu
      * @param v the clicked button
@@ -409,7 +401,6 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
                     toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
                     toast.show();
                 }
-
             }
         });
     }
@@ -456,7 +447,6 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         setResult(RE_LOGIN, returnIntent);
         finish();
     }
-
     @Override
     protected void onPause() {
         super.onPause();

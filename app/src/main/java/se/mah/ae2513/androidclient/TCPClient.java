@@ -1,6 +1,5 @@
 package se.mah.ae2513.androidclient;
 
-import android.system.ErrnoException;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -8,7 +7,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -50,7 +48,6 @@ public class TCPClient extends Thread {
     public void run() {
         try {
             //create a socket to make the connection with the server
-            //Socket socket = new Socket(ipNumber, port);
             Socket socket = new Socket();
             socket.connect(new InetSocketAddress(ipNumber, port), 5000);
 
@@ -73,11 +70,9 @@ public class TCPClient extends Thread {
                     if (serverMessage != null ) {
                         mainActivity.msgFromServer(serverMessage);
                         //Prints out the message on consol in debugging perpose
-                        //mainActivity.setServerMessage(serverMessage);
                         Log.i("RESPONSE FROM SERVER", "S: Received Message: '" + serverMessage + "'");
                     }
                     serverMessage = null;
-
                 }
                 in.close();
                 out.close();

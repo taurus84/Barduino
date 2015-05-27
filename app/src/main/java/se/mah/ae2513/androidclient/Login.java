@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Timer;
@@ -22,23 +21,16 @@ import java.util.Timer;
  */
 public class Login extends Activity {
 
-    private EditText etUsername, etPassword, etPort, etIP;
-    private TextView tvUsername;
-    private TextView tvPassword;
-    private TextView tvErrorMessage;
+    private EditText etUsername, etPassword;
     private Button btnLogin, btnRegister;
-    private final int NO_CONNECTION = 0, LOGGED_OUT = 1, LOGIN_BAD = 2, RE_LOGIN = 3, SOCKET_TCP_ERROR = 4,
-            REGISTRATION_OK = 1;
+    private final int NO_CONNECTION = 0, LOGGED_OUT = 1, LOGIN_BAD = 2, RE_LOGIN = 3, SOCKET_TCP_ERROR = 4;
     private Timer udpTimer;
-    private String serverIP, serverPort;
     private Entity entity = Entity.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //connectUDP();
         setContentView(R.layout.login_layout);
-
     }
 
     @Override
@@ -64,29 +56,15 @@ public class Login extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(".Register");
-                //startActivityForResult(intent, 2);
                 startActivityForResult(intent, 2);
             }
         });
-
-    }
-
-    public void connectUDP() {
-        udpTimer = new Timer();
-        udpTimer.scheduleAtFixedRate(new UDP(this), 0, 2000);
-    }
-
-    public void stopUDPTimer() {
-        udpTimer.cancel();
-        udpTimer.purge();
     }
 
     private void preLogin() {
         if(etUsername.getText().toString().toLowerCase().equals("admin") &&
                 etPassword.getText().toString().toLowerCase().equals("barduino")) {
             adminChoice();
-            //Intent intent = new Intent(".Admin");
-            //startActivity(intent);
         } else {
             login();
         }
@@ -110,8 +88,6 @@ public class Login extends Activity {
             if (resultCode == LOGGED_OUT) {
                 makeToast("Signed out");
             } else if (resultCode == NO_CONNECTION) {
-                //String result=data.getStringExtra("result");
-                //Log.i("Hej", "hej");
                 makeToast("No connection to server");
             } else if (resultCode == LOGIN_BAD) {
                 makeToast("Wrong username or password");
@@ -128,7 +104,6 @@ public class Login extends Activity {
                 etUsername.setText(username);
             }
         }
-
     }
 
     private boolean checkValidUsernameAndPassword(String username, String password) {
@@ -148,7 +123,6 @@ public class Login extends Activity {
         } else {
             return true;
         }
-
     }
 
     private void adminChoice() {
@@ -185,13 +159,6 @@ public class Login extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return true;
-    }
-
-
-    public void setIP(String serverIP, int portNbr) {
-        this.serverIP = serverIP;
-        this.serverPort = Integer.toString(portNbr);
-        entity.setIpNbr(serverIP);
     }
 
     public void serverHostNotFound() {
