@@ -6,14 +6,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 /**
  * Created by John on 15-05-01.
@@ -22,13 +19,11 @@ public class Register extends Activity {
     private EditText etPassword_Register,etPassword_Register_2,et_Username_Register;
     private Button btnSubmit,btnCancel;
     private Entity entity = Entity.getInstance();
-    private final int USER_CREATED = 1,CANCEL = 0, REGISTRATION_OK = 1;
+    private final int  NO_ACTION = 0,REGISTRATION_OK = 1;
     private InputMethodManager imm;
     private TCPRegister client;
     private int serverPortNbr = 4444;
-    private final int NO_ACTION = 0;
     private Intent returnIntent;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +58,6 @@ public class Register extends Activity {
                 finish();
             }
         });
-
     }
 
     private boolean checkValidUsernameAndPassword(String username, String password1, String password2) {
@@ -89,22 +83,6 @@ public class Register extends Activity {
         } else {
             return true;
         }
-
-    }
-
-
-    private void incorrectInput() {
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle("Incorrect input");
-        alertDialog.setMessage("Your passwords do not match");
-        alertDialog.setCancelable(false);
-        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        alertDialog.show();
     }
 
     private void connectToserver(String username, String password) {
@@ -126,8 +104,6 @@ public class Register extends Activity {
         if(serverMessage.equals("REGISTER OK")) {
             //Success registration
             alertDialog("", "Your registration was successful!", "Press here to return to login screen", REGISTRATION_OK);
-            //setResult(RESULT_OK, returnIntent);
-            //finish();
         } else if(serverMessage.equals("REGISTER BAD")) {
             alertDialog("Error!", "You are already registered!", "OK", 0);
         }
@@ -139,16 +115,12 @@ public class Register extends Activity {
             @Override
             public void run() {
                 AlertDialog alertDialog = new AlertDialog.Builder(Register.this).create();
-
                 // Setting Dialog Title
                 alertDialog.setTitle(title);
-
                 // Setting Dialog Message
                 alertDialog.setMessage(message);
-
                 // Setting Icon to Dialog
-                //alertDialog.setIcon(R.drawable.tick);
-
+                alertDialog.setIcon(R.drawable.logo_b);
                 // Setting OK Button
                 alertDialog.setButton(textButton, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -156,7 +128,6 @@ public class Register extends Activity {
                         doOnAlertDialogOk(option);
                     }
                 });
-
                 // Showing Alert Message
                 alertDialog.show();
             }

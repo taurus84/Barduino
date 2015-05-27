@@ -1,9 +1,6 @@
 package se.mah.ae2513.androidclient;
 
-import android.view.View;
-
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 /**
  * Created by John on 15-04-08.
@@ -14,19 +11,13 @@ public class Entity {
     private int portNbr = 4444;
     private String ipNbr, username, password;
     private ArrayList<String> liquids;
-
     private ArrayList<Integer> liquidPrices;
-   // private String[] liquids = new String[4];
     private String status = "Not connected";
     private int balance = 0, maxVolume = 20;
-//    private int nbrOfFluids = getLiquids().size();
     private int maxVolumeSingleContainer = 20;
-
-
 
     private Entity() {
     }
-
 
     public static Entity getInstance() {
         return entity;
@@ -55,7 +46,6 @@ public class Entity {
     public synchronized void setLiquids(ArrayList<String> liquids) {
         this.liquids = liquids;
     }
-
 
     public synchronized ArrayList<Integer> getLiquidPrices() {
         return liquidPrices;

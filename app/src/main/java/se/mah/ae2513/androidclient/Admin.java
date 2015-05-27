@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 /**
- * Created by helengronvall on 15-05-20.
+ * Created by David Tran on 15-05-20.
  */
 public class Admin extends Activity {
 

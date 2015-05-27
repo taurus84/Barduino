@@ -20,8 +20,6 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 public class FloatingActionButtonNew extends FrameLayout {
 
     public static final int THEME_LIGHT = 0;
-    public static final int THEME_DARK = 1;
-
     public static final int POSITION_TOP_CENTER = 1;
     public static final int POSITION_TOP_RIGHT = 2;
     public static final int POSITION_RIGHT_CENTER = 3;
@@ -30,9 +28,7 @@ public class FloatingActionButtonNew extends FrameLayout {
     public static final int POSITION_BOTTOM_LEFT = 6;
     public static final int POSITION_LEFT_CENTER = 7;
     public static final int POSITION_TOP_LEFT = 8;
-
     private View contentView;
-
     private boolean systemOverlay;
 
     /**
@@ -56,9 +52,7 @@ public class FloatingActionButtonNew extends FrameLayout {
             throw new RuntimeException("Given context must be an instance of Activity, "
                     +"since this FAB is not a systemOverlay.");
         }
-
         setPosition(position, layoutParams);
-
         // If no custom backgroundDrawable is specified, use the background drawable of the theme.
         if(backgroundDrawable == null) {
             if(theme == THEME_LIGHT)
@@ -71,7 +65,6 @@ public class FloatingActionButtonNew extends FrameLayout {
             setContentView(contentView, contentParams);
         }
         setClickable(true);
-
         attach(layoutParams);
     }
 
@@ -81,9 +74,7 @@ public class FloatingActionButtonNew extends FrameLayout {
      * @param layoutParams should be either FrameLayout.LayoutParams or WindowManager.LayoutParams
      */
     public void setPosition(int position, ViewGroup.LayoutParams layoutParams) {
-
         boolean setDefaultMargin = false;
-
         int gravity;
         switch (position) {
             case POSITION_TOP_CENTER:
@@ -156,7 +147,6 @@ public class FloatingActionButtonNew extends FrameLayout {
             params = contentParams;
         }
         params.gravity = Gravity.CENTER;
-
         contentView.setClickable(false);
         this.addView(contentView, params);
     }
@@ -179,7 +169,6 @@ public class FloatingActionButtonNew extends FrameLayout {
             ((ViewGroup) getActivityContentView()).addView(this, layoutParams);
         }
     }
-
     /**
      * Detaches it from the container view.
      */
@@ -191,7 +180,6 @@ public class FloatingActionButtonNew extends FrameLayout {
             ((ViewGroup) getActivityContentView()).removeView(this);
         }
     }
-
     /**
      * Finds and returns the main content view from the Activity context.
      * @return the main content view
@@ -217,12 +205,10 @@ public class FloatingActionButtonNew extends FrameLayout {
             setBackgroundDrawable(drawable);
         }
     }
-
     /**
      * A builder for @link FloatingActionButton in conventional Java Builder format
      */
     public static class Builder {
-
         private Context context;
         private ViewGroup.LayoutParams layoutParams;
         private int theme;
@@ -231,10 +217,8 @@ public class FloatingActionButtonNew extends FrameLayout {
         private View contentView;
         private LayoutParams contentParams;
         private boolean systemOverlay;
-
         public Builder(Context context) {
             this.context = context;
-
             // Default FloatingActionButton settings
             int size = context.getResources().getDimensionPixelSize(R.dimen.action_button_size);
             int margin = context.getResources().getDimensionPixelSize(R.dimen.action_button_margin);
