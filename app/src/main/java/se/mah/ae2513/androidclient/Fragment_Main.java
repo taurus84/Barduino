@@ -33,7 +33,7 @@ public class Fragment_Main extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_main_layout, container, false);
+        View v = inflater.inflate(R.layout.layout_fragment_main, container, false);
         return v;
     }
 

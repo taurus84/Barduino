@@ -28,7 +28,7 @@ public class Register extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register_layout);
+        setContentView(R.layout.layout_register);
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         returnIntent = getIntent();
         setComponents();
