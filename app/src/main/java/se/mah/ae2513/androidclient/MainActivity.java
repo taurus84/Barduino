@@ -48,7 +48,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_mainActivity);
+        setContentView(R.layout.layout_main_activity);
         createFragments();
         initializeComponents();
         entity.setUsername(getIntent().getStringExtra("username"));
