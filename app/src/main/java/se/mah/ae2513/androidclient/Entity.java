@@ -3,18 +3,21 @@ package se.mah.ae2513.androidclient;
 import java.util.ArrayList;
 
 /**
- * Created by John on 15-04-08.
+ * This class holds the data.
+ * Works as a Singleton, which lets all classes receive the same information.
+ * Created by David Tran och John Tengvall 2015-04-08.
  */
 public class Entity {
 
     private static Entity entity = new Entity();
     private int portNbr = 4444;
-    private String ipNbr, username, password;
+    private String ipNbr, username, password, adminUsername = "admin", adminPassword = "barduino";
     private ArrayList<String> liquids;
     private ArrayList<Integer> liquidPrices;
     private String status = "Not connected";
     private int balance = 0, maxVolume = 20;
     private int maxVolumeSingleContainer = 20;
+
 
     private Entity() {
     }
@@ -22,6 +25,8 @@ public class Entity {
     public static Entity getInstance() {
         return entity;
     }
+
+    /********* Getters and setters for all the data stored ************************/
 
     public synchronized int getMaxVolumeSingleContainer() {
         return maxVolumeSingleContainer;
@@ -37,6 +42,22 @@ public class Entity {
 
     public synchronized void setMaxVolume(int volume) {
         this.maxVolume = volume;
+    }
+
+    public synchronized void setAdminUsername(String username) {
+        adminUsername = username;
+    }
+
+    public synchronized String getAdminUsername() {
+        return adminUsername;
+    }
+
+    public synchronized void setAdminPassword(String password) {
+        adminPassword = password;
+    }
+
+    public synchronized String getAdminPassword() {
+        return adminPassword;
     }
 
     public synchronized ArrayList<String> getLiquids() {
@@ -58,6 +79,7 @@ public class Entity {
     public synchronized void setStatus(String status) {
         this.status = status;
     }
+
     public synchronized String getStatus() {
         return status;
     }

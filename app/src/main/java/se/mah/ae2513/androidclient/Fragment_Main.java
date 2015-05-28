@@ -14,11 +14,17 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 
 /**
- * Created by David Tran on 15-04-29.
+ * This class is a fragment which from has a dynamic UI depending on how
+ * many fluids the server has in the system.
+ *
+ * This fragment is a part of the layout in MainActivity.
+ * The fragment holds its own logic, because in Andoroid only the class which
+ * creates a View should be able to change the View.
+ *
+ * Created by David Tran and John Tengvall 2015-04-29.
  */
 public class Fragment_Main extends Fragment {
     private TextView tvTotalVolume, tvTotalPrice, tvStatus, tvVolumeError;
@@ -37,9 +43,21 @@ public class Fragment_Main extends Fragment {
         return v;
     }
 
+    /**
+     * This method is called after the called class, MainActivity, is done doing its
+     * user interface. This way, collisions can be avoided, which could generate
+     * nullpointer exceptions.
+     *
+     * @param savedInstanceState
+     */
     public void onActivityCreated(Bundle savedInstanceState) {
         comm = (Communicator) getActivity();
         super.onActivityCreated(savedInstanceState);
+        setComponents();
+    }
+
+    //set up the Views
+    private void setComponents() {
         tvTotalVolume = (TextView) getActivity().findViewById(R.id.tvTotal);
         tvTotalPrice = (TextView) getActivity().findViewById(R.id.tvTotalPrice);
         tvVolumeError = (TextView) getActivity().findViewById(R.id.tvVolumeOverMax);
@@ -56,6 +74,11 @@ public class Fragment_Main extends Fragment {
         });
     }
 
+    /*
+     * This method is called when the user press the Order button.
+     * It checks if the user has enough credits to order the drink, if the volume
+     * of the drink exceeds the maximum allowed.
+     */
     private void orderDrink() {
         int totalVolume = 0;
         if(orderPrice() <= entity.getBalance()) {
@@ -84,6 +107,10 @@ public class Fragment_Main extends Fragment {
         }
     }
 
+    /*
+     * The method calculates the cost of the drink
+     * @return int the price of the drink
+     */
     private int orderPrice() {
         int total = 0;
         for(int i = 0; i < seekBars.size(); i++) {
@@ -95,22 +122,32 @@ public class Fragment_Main extends Fragment {
         return total;
     }
 
+    /**
+     * This method creates the interface depending on how many liquids the server has.
+     */
     public void setLiquids() {
+        //how many liquids?
         int nbrOfFluids = entity.getLiquids().size();
         for(int i = 0; i < nbrOfFluids; i++) {
-            setTextLiquids(entity.getLiquids().get(i), entity.getLiquidPrices().get(i));
+            //set name and price for every liquid
+            setLiquids(entity.getLiquids().get(i), entity.getLiquidPrices().get(i));
         }
     }
 
-    public void setTextLiquids(String liquid, int price) {
+    /*
+     * Method called from setLiquids()
+     * @param Sting liquid the name of the liquid
+     * @param int price the price for the liquid per centiliter
+     */
+    private void setLiquids(String liquid, int price) {
         View v = l.inflate(R.layout.fluid_item, fluidBox, false);
         //setup params
         RelativeLayout.LayoutParams loRules = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        //has to have an id to put things below.
+        //has to have an id to use below param in relativeLayout. ID starts from 100
         v.setId(0 + idTracker);
         idTracker++;
-        //no components put in?
+        //no components put in yet?
         if(firstComponent) {
             loRules.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
             firstComponent = false;
@@ -124,6 +161,7 @@ public class Fragment_Main extends Fragment {
         TextView tvFluid = (TextView) v.findViewById(R.id.testFluid);
         TextView tvPrice = (TextView) v.findViewById(R.id.tvPrice);
         SeekBar seekX = (SeekBar) v.findViewById(R.id.testSeek);
+        //Maximum allowed volume for each liquid
         seekX.setMax(entity.getMaxVolumeSingleContainer());
         seekBars.add(seekX);
         seekX.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -132,7 +170,7 @@ public class Fragment_Main extends Fragment {
                 //changing text when sliding on the seekbar
                 tvVol.setText(seekBar.getProgress() + " cl");
                 changeTotalVolume();
-                //tinging seekbar background
+                //tinting seekbar background, so the red background is shown when seekbar slides
                 seekBar.getBackground().setAlpha(255 - seekBar.getProgress() * 10);
             }
             @Override
@@ -149,12 +187,20 @@ public class Fragment_Main extends Fragment {
         fluidBox.addView(v, loRules);
     }
 
+    /*
+     * This method is called when a slider value is changed.
+     * Changes the totalVolume and price of the drink
+     */
     private void changeTotalVolume() {
+        //declaring the totalVolume
         int totalVolume = 0;
+        //setting the maximum allowed drink size. Data from Entity class
         int maxVolume = entity.getMaxVolume();
+        //sums up the values from all seekbars
         for(int i = 0; i < seekBars.size(); i++) {
             totalVolume += seekBars.get(i).getProgress();
         }
+        //if drink is too big, change textcolor to Red and show an error text
         if(totalVolume > maxVolume) {
             tvTotalVolume.setTextColor(getResources().getColor(R.color.logoColor));
             tvVolumeError.setText("Your drink is too big! Maximum size is " + maxVolume + "cl");
@@ -163,14 +209,25 @@ public class Fragment_Main extends Fragment {
             tvTotalVolume.setTextColor(getResources().getColor(R.color.textColor));
             tvVolumeError.setVisibility(View.GONE);
         }
+        //set the textviews with drink size and price
         tvTotalVolume.setText(totalVolume + " cl");
         tvTotalPrice.setText("Drink price: " + orderPrice() + "kr");
     }
 
+    /**
+     * This method sets the text on the bottom of the app, which is
+     * a status indicator for the user.
+     * @param text
+     */
     public void setStatusText(String text) {
         tvStatus.setText(text);
     }
 
+    /**
+     * This method toggles between either showing the Order button or
+     * the status string.
+     * @param show
+     */
     public void showOrderButton(boolean show) {
         if(show) {
             tvStatus.setVisibility(View.GONE);
@@ -181,14 +238,14 @@ public class Fragment_Main extends Fragment {
         }
     }
 
-    private void sendGrog(String message) {
-        comm.sendMessage(message);
-        setStatusText("Please wait...");
-        showOrderButton(false);
-    }
-
-    public void receiptWindow(final String message) {
+    /*
+     * This method is a confirmation window for the user before sending the grog to the server.
+     * It generates the string which fits the protocol and if the user confirms it will  call
+     * the sendGrog method.
+     */
+    private void receiptWindow(final String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        //Build the string
         String receiptStr = "";
         for(int i = 0; i < seekBars.size(); i++) {
             int seekBarValue = seekBars.get(i).getProgress();
@@ -197,6 +254,7 @@ public class Fragment_Main extends Fragment {
             }
         }
         receiptStr += "\nTotal Price: " + orderPrice() +" kr";
+        //the alertdialog preferences
         builder.setTitle("Receipt")
                 .setMessage(receiptStr)
                 .setCancelable(true)
@@ -215,6 +273,23 @@ public class Fragment_Main extends Fragment {
         builder.create().show();
     }
 
+    /*
+     * This method uses the Communicator interface to send a message to
+     * the server containing the ordered grog
+     */
+    private void sendGrog(String message) {
+        comm.sendMessage(message);
+        setStatusText("Please wait...");
+        showOrderButton(false);
+    }
+
+    /*
+     * A method to create an alertDialog to give the user information
+     * @param String title the title on the top of the dialog screen
+     * @param String message the message to the user
+     * @param String textButton the text on the button the user can click, often 'OK'
+     * @param int option which action to be called in method doOnAlertDialog
+     */
     private void alertDialog(String title, String message, String textButton, final int option) {
         AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
         // Setting Dialog Title
@@ -235,6 +310,9 @@ public class Fragment_Main extends Fragment {
         alertDialog.show();
     }
 
+    /*
+     * Different actions can be executed from an alertDialog.
+     */
     private void doOnAlertDialogOk(int option) {
         switch (option) {
             case 0:

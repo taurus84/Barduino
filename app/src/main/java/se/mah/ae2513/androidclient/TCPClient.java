@@ -14,7 +14,11 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 /**
- * Created by David on 2015-04-02.
+ * This class creates a connection to the server using TCP.
+ * The class is used from MainActivity class. It lets the user communicate with the
+ * server by sending and receiving strings.
+ *
+ * Created by David Tran 2015-04-02.
  */
 public class TCPClient extends Thread {
 
@@ -45,6 +49,9 @@ public class TCPClient extends Thread {
         }
     }
 
+    /**
+     * The method is called when the thread starts
+     */
     public void run() {
         try {
             //create a socket to make the connection with the server
@@ -64,9 +71,11 @@ public class TCPClient extends Thread {
                 while (true) {
                     serverMessage = in.readLine();
 
+                    //closes the connection to the server
                     if(serverMessage.equals("STOP")) {
                         break;
                     }
+                    //receives a messages from server
                     if (serverMessage != null ) {
                         mainActivity.msgFromServer(serverMessage);
                         //Prints out the message on consol in debugging perpose
@@ -74,12 +83,12 @@ public class TCPClient extends Thread {
                     }
                     serverMessage = null;
                 }
+                //close connections
                 in.close();
                 out.close();
                 socket.close();
                 Log.i("Meddelande: ", "Socket closed");
-            }   //was before Exception e, may find more Exceptions on the road
-                catch (SocketTimeoutException e) {
+            } catch (SocketTimeoutException e) {
                     Log.i("ERROR", "Timeout");
                     connectFailed = true;
                     connected = false;
@@ -108,9 +117,20 @@ public class TCPClient extends Thread {
         }
     }
 
+    /**
+     * Method returns true or false depending on if connection is
+     * established or not
+     * @return
+     */
     public boolean isConnected() {
         return connected;
     }
+
+    /**
+     * Method returns true or false depending if the connection
+     * was failed or not
+     * @return
+     */
     public boolean ConnectFailed() {
         return connectFailed;
     }

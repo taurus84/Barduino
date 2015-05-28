@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 /**
+ * This class is an Activity for registration of a new user
  * Created by John on 15-05-01.
  */
 public class Register extends Activity {
@@ -43,12 +44,7 @@ public class Register extends Activity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String password1 = etPassword_Register.getText().toString();
-                String password2 = etPassword_Register_2.getText().toString();
-                String username =  et_Username_Register.getText().toString().toLowerCase();
-                if(checkValidUsernameAndPassword(username, password1, password2)) {
-                    connectToserver(username, password1);
-                }
+                registerUser();
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +56,26 @@ public class Register extends Activity {
         });
     }
 
+    /**
+     * This method checks in the input is ok, and if ok a connection
+     * to the server will be established and a message is sent to server.
+     */
+    private void registerUser() {
+        String password1 = etPassword_Register.getText().toString();
+        String password2 = etPassword_Register_2.getText().toString();
+        String username =  et_Username_Register.getText().toString().toLowerCase();
+        if(checkValidUsernameAndPassword(username, password1, password2)) {
+            connectToserver(username, password1);
+        }
+    }
+
+    /*
+     * This method checks if the input on 'username' and 'password' is ok
+     * @param String username
+     * @param String password1 the string in first password row
+     * @param String password2 the string in second password row
+     * @return boolean ok or not
+     */
     private boolean checkValidUsernameAndPassword(String username, String password1, String password2) {
         if(username.isEmpty() || password1.isEmpty() || password2.isEmpty()) {
             alertDialog("Error!", "You forgot to fill in all boxes!", "OK", NO_ACTION);
@@ -100,6 +116,11 @@ public class Register extends Activity {
         }
     }
 
+    /**
+     * This method handles the messages from server. The message either contains
+     * 'REGISTER OK' or 'REGISTER BAD'
+     * @param serverMessage
+     */
     public void msgFromServer(String serverMessage) {
         if(serverMessage.equals("REGISTER OK")) {
             //Success registration
@@ -110,6 +131,13 @@ public class Register extends Activity {
         client.sendMessage("STOP");
     }
 
+    /*
+     * A method to create an alertDialog to give the user information
+     * @param String title the title on the top of the dialog screen
+     * @param String message the message to the user
+     * @param String textButton the text on the button the user can click, often 'OK'
+     * @param int option which action to be called in method doOnAlertDialog
+     */
     private void alertDialog(final String title, final String message, final String textButton, final int option) {
         runOnUiThread(new Runnable() {
             @Override
@@ -134,6 +162,9 @@ public class Register extends Activity {
         });
     }
 
+    /*
+     * Different actions can be executed from an alertDialog.
+     */
     private void doOnAlertDialogOk(int option) {
         switch (option) {
             case NO_ACTION:

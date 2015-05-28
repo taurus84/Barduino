@@ -23,8 +23,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * The class creates a connection to a server where user chooses
- * ip-address and port number of the server.
+ *
  */
 public class MainActivity extends Activity implements Communicator, View.OnClickListener {
     private Entity entity = Entity.getInstance();
@@ -51,9 +50,8 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         setContentView(R.layout.layout_main_activity);
         createFragments();
         initializeComponents();
-        entity.setUsername(getIntent().getStringExtra("username"));
-        entity.setPassword(getIntent().getStringExtra("password"));
-        returnIntent = getIntent();
+        saveUsernamePassword();
+        returnIntent = getIntent(); //reference to the activity which created this activity
         connectToServer();
         while(!client.isConnected()) {
             if(client.ConnectFailed()) {
@@ -79,8 +77,18 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         }
     }
 
+    /*
+     * Save the input username and password to Entity class
+     */
+    private void saveUsernamePassword() {
+        entity.setUsername(getIntent().getStringExtra("username"));
+        entity.setPassword(getIntent().getStringExtra("password"));
+    }
+
     private void initializeComponents() {
         tvBalance = (TextView) findViewById(R.id.tvBalance);
+
+        //FloatingActionButton up in right corner with subMenus
         ImageView icon = new ImageView(this); // Create an icon
         icon.setImageResource(R.drawable.coin);
         actionButton = new FloatingActionButtonNew.Builder(this)
@@ -88,13 +96,12 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
                 .setPosition(FloatingActionButton.POSITION_TOP_RIGHT)
                 .build();
         ImageView icon1 = new ImageView(this);
+        icon1.setImageResource(R.drawable.sync);
         ImageView icon2 = new ImageView(this);
-        icon2.setImageResource(R.drawable.sync);
-        ImageView icon3 = new ImageView(this);
-        icon3.setImageResource(R.drawable.logout);
+        icon2.setImageResource(R.drawable.logout);
         SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
-        SubActionButton button2 = itemBuilder.setContentView(icon2).build();
-        SubActionButton button3 = itemBuilder.setContentView(icon3).build();
+        SubActionButton button2 = itemBuilder.setContentView(icon1).build();
+        SubActionButton button3 = itemBuilder.setContentView(icon2).build();
         button2.setTag(TAG_UPDATE);
         button3.setTag(TAG_LOGOUT);
         button2.setOnClickListener(this);
@@ -129,10 +136,14 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
 
     private void signOut() {
         closeConnection();
+        //set result code to the intent the app is going back to, in this case Login.class
         setResult(LOGGED_OUT, returnIntent);
-        finish();
+        finish(); //close this activity and return to Login.class
     }
 
+    /**
+     * This method tries to connect to the server
+     */
     public void connectToServer() {
         //message STOP returned from server if socket closes
         if(client != null) {
@@ -143,26 +154,13 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         client.start();
     }
 
+    /*
+     * This method is used when loggin in.
+     */
     private void login() {
         String message = "LOGIN " + entity.getUsername() +
                         ":" + entity.getPassword();
         sendMessage(message);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        //int id = item.getItemId();
-        return super.onOptionsItemSelected(item);
     }
 
     /*
@@ -176,6 +174,11 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         transaction.commit();
     }
 
+    /**
+     * Close the connection to server by sending 'STOP' to server.
+     * The server will reply with 'STOP' and in TCPClient that message
+     * will close connections
+     */
     public void closeConnection(){
         stopTimer();
         if(client != null) {
@@ -279,6 +282,11 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         });
     }
 
+    /*
+     * This method either shows or hides the Order button.
+     * @param boolean   true Shows Order button and hides status text
+     *                  false Hides Order button and shows the status text
+     */
     private void showOrderButton(final boolean show) {
         runOnUiThread(new Runnable() {
             @Override
@@ -289,13 +297,19 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         });
     }
 
+    /*
+     * This method sends a message 'INGREDIENTS' to server. The reply will be
+     * handled in msgFromServer(String)
+     */
     private void updateFluidsFromServer() {
         if(client != null) {
             client.sendMessage("INGREDIENTS");
         }
     }
 
-    //implemented method for interface Communication
+    /*
+     * This method send messages to the server
+     */
     @Override
     public void sendMessage(String message) {
         if(client != null) {
@@ -303,7 +317,7 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         }
     }
     /*
-    Timer to check server status
+     * Timer to check server status
      */
     private void startTimer() {
         stopTimer();
@@ -328,6 +342,9 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         sendMessage("AVAREQ");
     }
 
+    /*
+     * This method stops the timer and no messages are sent to server
+     */
     private void stopTimer() {
         if(timer != null) {
             timer.cancel();
@@ -368,6 +385,10 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         }
     }
 
+    /*
+     * This method sets the status text on the bottom of the screen, if
+     * the textview is visible
+     */
     private void setTextOnStatus() {
         runOnUiThread(new Runnable() {
             @Override
@@ -379,6 +400,9 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         });
     }
 
+    /*
+     * This method updates the balance in the textview next to the Coin
+     */
     private void updateBalance() {
         runOnUiThread(new Runnable() {
             @Override
@@ -388,6 +412,12 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         });
     }
 
+    /*
+     * This method creates a Toast message for the user. A small textbox showing for
+     * a few seconds
+     * @param String message the message on the toast
+     * @param int length either short or long time
+     */
     private void makeToast(final String message, final int length) {
         runOnUiThread(new Runnable() {
             @Override
@@ -405,6 +435,13 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         });
     }
 
+    /*
+    * A method to create an alertDialog to give the user information
+    * @param String title the title on the top of the dialog screen
+    * @param String message the message to the user
+    * @param String textButton the text on the button the user can click, often 'OK'
+    * @param int option which action to be called in method doOnAlertDialog
+    */
     private void alertDialog(final String title, final String message, final String textButton, final int option) {
         runOnUiThread(new Runnable() {
             @Override
@@ -429,6 +466,9 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         });
     }
 
+    /*
+     * Different actions can be executed from an alertDialog.
+     */
     private void doOnAlertDialogOk(int option) {
         switch (option) {
             case NO_ACTION:
@@ -442,6 +482,10 @@ public class MainActivity extends Activity implements Communicator, View.OnClick
         }
     }
 
+    /*
+     * This method restarts the mainActivity which will change the UI or balance
+     * if it has been changed
+     */
     private void update() {
         closeConnection();
         setResult(RE_LOGIN, returnIntent);

@@ -17,7 +17,10 @@ import android.widget.Toast;
 import java.util.Timer;
 
 /**
- * Created by David on 2015-04-17.
+ * This class is an Activity for the Login screen.
+ * It lets the user either register a new user or log in to Barduino system
+ *
+ * Created by David Tran and John Tengvall 2015-04-17.
  */
 public class Login extends Activity {
 
@@ -52,6 +55,7 @@ public class Login extends Activity {
             }
         });
         btnRegister = (Button) findViewById(R.id.btnRegister);
+        //if Register button is pressed a new Activity is opened
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,19 +65,29 @@ public class Login extends Activity {
         });
     }
 
+    /*
+     * If admin is logging in, the Admin class/activity is shown.
+     * Else login() is called
+     */
     private void preLogin() {
-        if(etUsername.getText().toString().toLowerCase().equals("admin") &&
-                etPassword.getText().toString().toLowerCase().equals("barduino")) {
+        String adminUsername = entity.getAdminUsername();
+        String adminPassword = entity.getAdminPassword();
+        if(etUsername.getText().toString().toLowerCase().equals(adminUsername) &&
+                etPassword.getText().toString().toLowerCase().equals(adminPassword)) {
             adminChoice();
         } else {
             login();
         }
     }
 
+    /*
+     * This method opens the MainActivity and parses along the username and password
+     */
     private void login() {
         Intent intent = new Intent(".MainActivity");
         String username = etUsername.getText().toString().toLowerCase();
         String password = etPassword.getText().toString();
+        //if username and password is ok, MainActivity is started
         if(checkValidUsernameAndPassword(username, password)) {
             intent.putExtra("username", username);
             intent.putExtra("password", password);
@@ -81,6 +95,10 @@ public class Login extends Activity {
         }
     }
 
+    /*
+     * When returned from Register activity or MainActivity different parses can
+     * be thrown back.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -106,6 +124,10 @@ public class Login extends Activity {
         }
     }
 
+    /*
+     * This method checks if the input in username and password is ok.
+     * @return boolean true or false depending if the input is ok
+     */
     private boolean checkValidUsernameAndPassword(String username, String password) {
         if(username.isEmpty() || password.isEmpty()) {
             makeToast("You forgot to fill in all boxes!");
@@ -125,6 +147,10 @@ public class Login extends Activity {
         }
     }
 
+    /*
+     * This method lets the admin choose to go to Admin screen or login
+     * to Barduino system.
+     */
     private void adminChoice() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Hello Admin!")
@@ -145,23 +171,13 @@ public class Login extends Activity {
         builder.create().show();        // create and show the alert dialog
     }
 
+    /*
+     * Creates a Toast screen with information for the user. A small textbox flashing up
+     * for a few seconds
+     */
     private void makeToast(String toastMessage) {
         Toast toast = Toast.makeText(getApplicationContext(), toastMessage, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
         toast.show();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return true;
-    }
-
-    public void serverHostNotFound() {
-        Toast.makeText(getApplicationContext(), "Server host not found", Toast.LENGTH_SHORT).show();
     }
 }

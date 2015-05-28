@@ -13,6 +13,10 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 
 /**
+ * This class is a simple version of the class TCPClient
+ * It is used only for registration of a new user. It connects to the server
+ * using TCP and sends a message to generate the new user.
+ *
  * Created by David on 2015-04-02.
  */
 public class TCPRegister extends Thread {
@@ -74,7 +78,6 @@ public class TCPRegister extends Thread {
                         Log.i("RESPONSE FROM SERVER", "S: Received Message: '" + serverMessage + "'");
                     }
                     serverMessage = null;
-
                 }
                 in.close();
                 out.close();
@@ -84,13 +87,11 @@ public class TCPRegister extends Thread {
                 Log.e("TCP", "S: Error", e);
                 connectFailed = true;
                 connected = false;
-                //mainActivity.connectionDown();
             }
         } catch (IOException e) {
             Log.e("TCP", "C: Error", e);
             connectFailed = true;
             connected = false;
-            //mainActivity.connectionDown();
         }
     }
 
