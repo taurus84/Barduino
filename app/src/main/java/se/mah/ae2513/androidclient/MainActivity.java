@@ -9,21 +9,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
  *
+ * Created by David Tran and John Tengvall on 2015-04-22
  */
 public class MainActivity extends Activity implements Communicator, View.OnClickListener {
     private Entity entity = Entity.getInstance();
