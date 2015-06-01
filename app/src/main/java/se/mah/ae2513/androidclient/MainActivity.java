@@ -23,7 +23,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- *
+ * This class is the main part of the application.
+ * It's layout header contains logo and floating action button.
+ * The body contains layout from Fragment_Main.
+ * It handles the communication with the server.
  * Created by David Tran and John Tengvall on 2015-04-22
  */
 public class MainActivity extends Activity implements Communicator, View.OnClickListener {
