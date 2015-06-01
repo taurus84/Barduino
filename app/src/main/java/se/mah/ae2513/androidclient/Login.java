@@ -27,7 +27,6 @@ public class Login extends Activity {
     private EditText etUsername, etPassword;
     private Button btnLogin, btnRegister;
     private final int NO_CONNECTION = 0, LOGGED_OUT = 1, LOGIN_BAD = 2, RE_LOGIN = 3, SOCKET_TCP_ERROR = 4;
-    private Timer udpTimer;
     private Entity entity = Entity.getInstance();
 
     @Override
